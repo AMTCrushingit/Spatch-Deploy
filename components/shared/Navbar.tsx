@@ -18,6 +18,7 @@ export default function Navbar({ role = "guest", userName = "", userAvatar = "" 
     { href: "/request", label: "Post a Request" },
     { href: "/quotes", label: "My Quotes" },
     { href: "/chat", label: "Messages" },
+    { href: "/pricing", label: "Pricing" },
   ];
 
   const providerLinks = [

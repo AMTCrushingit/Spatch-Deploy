@@ -239,9 +239,12 @@ export default function HomePage() {
               <span className="text-xs ml-2" style={{ color: "#8A8070" }}>Powered by Credii</span>
             </div>
             <div className="flex gap-6">
-              {["About", "For Providers", "Privacy", "Terms", "Contact"].map(l => (
-                <Link key={l} href="#" className="text-xs hover:opacity-70" style={{ color: "#8A8070" }}>{l}</Link>
-              ))}
+              <Link href="#" className="text-xs hover:opacity-70" style={{ color: "#8A8070" }}>About</Link>
+              <Link href="/pricing" className="text-xs hover:opacity-70" style={{ color: "#8A8070" }}>Pricing</Link>
+              <Link href="/register?role=provider" className="text-xs hover:opacity-70" style={{ color: "#8A8070" }}>For Providers</Link>
+              <Link href="#" className="text-xs hover:opacity-70" style={{ color: "#8A8070" }}>Privacy</Link>
+              <Link href="#" className="text-xs hover:opacity-70" style={{ color: "#8A8070" }}>Terms</Link>
+              <Link href="#" className="text-xs hover:opacity-70" style={{ color: "#8A8070" }}>Contact</Link>
             </div>
             <p className="text-xs" style={{ color: "#8A8070" }}>© 2026 Spatch / Credii. All rights reserved.</p>
           </div>
