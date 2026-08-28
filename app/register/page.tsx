@@ -44,7 +44,7 @@ export default function RegisterPage() {
           <Link href="/" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold text-xs"
               style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>S</div>
-            <span className="font-bold text-lg" style={{ color: "#1A1A2E" }}>Spatch</span>
+            <span className="font-bold text-lg" style={{ color: "#1A1A2E" }}>Rivva</span>
           </Link>
           <span className="text-xs" style={{ color: "#8A8070" }}>Step {step} of {totalSteps}</span>
         </div>

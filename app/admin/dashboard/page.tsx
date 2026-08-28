@@ -24,7 +24,7 @@ export default function AdminDashboard() {
           <div>
             <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>Credii Admin Panel</h1>
             <p className="text-sm mt-1" style={{ color: "#8A8070" }}>
-              Spatch platform overview · August 6, 2026
+              Rivva platform overview · August 6, 2026
             </p>
           </div>
           <div className="flex gap-2">

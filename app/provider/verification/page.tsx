@@ -8,10 +8,10 @@ const currentProvider = providers.find(p => p.user_id === "u2")!;
 const currentUser = users.find(u => u.id === "u2")!;
 
 const verificationSteps = [
-  { id: "account", label: "Account Created", status: "done", icon: "✅", desc: "Your Spatch account is active" },
+  { id: "account", label: "Account Created", status: "done", icon: "✅", desc: "Your Rivva account is active" },
   { id: "id", label: "ID Verification", status: "done", icon: "🪪", desc: "Government-issued ID submitted and verified" },
   { id: "skill", label: "Skill Verification", status: "done", icon: "🎓", desc: "Electrical licence verified by Credii admin" },
-  { id: "approved", label: "Profile Approved", status: "done", icon: "🛡️", desc: "You are a verified Spatch provider" },
+  { id: "approved", label: "Profile Approved", status: "done", icon: "🛡️", desc: "You are a verified Rivva provider" },
 ];
 
 export default function VerificationPage() {

@@ -45,7 +45,7 @@ export default function Navbar({ role = "guest", userName = "", userAvatar = "" 
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
               style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>S</div>
-            <span className="font-bold text-xl" style={{ color: "#1A1A2E" }}>Spatch</span>
+            <span className="font-bold text-xl" style={{ color: "#1A1A2E" }}>Rivva</span>
             {role === "admin" && (
               <span className="text-xs px-2 py-0.5 rounded-full font-medium ml-1"
                 style={{ background: "#FF6B4A20", color: "#FF6B4A" }}>Credii Admin</span>

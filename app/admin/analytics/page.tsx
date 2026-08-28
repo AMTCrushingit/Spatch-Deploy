@@ -17,7 +17,7 @@ export default function AnalyticsPage() {
           <div>
             <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>Platform Analytics</h1>
             <p className="text-sm mt-1" style={{ color: "#8A8070" }}>
-              Spatch MVP · Data for grants, valuation & partnerships
+              Rivva MVP · Data for grants, valuation & partnerships
             </p>
           </div>
           <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white text-sm font-medium hover:opacity-90 transition"

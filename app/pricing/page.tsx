@@ -14,7 +14,7 @@ const providerTiers = [
     monthlyPrice: 50,
     color: "#0ABFBC",
     colorLight: "#0ABFBC15",
-    description: "Perfect for new providers getting started on Spatch.",
+    description: "Perfect for new providers getting started on Rivva.",
     badge: null,
     cta: "Get Started",
     features: [
@@ -224,7 +224,7 @@ export default function PricingPage() {
             <span style={{ color: "#FF6B4A" }}>across the Caribbean</span>
           </h1>
           <p className="text-lg mt-4" style={{ color: "#8A8070" }}>
-            Join 2,400+ verified providers earning more with Spatch. No hidden fees. Cancel anytime.
+            Join 2,400+ verified providers earning more with Rivva. No hidden fees. Cancel anytime.
           </p>
 
           {/* Tab switcher */}
@@ -393,7 +393,7 @@ export default function PricingPage() {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { name: "Homepage Feature", price: "TT$300/mo", desc: "Your card on the Spatch homepage", icon: "🏠" },
+                { name: "Homepage Feature", price: "TT$300/mo", desc: "Your card on the Rivva homepage", icon: "🏠" },
                 { name: "Category Spotlight", price: "TT$150/mo", desc: "Top of results for one category", icon: "🔦" },
                 { name: "Island Boost", price: "TT$200/mo", desc: "Priority matching island-wide for 30 days", icon: "📍" },
                 { name: "Launch Boost", price: "TT$75 once", desc: "First 10 leads guaranteed for new providers", icon: "🚀" },
@@ -473,7 +473,7 @@ export default function PricingPage() {
           <div className="text-center mb-10">
             <p className="text-base" style={{ color: "#8A8070" }}>
               Institutional partnerships that generate TT$150k–600k per contract.<br />
-              This is Spatch&apos;s advantage over every US marketplace.
+              This is Rivva&apos;s advantage over every US marketplace.
             </p>
           </div>
 
@@ -542,7 +542,7 @@ export default function PricingPage() {
             {[
               { icon: <TrendingUp size={22} />, color: "#FF6B4A", title: "Grant-Ready Data", desc: "Every request, provider, and job completion is tracked and exportable for development agency reporting and grant applications." },
               { icon: <Shield size={22} />, color: "#0ABFBC", title: "Verified Workforce", desc: "All providers are ID-verified and skill-checked by Credii. Organisations get a trusted, auditable pool of Caribbean professionals." },
-              { icon: <Globe size={22} />, color: "#FFB347", title: "Africa Expansion", desc: "Development bank partners get early access to Spatch's Africa rollout — the same model, applied to 54 countries." },
+              { icon: <Globe size={22} />, color: "#FFB347", title: "Africa Expansion", desc: "Development bank partners get early access to Rivva's Africa rollout — the same model, applied to 54 countries." },
             ].map(v => (
               <div key={v.title} className="p-5 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-3"
@@ -577,7 +577,7 @@ export default function PricingPage() {
           <h2 className="text-2xl font-bold text-center mb-8" style={{ color: "#1A1A2E" }}>Frequently Asked Questions</h2>
           <div className="space-y-4">
             {[
-              { q: "Is it free for clients?", a: "Yes. Clients always use Spatch for free. They post requests, receive quotes, and hire providers at no cost. Providers pay to access leads." },
+              { q: "Is it free for clients?", a: "Yes. Clients always use Rivva for free. They post requests, receive quotes, and hire providers at no cost. Providers pay to access leads." },
               { q: "Can I change my plan anytime?", a: "Yes. Upgrade or downgrade at any time. Changes take effect at the start of your next billing cycle. No cancellation fees." },
               { q: "What payment methods are accepted?", a: "We accept all major credit/debit cards, Linx, and WiPay across the Caribbean. Bank transfer available for annual plans." },
               { q: "Do I need to be verified before I can subscribe?", a: "Yes. All providers must complete basic verification (ID + skill proof) before their profile goes live, regardless of plan." },
@@ -629,10 +629,10 @@ export default function PricingPage() {
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold text-xs"
               style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>S</div>
-            <span className="font-bold" style={{ color: "#1A1A2E" }}>Spatch</span>
+            <span className="font-bold" style={{ color: "#1A1A2E" }}>Rivva</span>
             <span className="text-xs ml-2" style={{ color: "#8A8070" }}>Powered by Credii</span>
           </div>
-          <p className="text-xs" style={{ color: "#8A8070" }}>© 2026 Spatch / Credii. All rights reserved.</p>
+          <p className="text-xs" style={{ color: "#8A8070" }}>© 2026 Rivva / Credii. All rights reserved.</p>
         </div>
       </footer>
     </div>

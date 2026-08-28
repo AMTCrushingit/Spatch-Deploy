@@ -218,7 +218,7 @@ export default function ApprovalsPage() {
                 {providerStates[selectedProv.id] === "approved" && (
                   <div className="p-3 rounded-xl text-center text-sm font-medium"
                     style={{ background: "#2ECC7115", color: "#2ECC71" }}>
-                    ✓ Provider is live on Spatch
+                    ✓ Provider is live on Rivva
                   </div>
                 )}
                 {providerStates[selectedProv.id] === "rejected" && (

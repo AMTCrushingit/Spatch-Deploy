@@ -43,7 +43,7 @@ export default function LoginPage() {
         <Link href="/" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
             style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>S</div>
-          <span className="font-bold text-xl text-white">Spatch</span>
+          <span className="font-bold text-xl text-white">Rivva</span>
         </Link>
         <div>
           <h2 className="text-3xl font-bold text-white leading-snug">
@@ -67,7 +67,7 @@ export default function LoginPage() {
             ))}
           </div>
         </div>
-        <p className="text-xs" style={{ color: "#8A8070" }}>© 2026 Spatch / Credii</p>
+        <p className="text-xs" style={{ color: "#8A8070" }}>© 2026 Rivva / Credii</p>
       </div>
 
       {/* Right panel */}
@@ -76,11 +76,11 @@ export default function LoginPage() {
           <Link href="/" className="flex items-center gap-2 mb-8 lg:hidden">
             <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold text-xs"
               style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>S</div>
-            <span className="font-bold text-lg" style={{ color: "#1A1A2E" }}>Spatch</span>
+            <span className="font-bold text-lg" style={{ color: "#1A1A2E" }}>Rivva</span>
           </Link>
 
           <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>Welcome back</h1>
-          <p className="text-sm mt-1" style={{ color: "#8A8070" }}>Log in to your Spatch account</p>
+          <p className="text-sm mt-1" style={{ color: "#8A8070" }}>Log in to your Rivva account</p>
 
           {/* Demo buttons */}
           <div className="mt-6 p-4 rounded-2xl border" style={{ borderColor: "#E8E2D9", background: "#F7F4EF" }}>

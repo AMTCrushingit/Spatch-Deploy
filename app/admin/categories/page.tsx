@@ -55,7 +55,7 @@ export default function CategoriesPage() {
           <div>
             <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>Service Categories</h1>
             <p className="text-sm mt-1" style={{ color: "#8A8070" }}>
-              Manage the categories available on Spatch
+              Manage the categories available on Rivva
             </p>
           </div>
           <button onClick={() => setShowAdd(true)}

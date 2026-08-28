@@ -79,7 +79,7 @@ export default function HomePage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold" style={{ color: "#1A1A2E" }}>How Spatch works</h2>
+            <h2 className="text-3xl font-bold" style={{ color: "#1A1A2E" }}>How Rivva works</h2>
             <p className="mt-3 text-base" style={{ color: "#8A8070" }}>Three steps to get your job done</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -161,11 +161,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why Spatch */}
+      {/* Why Rivva */}
       <section className="py-16" style={{ background: "#F7F4EF" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold" style={{ color: "#1A1A2E" }}>Why Spatch?</h2>
+            <h2 className="text-3xl font-bold" style={{ color: "#1A1A2E" }}>Why Rivva?</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -196,7 +196,7 @@ export default function HomePage() {
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-white">Grow your business<br />across the Caribbean</h2>
               <p className="mt-3 text-sm" style={{ color: "#8A8070" }}>
-                Join 2,400+ verified providers earning TT$50k–TT$200k/year through Spatch leads.
+                Join 2,400+ verified providers earning TT$50k–TT$200k/year through Rivva leads.
               </p>
               <ul className="mt-4 space-y-2">
                 {["Get matched to clients on your island", "Set your own prices and availability", "Build your reputation with verified reviews", "Subscription from TT$50/month"].map(item => (
@@ -235,7 +235,7 @@ export default function HomePage() {
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold text-xs"
                 style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>S</div>
-              <span className="font-bold" style={{ color: "#1A1A2E" }}>Spatch</span>
+              <span className="font-bold" style={{ color: "#1A1A2E" }}>Rivva</span>
               <span className="text-xs ml-2" style={{ color: "#8A8070" }}>Powered by Credii</span>
             </div>
             <div className="flex gap-6">
@@ -246,7 +246,7 @@ export default function HomePage() {
               <Link href="#" className="text-xs hover:opacity-70" style={{ color: "#8A8070" }}>Terms</Link>
               <Link href="#" className="text-xs hover:opacity-70" style={{ color: "#8A8070" }}>Contact</Link>
             </div>
-            <p className="text-xs" style={{ color: "#8A8070" }}>© 2026 Spatch / Credii. All rights reserved.</p>
+            <p className="text-xs" style={{ color: "#8A8070" }}>© 2026 Rivva / Credii. All rights reserved.</p>
           </div>
         </div>
       </footer>

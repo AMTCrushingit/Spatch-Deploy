@@ -1,4 +1,4 @@
-// ─── Spatch Mock Data Store ───────────────────────────────────────────────────
+// ─── Rivva Mock Data Store ───────────────────────────────────────────────────
 // Simulates PostgreSQL + Prisma schema from the spec
 
 export type Island = "Trinidad" | "Barbados" | "Jamaica" | "St. Lucia" | "Grenada" | "Antigua";

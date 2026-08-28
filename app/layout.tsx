@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Spatch — Caribbean's Service Marketplace",
+  title: "Rivva — Caribbean's Service Network",
   description: "Connect with verified service providers across the Caribbean. Powered by Credii.",
 };
 
