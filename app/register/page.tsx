@@ -4,246 +4,144 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ArrowLeft, CheckCircle } from "lucide-react";
 import { serviceCategories } from "@/lib/data";
+import { useTheme, colors } from "@/lib/theme";
 
 const islands = ["Trinidad", "Barbados", "Jamaica", "St. Lucia", "Grenada", "Antigua"];
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const c = colors;
   const [step, setStep] = useState(1);
   const [role, setRole] = useState<"client" | "provider">("client");
-  const [form, setForm] = useState({
-    name: "", email: "", phone: "", password: "",
-    island: "", bio: "", skills: [] as string[], categories: [] as string[],
-  });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", island: "", bio: "", categories: [] as string[] });
 
-  function update(k: string, v: string | string[]) {
-    setForm(f => ({ ...f, [k]: v }));
-  }
-
-  function toggleCategory(id: string) {
-    setForm(f => ({
-      ...f,
-      categories: f.categories.includes(id)
-        ? f.categories.filter(c => c !== id)
-        : [...f.categories, id],
-    }));
-  }
-
-  function handleSubmit() {
-    if (role === "client") router.push("/dashboard");
-    else router.push("/provider/verification");
-  }
+  function update(k: string, v: string) { setForm(f => ({ ...f, [k]: v })); }
+  function toggleCat(id: string) { setForm(f => ({ ...f, categories: f.categories.includes(id) ? f.categories.filter(c => c !== id) : [...f.categories, id] })); }
+  function handleSubmit() { if (role === "client") router.push("/dashboard"); else router.push("/provider/verification"); }
 
   const totalSteps = role === "provider" ? 3 : 2;
+  const inp = { width: "100%", padding: "0.875rem 1rem", borderRadius: "0.75rem", border: `1px solid ${c.border(theme)}`, background: c.inputBg(theme), color: c.text(theme), fontSize: "1rem", outline: "none", boxSizing: "border-box" as const };
+  const btn = (primary = true) => ({ width: "100%", padding: "1rem", borderRadius: "0.875rem", border: primary ? "none" : `1px solid ${c.border(theme)}`, background: primary ? "linear-gradient(135deg, #FF6B4A, #FF8C42)" : c.bgMuted(theme), color: primary ? "#fff" : c.text(theme), fontWeight: 700, fontSize: "1rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" });
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12" style={{ background: "#FFFDF9" }}>
-      <div className="w-full max-w-lg">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold text-xs"
-              style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>S</div>
-            <span className="font-bold text-lg" style={{ color: "#1A1A2E" }}>Rivva</span>
+    <div style={{ minHeight: "100vh", background: c.bg(theme), display: "flex", alignItems: "center", justifyContent: "center", padding: "3rem 1.5rem" }}>
+      <div style={{ width: "100%", maxWidth: "520px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem" }}>
+          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.6rem", textDecoration: "none" }}>
+            <div style={{ width: "2rem", height: "2rem", borderRadius: "0.5rem", background: "linear-gradient(135deg, #FF6B4A, #E63946)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900 }}>R</div>
+            <span style={{ fontWeight: 800, fontSize: "1.2rem", color: c.text(theme) }}>Rivva</span>
           </Link>
-          <span className="text-xs" style={{ color: "#8A8070" }}>Step {step} of {totalSteps}</span>
+          <span style={{ fontSize: "0.9rem", color: c.textMuted(theme) }}>Step {step} of {totalSteps}</span>
         </div>
 
-        {/* Progress bar */}
-        <div className="w-full h-1.5 rounded-full mb-8" style={{ background: "#E8E2D9" }}>
-          <div className="h-full rounded-full transition-all duration-300"
-            style={{ width: `${(step / totalSteps) * 100}%`, background: "#FF6B4A" }} />
+        {/* Progress */}
+        <div style={{ width: "100%", height: "0.4rem", borderRadius: "999px", background: c.border(theme), marginBottom: "2.5rem" }}>
+          <div style={{ height: "100%", borderRadius: "999px", background: "linear-gradient(90deg, #FF6B4A, #FFB347)", width: `${(step / totalSteps) * 100}%`, transition: "width 0.3s" }} />
         </div>
 
-        {/* Step 1 — Role + Basic Info */}
+        {/* Step 1 */}
         {step === 1 && (
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>Create your account</h1>
-            <p className="text-sm mt-1 mb-6" style={{ color: "#8A8070" }}>Join the Caribbean&apos;s service marketplace</p>
-
-            {/* Role toggle */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <h1 style={{ fontSize: "2rem", fontWeight: 900, color: c.text(theme), marginBottom: "0.5rem" }}>Create your account</h1>
+            <p style={{ color: c.textMuted(theme), fontSize: "1rem", marginBottom: "2rem" }}>Join the Caribbean&apos;s service marketplace</p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2rem" }}>
               {(["client", "provider"] as const).map(r => (
-                <button key={r} onClick={() => setRole(r)}
-                  className="p-4 rounded-2xl border text-left transition"
-                  style={{
-                    borderColor: role === r ? "#FF6B4A" : "#E8E2D9",
-                    background: role === r ? "#FF6B4A08" : "#fff",
-                  }}>
-                  <div className="text-2xl mb-2">{r === "client" ? "🙋" : "🔧"}</div>
-                  <p className="font-semibold text-sm capitalize" style={{ color: "#1A1A2E" }}>{r}</p>
-                  <p className="text-xs mt-0.5" style={{ color: "#8A8070" }}>
-                    {r === "client" ? "I need services done" : "I provide services"}
-                  </p>
+                <button key={r} onClick={() => setRole(r)} style={{ padding: "1.25rem", borderRadius: "1rem", border: `2px solid ${role === r ? "#FF6B4A" : c.border(theme)}`, background: role === r ? "#FF6B4A08" : c.bgCard(theme), cursor: "pointer", textAlign: "left" }}>
+                  <div style={{ fontSize: "1.75rem", marginBottom: "0.5rem" }}>{r === "client" ? "🙋" : "🔧"}</div>
+                  <p style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), textTransform: "capitalize" }}>{r}</p>
+                  <p style={{ fontSize: "0.85rem", color: c.textMuted(theme), marginTop: "0.25rem" }}>{r === "client" ? "I need services done" : "I provide services"}</p>
                 </button>
               ))}
             </div>
-
-            <div className="space-y-4">
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
+              {[{ label: "Full Name", key: "name", type: "text", placeholder: "e.g. Aaliyah Joseph" }, { label: "Email", key: "email", type: "email", placeholder: "you@example.com" }, { label: "Phone", key: "phone", type: "tel", placeholder: "+1-868-555-0000" }, { label: "Password", key: "password", type: "password", placeholder: "••••••••" }].map(f => (
+                <div key={f.key}>
+                  <label style={{ fontSize: "0.9rem", fontWeight: 600, color: c.text(theme), display: "block", marginBottom: "0.5rem" }}>{f.label}</label>
+                  <input type={f.type} value={form[f.key as keyof typeof form] as string} onChange={e => update(f.key, e.target.value)} placeholder={f.placeholder} style={inp} />
+                </div>
+              ))}
               <div>
-                <label className="text-xs font-medium block mb-1.5" style={{ color: "#1A1A2E" }}>Full Name</label>
-                <input value={form.name} onChange={e => update("name", e.target.value)}
-                  placeholder="e.g. Aaliyah Joseph" className="w-full px-4 py-3 rounded-xl border text-sm outline-none"
-                  style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }} />
-              </div>
-              <div>
-                <label className="text-xs font-medium block mb-1.5" style={{ color: "#1A1A2E" }}>Email</label>
-                <input type="email" value={form.email} onChange={e => update("email", e.target.value)}
-                  placeholder="you@example.com" className="w-full px-4 py-3 rounded-xl border text-sm outline-none"
-                  style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }} />
-              </div>
-              <div>
-                <label className="text-xs font-medium block mb-1.5" style={{ color: "#1A1A2E" }}>Phone</label>
-                <input value={form.phone} onChange={e => update("phone", e.target.value)}
-                  placeholder="+1-868-555-0000" className="w-full px-4 py-3 rounded-xl border text-sm outline-none"
-                  style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }} />
-              </div>
-              <div>
-                <label className="text-xs font-medium block mb-1.5" style={{ color: "#1A1A2E" }}>Island</label>
-                <select value={form.island} onChange={e => update("island", e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border text-sm outline-none"
-                  style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }}>
+                <label style={{ fontSize: "0.9rem", fontWeight: 600, color: c.text(theme), display: "block", marginBottom: "0.5rem" }}>Island</label>
+                <select value={form.island} onChange={e => update("island", e.target.value)} style={{ ...inp }}>
                   <option value="">Select your island</option>
-                  {islands.map(i => <option key={i} value={i}>{i}</option>)}
+                  {islands.map(i => <option key={i}>{i}</option>)}
                 </select>
               </div>
-              <div>
-                <label className="text-xs font-medium block mb-1.5" style={{ color: "#1A1A2E" }}>Password</label>
-                <input type="password" value={form.password} onChange={e => update("password", e.target.value)}
-                  placeholder="••••••••" className="w-full px-4 py-3 rounded-xl border text-sm outline-none"
-                  style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }} />
-              </div>
             </div>
-
-            <button onClick={() => setStep(2)}
-              className="w-full mt-6 py-3 rounded-xl text-white font-medium text-sm flex items-center justify-center gap-2 hover:opacity-90 transition"
-              style={{ background: "#FF6B4A" }}>
-              Continue <ArrowRight size={16} />
-            </button>
-            <p className="text-center text-sm mt-4" style={{ color: "#8A8070" }}>
-              Already have an account?{" "}
-              <Link href="/login" className="font-medium" style={{ color: "#FF6B4A" }}>Log in</Link>
+            <button onClick={() => setStep(2)} style={btn()}>Continue <ArrowRight size={18} /></button>
+            <p style={{ textAlign: "center", fontSize: "0.95rem", color: c.textMuted(theme), marginTop: "1.25rem" }}>
+              Already have an account? <Link href="/login" style={{ fontWeight: 700, color: "#FF6B4A", textDecoration: "none" }}>Log in</Link>
             </p>
           </div>
         )}
 
-        {/* Step 2 — Provider: Skills & Categories / Client: Done */}
+        {/* Step 2 — Provider: categories */}
         {step === 2 && role === "provider" && (
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>Your services</h1>
-            <p className="text-sm mt-1 mb-6" style={{ color: "#8A8070" }}>Select the categories you work in</p>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
+            <h1 style={{ fontSize: "2rem", fontWeight: 900, color: c.text(theme), marginBottom: "0.5rem" }}>Your services</h1>
+            <p style={{ color: c.textMuted(theme), fontSize: "1rem", marginBottom: "1.5rem" }}>Select the categories you work in</p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.75rem", marginBottom: "1.5rem" }}>
               {serviceCategories.map(cat => (
-                <button key={cat.id} onClick={() => toggleCategory(cat.id)}
-                  className="p-3 rounded-xl border text-left transition"
-                  style={{
-                    borderColor: form.categories.includes(cat.id) ? "#0ABFBC" : "#E8E2D9",
-                    background: form.categories.includes(cat.id) ? "#0ABFBC10" : "#fff",
-                  }}>
-                  <span className="text-xl">{cat.icon}</span>
-                  <p className="text-xs font-medium mt-1" style={{ color: "#1A1A2E" }}>{cat.name}</p>
+                <button key={cat.id} onClick={() => toggleCat(cat.id)} style={{ padding: "0.875rem", borderRadius: "0.875rem", border: `2px solid ${form.categories.includes(cat.id) ? "#0ABFBC" : c.border(theme)}`, background: form.categories.includes(cat.id) ? "#0ABFBC10" : c.bgCard(theme), cursor: "pointer", textAlign: "left" }}>
+                  <span style={{ fontSize: "1.5rem" }}>{cat.icon}</span>
+                  <p style={{ fontSize: "0.85rem", fontWeight: 600, color: c.text(theme), marginTop: "0.4rem" }}>{cat.name}</p>
                 </button>
               ))}
             </div>
-
-            <div className="mb-4">
-              <label className="text-xs font-medium block mb-1.5" style={{ color: "#1A1A2E" }}>Bio / About you</label>
-              <textarea value={form.bio} onChange={e => update("bio", e.target.value)}
-                rows={3} placeholder="Describe your experience and what makes you great..."
-                className="w-full px-4 py-3 rounded-xl border text-sm outline-none resize-none"
-                style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }} />
+            <div style={{ marginBottom: "1.5rem" }}>
+              <label style={{ fontSize: "0.9rem", fontWeight: 600, color: c.text(theme), display: "block", marginBottom: "0.5rem" }}>Bio / About you</label>
+              <textarea value={form.bio} onChange={e => update("bio", e.target.value)} rows={3} placeholder="Describe your experience..." style={{ ...inp, resize: "none" }} />
             </div>
-
-            <div className="flex gap-3">
-              <button onClick={() => setStep(1)}
-                className="flex-1 py-3 rounded-xl border text-sm font-medium flex items-center justify-center gap-2"
-                style={{ borderColor: "#E8E2D9", color: "#1A1A2E" }}>
-                <ArrowLeft size={16} /> Back
-              </button>
-              <button onClick={() => setStep(3)}
-                className="flex-1 py-3 rounded-xl text-white font-medium text-sm flex items-center justify-center gap-2 hover:opacity-90 transition"
-                style={{ background: "#FF6B4A" }}>
-                Continue <ArrowRight size={16} />
-              </button>
+            <div style={{ display: "flex", gap: "0.75rem" }}>
+              <button onClick={() => setStep(1)} style={{ ...btn(false), flex: 1 }}><ArrowLeft size={18} /> Back</button>
+              <button onClick={() => setStep(3)} style={{ ...btn(), flex: 1 }}>Continue <ArrowRight size={18} /></button>
             </div>
           </div>
         )}
 
-        {/* Step 2 — Client: Review & Submit */}
+        {/* Step 2 — Client: review */}
         {step === 2 && role === "client" && (
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>You&apos;re all set!</h1>
-            <p className="text-sm mt-1 mb-6" style={{ color: "#8A8070" }}>Review your details and create your account</p>
-            <div className="p-5 rounded-2xl border space-y-3" style={{ borderColor: "#E8E2D9" }}>
-              {[
-                { label: "Name", value: form.name || "Aaliyah Joseph" },
-                { label: "Email", value: form.email || "aaliyah@email.com" },
-                { label: "Island", value: form.island || "Trinidad" },
-                { label: "Role", value: "Client" },
-              ].map(item => (
-                <div key={item.label} className="flex justify-between text-sm">
-                  <span style={{ color: "#8A8070" }}>{item.label}</span>
-                  <span className="font-medium" style={{ color: "#1A1A2E" }}>{item.value}</span>
+            <h1 style={{ fontSize: "2rem", fontWeight: 900, color: c.text(theme), marginBottom: "0.5rem" }}>You&apos;re all set!</h1>
+            <p style={{ color: c.textMuted(theme), fontSize: "1rem", marginBottom: "1.5rem" }}>Review your details and create your account</p>
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), marginBottom: "1.5rem" }}>
+              {[{ label: "Name", value: form.name || "Aaliyah Joseph" }, { label: "Email", value: form.email || "aaliyah@email.com" }, { label: "Island", value: form.island || "Trinidad" }, { label: "Role", value: "Client" }].map(item => (
+                <div key={item.label} style={{ display: "flex", justifyContent: "space-between", padding: "0.625rem 0", borderBottom: `1px solid ${c.border(theme)}` }}>
+                  <span style={{ color: c.textMuted(theme), fontSize: "0.95rem" }}>{item.label}</span>
+                  <span style={{ fontWeight: 600, color: c.text(theme), fontSize: "0.95rem" }}>{item.value}</span>
                 </div>
               ))}
             </div>
-            <div className="flex gap-3 mt-6">
-              <button onClick={() => setStep(1)}
-                className="flex-1 py-3 rounded-xl border text-sm font-medium flex items-center justify-center gap-2"
-                style={{ borderColor: "#E8E2D9", color: "#1A1A2E" }}>
-                <ArrowLeft size={16} /> Back
-              </button>
-              <button onClick={handleSubmit}
-                className="flex-1 py-3 rounded-xl text-white font-medium text-sm flex items-center justify-center gap-2 hover:opacity-90 transition"
-                style={{ background: "#FF6B4A" }}>
-                Create Account <ArrowRight size={16} />
-              </button>
+            <div style={{ display: "flex", gap: "0.75rem" }}>
+              <button onClick={() => setStep(1)} style={{ ...btn(false), flex: 1 }}><ArrowLeft size={18} /> Back</button>
+              <button onClick={handleSubmit} style={{ ...btn(), flex: 1 }}>Create Account <ArrowRight size={18} /></button>
             </div>
           </div>
         )}
 
-        {/* Step 3 — Provider: Verification upload */}
+        {/* Step 3 — Provider: verification */}
         {step === 3 && role === "provider" && (
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>Verify your identity</h1>
-            <p className="text-sm mt-1 mb-6" style={{ color: "#8A8070" }}>Upload your ID and proof of skill to get approved</p>
-
-            <div className="space-y-4">
-              {[
-                { label: "Government-issued ID", hint: "Passport, driver's licence, or national ID" },
-                { label: "Proof of skill / certification", hint: "Certificate, licence, or portfolio sample" },
-              ].map(doc => (
-                <div key={doc.label} className="p-4 rounded-2xl border-2 border-dashed text-center cursor-pointer hover:border-teal-400 transition"
-                  style={{ borderColor: "#E8E2D9" }}>
-                  <div className="text-2xl mb-2">📎</div>
-                  <p className="text-sm font-medium" style={{ color: "#1A1A2E" }}>{doc.label}</p>
-                  <p className="text-xs mt-1" style={{ color: "#8A8070" }}>{doc.hint}</p>
-                  <span className="inline-block mt-2 text-xs px-3 py-1 rounded-full"
-                    style={{ background: "#F7F4EF", color: "#8A8070" }}>Click to upload</span>
+            <h1 style={{ fontSize: "2rem", fontWeight: 900, color: c.text(theme), marginBottom: "0.5rem" }}>Verify your identity</h1>
+            <p style={{ color: c.textMuted(theme), fontSize: "1rem", marginBottom: "1.5rem" }}>Upload your ID and proof of skill to get approved</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.5rem" }}>
+              {[{ label: "Government-issued ID", hint: "Passport, driver's licence, or national ID" }, { label: "Proof of skill / certification", hint: "Certificate, licence, or portfolio sample" }].map(doc => (
+                <div key={doc.label} style={{ padding: "1.5rem", borderRadius: "1rem", border: `2px dashed ${c.border(theme)}`, textAlign: "center", cursor: "pointer", background: c.bgCard(theme) }}>
+                  <div style={{ fontSize: "1.75rem", marginBottom: "0.5rem" }}>📎</div>
+                  <p style={{ fontWeight: 600, color: c.text(theme), fontSize: "0.95rem" }}>{doc.label}</p>
+                  <p style={{ fontSize: "0.85rem", color: c.textMuted(theme), marginTop: "0.25rem" }}>{doc.hint}</p>
+                  <span style={{ display: "inline-block", marginTop: "0.75rem", padding: "0.3rem 0.875rem", borderRadius: "999px", background: c.bgMuted(theme), color: c.textMuted(theme), fontSize: "0.8rem" }}>Click to upload</span>
                 </div>
               ))}
             </div>
-
-            <div className="mt-4 p-3 rounded-xl flex items-start gap-2"
-              style={{ background: "#0ABFBC10", border: "1px solid #0ABFBC30" }}>
-              <CheckCircle size={16} style={{ color: "#0ABFBC", flexShrink: 0, marginTop: 2 }} />
-              <p className="text-xs" style={{ color: "#1A1A2E" }}>
-                Your documents are reviewed by the Credii admin team within 24–48 hours. You&apos;ll be notified by email once approved.
-              </p>
+            <div style={{ padding: "1rem", borderRadius: "0.875rem", background: "#E6394610", border: "1px solid #E6394625", display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "1.5rem" }}>
+              <CheckCircle size={16} style={{ color: "#E63946", flexShrink: 0, marginTop: "0.1rem" }} />
+              <p style={{ fontSize: "0.9rem", color: c.text(theme) }}>Your documents are reviewed by the <strong style={{ color: "#E63946" }}>Credii</strong> admin team within 24–48 hours. You&apos;ll be notified by email once approved.</p>
             </div>
-
-            <div className="flex gap-3 mt-6">
-              <button onClick={() => setStep(2)}
-                className="flex-1 py-3 rounded-xl border text-sm font-medium flex items-center justify-center gap-2"
-                style={{ borderColor: "#E8E2D9", color: "#1A1A2E" }}>
-                <ArrowLeft size={16} /> Back
-              </button>
-              <button onClick={handleSubmit}
-                className="flex-1 py-3 rounded-xl text-white font-medium text-sm flex items-center justify-center gap-2 hover:opacity-90 transition"
-                style={{ background: "#FF6B4A" }}>
-                Submit & Finish <ArrowRight size={16} />
-              </button>
+            <div style={{ display: "flex", gap: "0.75rem" }}>
+              <button onClick={() => setStep(2)} style={{ ...btn(false), flex: 1 }}><ArrowLeft size={18} /> Back</button>
+              <button onClick={handleSubmit} style={{ ...btn(), flex: 1 }}>Submit &amp; Finish <ArrowRight size={18} /></button>
             </div>
           </div>
         )}

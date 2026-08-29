@@ -3,139 +3,96 @@ import { useState } from "react";
 import Navbar from "@/components/shared/Navbar";
 import { serviceRequests, reviews, getCategoryById } from "@/lib/data";
 import { formatDate, ratingStars } from "@/lib/utils";
+import { useTheme, colors } from "@/lib/theme";
 import { Edit2, MapPin, Phone, Mail, Calendar, CheckCircle } from "lucide-react";
 
-const currentUser = {
-  id: "u1", name: "Aaliyah Joseph", email: "aaliyah@email.com",
-  phone: "+1-868-555-0101", island: "Trinidad", avatar: "AJ",
-  joined: "January 2026",
-};
-
+const currentUser = { id: "u1", name: "Aaliyah Joseph", email: "aaliyah@email.com", phone: "+1-868-555-0101", island: "Trinidad", avatar: "AJ", joined: "January 2026" };
 const myRequests = serviceRequests.filter(r => r.client_id === "cl1");
 
 export default function ClientProfilePage() {
+  const { theme } = useTheme();
+  const c = colors;
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({ name: currentUser.name, phone: currentUser.phone, island: currentUser.island });
 
+  const inp = { width: "100%", padding: "0.875rem 1rem", borderRadius: "0.75rem", border: `1px solid ${c.border(theme)}`, background: c.inputBg(theme), color: c.text(theme), fontSize: "0.95rem", outline: "none", boxSizing: "border-box" as const };
+
   return (
-    <div style={{ background: "#FFFDF9", minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh", background: c.bg(theme) }}>
       <Navbar role="client" userName={currentUser.name} userAvatar={currentUser.avatar} />
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-bold mb-6" style={{ color: "#1A1A2E" }}>My Profile</h1>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {/* Profile card */}
-          <div className="md:col-span-1">
-            <div className="p-6 rounded-2xl border text-center" style={{ borderColor: "#E8E2D9" }}>
-              <div className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4"
-                style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>
-                {currentUser.avatar}
-              </div>
-              <h2 className="font-bold text-lg" style={{ color: "#1A1A2E" }}>{currentUser.name}</h2>
-              <p className="text-sm mt-1" style={{ color: "#8A8070" }}>Client</p>
-
-              <div className="mt-4 space-y-2 text-left">
-                {[
-                  { icon: <MapPin size={14} />, value: currentUser.island },
-                  { icon: <Mail size={14} />, value: currentUser.email },
-                  { icon: <Phone size={14} />, value: currentUser.phone },
-                  { icon: <Calendar size={14} />, value: `Joined ${currentUser.joined}` },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm" style={{ color: "#8A8070" }}>
-                    <span style={{ color: "#FF6B4A" }}>{item.icon}</span>
-                    {item.value}
+      <div style={{ padding: "2.5rem" }}>
+        <h1 style={{ fontSize: "1.75rem", fontWeight: 900, color: c.text(theme), marginBottom: "2rem" }}>My Profile</h1>
+        <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: "2rem" }} className="grid-profile">
+          {/* Left */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), textAlign: "center", boxShadow: c.shadow(theme) }}>
+              <div style={{ width: "5rem", height: "5rem", borderRadius: "50%", background: "linear-gradient(135deg, #FF6B4A, #E63946)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "1.5rem", fontWeight: 900, margin: "0 auto 1rem" }}>{currentUser.avatar}</div>
+              <h2 style={{ fontWeight: 800, fontSize: "1.1rem", color: c.text(theme) }}>{currentUser.name}</h2>
+              <p style={{ fontSize: "0.9rem", color: c.textMuted(theme), marginTop: "0.2rem" }}>Client</p>
+              <div style={{ marginTop: "1.25rem", display: "flex", flexDirection: "column", gap: "0.625rem", textAlign: "left" }}>
+                {[{ icon: <MapPin size={13} />, value: currentUser.island }, { icon: <Mail size={13} />, value: currentUser.email }, { icon: <Phone size={13} />, value: currentUser.phone }, { icon: <Calendar size={13} />, value: `Joined ${currentUser.joined}` }].map((item, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.85rem", color: c.textMuted(theme) }}>
+                    <span style={{ color: "#FF6B4A" }}>{item.icon}</span> {item.value}
                   </div>
                 ))}
               </div>
-
-              <button onClick={() => setEditing(!editing)}
-                className="mt-5 w-full py-2 rounded-xl border text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-50 transition"
-                style={{ borderColor: "#E8E2D9", color: "#1A1A2E" }}>
+              <button onClick={() => setEditing(!editing)} style={{ marginTop: "1.25rem", width: "100%", padding: "0.625rem", borderRadius: "0.75rem", border: `1px solid ${c.border(theme)}`, background: c.bgMuted(theme), color: c.text(theme), fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", fontSize: "0.9rem" }}>
                 <Edit2 size={14} /> {editing ? "Cancel" : "Edit Profile"}
               </button>
             </div>
 
-            {/* Stats */}
-            <div className="mt-4 p-5 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-              <h3 className="font-semibold text-sm mb-3" style={{ color: "#1A1A2E" }}>Activity</h3>
-              <div className="space-y-3">
-                {[
-                  { label: "Requests posted", value: myRequests.length },
-                  { label: "Jobs completed", value: myRequests.filter(r => r.status === "closed").length },
-                  { label: "Reviews given", value: 2 },
-                  { label: "Providers hired", value: 3 },
-                ].map(s => (
-                  <div key={s.label} className="flex justify-between text-sm">
-                    <span style={{ color: "#8A8070" }}>{s.label}</span>
-                    <span className="font-semibold" style={{ color: "#1A1A2E" }}>{s.value}</span>
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme) }}>
+              <h3 style={{ fontWeight: 700, fontSize: "0.95rem", color: c.text(theme), marginBottom: "1rem" }}>Activity</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                {[{ label: "Requests posted", value: myRequests.length }, { label: "Jobs completed", value: myRequests.filter(r => r.status === "closed").length }, { label: "Reviews given", value: 2 }, { label: "Providers hired", value: 3 }].map(s => (
+                  <div key={s.label} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem" }}>
+                    <span style={{ color: c.textMuted(theme) }}>{s.label}</span>
+                    <span style={{ fontWeight: 700, color: c.text(theme) }}>{s.value}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Main content */}
-          <div className="md:col-span-2 space-y-6">
-            {/* Edit form */}
+          {/* Right */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             {editing && (
-              <div className="p-5 rounded-2xl border" style={{ borderColor: "#FF6B4A40", background: "#FF6B4A05" }}>
-                <h3 className="font-semibold text-sm mb-4" style={{ color: "#1A1A2E" }}>Edit Details</h3>
-                <div className="space-y-3">
-                  {[
-                    { label: "Full Name", key: "name", type: "text" },
-                    { label: "Phone", key: "phone", type: "tel" },
-                  ].map(f => (
+              <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `2px solid #FF6B4A40`, background: "#FF6B4A05" }}>
+                <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "1.25rem" }}>Edit Details</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  {[{ label: "Full Name", key: "name", type: "text" }, { label: "Phone", key: "phone", type: "tel" }].map(f => (
                     <div key={f.key}>
-                      <label className="text-xs font-medium block mb-1" style={{ color: "#1A1A2E" }}>{f.label}</label>
-                      <input type={f.type} value={form[f.key as keyof typeof form]}
-                        onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))}
-                        className="w-full px-4 py-2.5 rounded-xl border text-sm outline-none"
-                        style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }} />
+                      <label style={{ fontSize: "0.9rem", fontWeight: 600, color: c.text(theme), display: "block", marginBottom: "0.5rem" }}>{f.label}</label>
+                      <input type={f.type} value={form[f.key as keyof typeof form]} onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))} style={inp} />
                     </div>
                   ))}
                   <div>
-                    <label className="text-xs font-medium block mb-1" style={{ color: "#1A1A2E" }}>Island</label>
-                    <select value={form.island} onChange={e => setForm(prev => ({ ...prev, island: e.target.value }))}
-                      className="w-full px-4 py-2.5 rounded-xl border text-sm outline-none"
-                      style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }}>
-                      {["Trinidad", "Barbados", "Jamaica", "St. Lucia", "Grenada", "Antigua"].map(i => (
-                        <option key={i}>{i}</option>
-                      ))}
+                    <label style={{ fontSize: "0.9rem", fontWeight: 600, color: c.text(theme), display: "block", marginBottom: "0.5rem" }}>Island</label>
+                    <select value={form.island} onChange={e => setForm(prev => ({ ...prev, island: e.target.value }))} style={inp}>
+                      {["Trinidad", "Barbados", "Jamaica", "St. Lucia", "Grenada", "Antigua"].map(i => <option key={i}>{i}</option>)}
                     </select>
                   </div>
-                  <button onClick={() => setEditing(false)}
-                    className="w-full py-2.5 rounded-xl text-white text-sm font-medium hover:opacity-90 transition"
-                    style={{ background: "#FF6B4A" }}>
-                    Save Changes
-                  </button>
+                  <button onClick={() => setEditing(false)} style={{ padding: "0.875rem", borderRadius: "0.875rem", border: "none", background: "linear-gradient(135deg, #FF6B4A, #FF8C42)", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: "0.95rem" }}>Save Changes</button>
                 </div>
               </div>
             )}
 
-            {/* Request history */}
             <div>
-              <h3 className="font-semibold text-sm mb-3" style={{ color: "#1A1A2E" }}>Request History</h3>
-              <div className="space-y-3">
+              <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "1rem" }}>Request History</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
                 {myRequests.map(req => {
                   const cat = getCategoryById(req.category_id);
+                  const statusColor = req.status === "open" ? "#2ECC71" : req.status === "matched" ? "#FFB347" : "#888";
                   return (
-                    <div key={req.id} className="p-4 rounded-2xl border flex items-center gap-3"
-                      style={{ borderColor: "#E8E2D9" }}>
-                      <div className="w-9 h-9 rounded-xl flex items-center justify-center text-base flex-shrink-0"
-                        style={{ background: "#F7F4EF" }}>{cat?.icon}</div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium" style={{ color: "#1A1A2E" }}>{cat?.name}</p>
-                        <p className="text-xs truncate" style={{ color: "#8A8070" }}>{req.description}</p>
+                    <div key={req.id} style={{ padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), display: "flex", alignItems: "center", gap: "0.875rem", boxShadow: c.shadow(theme) }}>
+                      <div style={{ width: "2.5rem", height: "2.5rem", borderRadius: "0.75rem", background: c.bgMuted(theme), display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0 }}>{cat?.icon}</div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{ fontWeight: 600, color: c.text(theme), fontSize: "0.95rem" }}>{cat?.name}</p>
+                        <p style={{ fontSize: "0.85rem", color: c.textMuted(theme), overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{req.description}</p>
                       </div>
-                      <div className="text-right flex-shrink-0">
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium capitalize
-                          ${req.status === "open" ? "text-green-700 bg-green-100" :
-                            req.status === "matched" ? "text-amber-700 bg-amber-100" :
-                            "text-gray-500 bg-gray-100"}`}>
-                          {req.status}
-                        </span>
-                        <p className="text-xs mt-1" style={{ color: "#8A8070" }}>{formatDate(req.created_at)}</p>
+                      <div style={{ textAlign: "right", flexShrink: 0 }}>
+                        <span style={{ padding: "0.2rem 0.625rem", borderRadius: "999px", background: `${statusColor}18`, color: statusColor, fontSize: "0.75rem", fontWeight: 700, textTransform: "capitalize" }}>{req.status}</span>
+                        <p style={{ fontSize: "0.75rem", color: c.textFaint(theme), marginTop: "0.3rem" }}>{formatDate(req.created_at)}</p>
                       </div>
                     </div>
                   );
@@ -143,20 +100,19 @@ export default function ClientProfilePage() {
               </div>
             </div>
 
-            {/* Reviews given */}
             <div>
-              <h3 className="font-semibold text-sm mb-3" style={{ color: "#1A1A2E" }}>Reviews I&apos;ve Given</h3>
-              <div className="space-y-3">
+              <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "1rem" }}>Reviews I&apos;ve Given</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
                 {reviews.filter(r => r.client_id === "cl1").map(rev => (
-                  <div key={rev.id} className="p-4 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-sm font-medium" style={{ color: "#FFB347" }}>
-                        {ratingStars(rev.rating)}
-                      </span>
-                      <span className="text-xs" style={{ color: "#8A8070" }}>{formatDate(rev.created_at)}</span>
-                      <CheckCircle size={13} className="ml-auto" style={{ color: "#2ECC71" }} />
+                  <div key={rev.id} style={{ padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        <span style={{ color: "#FFB347", fontSize: "0.9rem" }}>{ratingStars(rev.rating)}</span>
+                        <span style={{ fontSize: "0.8rem", color: c.textFaint(theme) }}>{formatDate(rev.created_at)}</span>
+                      </div>
+                      <CheckCircle size={14} style={{ color: "#2ECC71" }} />
                     </div>
-                    <p className="text-sm" style={{ color: "#1A1A2E" }}>&ldquo;{rev.comment}&rdquo;</p>
+                    <p style={{ fontSize: "0.9rem", color: c.text(theme), lineHeight: 1.6 }}>&ldquo;{rev.comment}&rdquo;</p>
                   </div>
                 ))}
               </div>
@@ -164,6 +120,7 @@ export default function ClientProfilePage() {
           </div>
         </div>
       </div>
+      <style>{`.grid-profile{grid-template-columns:280px 1fr;} @media(max-width:1024px){.grid-profile{grid-template-columns:1fr!important;}}`}</style>
     </div>
   );
 }

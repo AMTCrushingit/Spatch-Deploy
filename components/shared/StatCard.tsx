@@ -1,3 +1,6 @@
+"use client";
+import { useTheme, colors } from "@/lib/theme";
+
 interface StatCardProps {
   label: string;
   value: string | number;
@@ -7,16 +10,20 @@ interface StatCardProps {
 }
 
 export default function StatCard({ label, value, icon, trend, color = "#FF6B4A" }: StatCardProps) {
+  const { theme } = useTheme();
+  const c = colors;
   return (
-    <div className="rounded-2xl p-5 border" style={{ background: "#FFFDF9", borderColor: "#E8E2D9" }}>
-      <div className="flex items-start justify-between">
+    <div style={{
+      background: c.bgCard(theme), border: `1px solid ${c.border(theme)}`,
+      borderRadius: "1rem", padding: "1.25rem", boxShadow: c.shadow(theme),
+    }}>
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
         <div>
-          <p className="text-sm font-medium" style={{ color: "#8A8070" }}>{label}</p>
-          <p className="text-3xl font-bold mt-1" style={{ color: "#1A1A2E" }}>{value}</p>
-          {trend && <p className="text-xs mt-1" style={{ color: "#2ECC71" }}>{trend}</p>}
+          <p style={{ fontSize: "0.85rem", color: c.textMuted(theme), fontWeight: 500 }}>{label}</p>
+          <p style={{ fontSize: "2rem", fontWeight: 800, color: c.text(theme), marginTop: "0.25rem", lineHeight: 1 }}>{value}</p>
+          {trend && <p style={{ fontSize: "0.8rem", color: c.green, marginTop: "0.3rem" }}>{trend}</p>}
         </div>
-        <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl"
-          style={{ background: `${color}18` }}>
+        <div style={{ width: "2.75rem", height: "2.75rem", borderRadius: "0.75rem", background: `${color}18`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem" }}>
           {icon}
         </div>
       </div>

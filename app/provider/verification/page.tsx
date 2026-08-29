@@ -2,7 +2,8 @@
 import { useState } from "react";
 import Navbar from "@/components/shared/Navbar";
 import { providers, users } from "@/lib/data";
-import { CheckCircle, Clock, Upload, Shield, AlertCircle, ArrowRight } from "lucide-react";
+import { useTheme, colors } from "@/lib/theme";
+import { CheckCircle, Clock, Upload, Shield, AlertCircle } from "lucide-react";
 
 const currentProvider = providers.find(p => p.user_id === "u2")!;
 const currentUser = users.find(u => u.id === "u2")!;
@@ -15,135 +16,89 @@ const verificationSteps = [
 ];
 
 export default function VerificationPage() {
+  const { theme } = useTheme();
+  const c = colors;
   const [uploading, setUploading] = useState<string | null>(null);
+  const isApproved = currentProvider.verification_status === "approved";
 
   function simulateUpload(docType: string) {
     setUploading(docType);
     setTimeout(() => setUploading(null), 2000);
   }
 
-  const isApproved = currentProvider.verification_status === "approved";
-
   return (
-    <div style={{ background: "#FFFDF9", minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh", background: c.bg(theme) }}>
       <Navbar role="provider" userName={currentUser.name} userAvatar={currentUser.avatar} />
-
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>Verification Status</h1>
-          <p className="text-sm mt-1" style={{ color: "#8A8070" }}>
-            Verified providers get more leads and higher client trust
-          </p>
+      <div style={{ maxWidth: "760px", margin: "0 auto", padding: "2.5rem" }}>
+        <div style={{ marginBottom: "2rem" }}>
+          <h1 style={{ fontSize: "1.75rem", fontWeight: 900, color: c.text(theme) }}>Verification Status</h1>
+          <p style={{ color: c.textMuted(theme), marginTop: "0.25rem" }}>Verified providers get more leads and higher client trust</p>
         </div>
 
         {/* Status banner */}
-        <div className="p-5 rounded-2xl mb-6 flex items-center gap-4"
-          style={{
-            background: isApproved ? "#2ECC7110" : "#FFB34710",
-            border: `1px solid ${isApproved ? "#2ECC7130" : "#FFB34730"}`,
-          }}>
-          <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-            style={{ background: isApproved ? "#2ECC7120" : "#FFB34720" }}>
-            {isApproved
-              ? <Shield size={24} style={{ color: "#2ECC71" }} />
-              : <Clock size={24} style={{ color: "#FFB347" }} />}
+        <div style={{ padding: "1.5rem", borderRadius: "1rem", marginBottom: "2rem", display: "flex", alignItems: "center", gap: "1rem", background: isApproved ? "#2ECC7110" : "#FFB34710", border: `1px solid ${isApproved ? "#2ECC7130" : "#FFB34730"}` }}>
+          <div style={{ width: "3rem", height: "3rem", borderRadius: "50%", background: isApproved ? "#2ECC7120" : "#FFB34720", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            {isApproved ? <Shield size={22} style={{ color: "#2ECC71" }} /> : <Clock size={22} style={{ color: "#FFB347" }} />}
           </div>
-          <div>
-            <p className="font-bold text-base" style={{ color: "#1A1A2E" }}>
-              {isApproved ? "✓ Fully Verified Provider" : "⏳ Verification Pending"}
-            </p>
-            <p className="text-sm mt-0.5" style={{ color: "#8A8070" }}>
-              {isApproved
-                ? "Your profile is live and visible to clients across the Caribbean"
-                : "Your documents are under review. Typically 24–48 hours."}
-            </p>
+          <div style={{ flex: 1 }}>
+            <p style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme) }}>{isApproved ? "✓ Fully Verified Provider" : "⏳ Verification Pending"}</p>
+            <p style={{ fontSize: "0.9rem", color: c.textMuted(theme), marginTop: "0.2rem" }}>{isApproved ? "Your profile is live and visible to clients across the Caribbean" : "Your documents are under review. Typically 24–48 hours."}</p>
           </div>
-          {isApproved && (
-            <div className="ml-auto flex-shrink-0">
-              <span className="text-xs px-3 py-1 rounded-full font-medium"
-                style={{ background: "#2ECC71", color: "#fff" }}>Active</span>
-            </div>
-          )}
+          {isApproved && <span style={{ padding: "0.3rem 0.875rem", borderRadius: "999px", background: "#2ECC71", color: "#fff", fontSize: "0.85rem", fontWeight: 700, flexShrink: 0 }}>Active</span>}
         </div>
 
         {/* Verification steps */}
-        <div className="mb-6">
-          <h2 className="font-semibold text-sm mb-4" style={{ color: "#1A1A2E" }}>Verification Checklist</h2>
-          <div className="space-y-3">
+        <div style={{ marginBottom: "2rem" }}>
+          <h2 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "1rem" }}>Verification Checklist</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             {verificationSteps.map((step, i) => (
-              <div key={step.id} className="flex items-start gap-4 p-4 rounded-2xl border"
-                style={{ borderColor: step.status === "done" ? "#2ECC7130" : "#E8E2D9",
-                  background: step.status === "done" ? "#2ECC7105" : "#fff" }}>
-                {/* Step connector */}
-                <div className="flex flex-col items-center">
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-base"
-                    style={{ background: step.status === "done" ? "#2ECC7120" : "#F7F4EF" }}>
-                    {step.status === "done" ? <CheckCircle size={18} style={{ color: "#2ECC71" }} /> : step.icon}
-                  </div>
-                  {i < verificationSteps.length - 1 && (
-                    <div className="w-0.5 h-4 mt-1" style={{ background: "#E8E2D9" }} />
-                  )}
+              <div key={step.id} style={{ display: "flex", alignItems: "flex-start", gap: "1rem", padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${step.status === "done" ? "#2ECC7130" : c.border(theme)}`, background: step.status === "done" ? "#2ECC7105" : c.bgCard(theme) }}>
+                <div style={{ width: "2.5rem", height: "2.5rem", borderRadius: "50%", background: step.status === "done" ? "#2ECC7120" : c.bgMuted(theme), display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  {step.status === "done" ? <CheckCircle size={18} style={{ color: "#2ECC71" }} /> : <span style={{ fontSize: "1.1rem" }}>{step.icon}</span>}
                 </div>
-                <div className="flex-1 pt-1">
-                  <p className="font-medium text-sm" style={{ color: "#1A1A2E" }}>{step.label}</p>
-                  <p className="text-xs mt-0.5" style={{ color: "#8A8070" }}>{step.desc}</p>
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.95rem" }}>{step.label}</p>
+                  <p style={{ fontSize: "0.85rem", color: c.textMuted(theme), marginTop: "0.2rem" }}>{step.desc}</p>
                 </div>
-                {step.status === "done" && (
-                  <span className="text-xs px-2 py-0.5 rounded-full flex-shrink-0 mt-1"
-                    style={{ background: "#2ECC7115", color: "#2ECC71" }}>Done</span>
-                )}
+                {step.status === "done" && <span style={{ padding: "0.2rem 0.625rem", borderRadius: "999px", background: "#2ECC7115", color: "#2ECC71", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0 }}>Done</span>}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Documents section */}
-        <div className="mb-6">
-          <h2 className="font-semibold text-sm mb-4" style={{ color: "#1A1A2E" }}>Submitted Documents</h2>
-          <div className="space-y-3">
-            {[
-              { label: "Government-issued ID", type: "id", status: "verified", file: "passport_marcus_williams.pdf" },
-              { label: "Electrical Licence", type: "licence", status: "verified", file: "electrical_licence_2026.pdf" },
-            ].map(doc => (
-              <div key={doc.type} className="p-4 rounded-2xl border flex items-center gap-4"
-                style={{ borderColor: "#E8E2D9" }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-                  style={{ background: "#F7F4EF" }}>📄</div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium" style={{ color: "#1A1A2E" }}>{doc.label}</p>
-                  <p className="text-xs truncate" style={{ color: "#8A8070" }}>{doc.file}</p>
+        {/* Documents */}
+        <div style={{ marginBottom: "2rem" }}>
+          <h2 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "1rem" }}>Submitted Documents</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {[{ label: "Government-issued ID", file: "passport_marcus_williams.pdf" }, { label: "Electrical Licence", file: "electrical_licence_2026.pdf" }].map(doc => (
+              <div key={doc.label} style={{ padding: "1rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), display: "flex", alignItems: "center", gap: "0.875rem" }}>
+                <div style={{ width: "2.5rem", height: "2.5rem", borderRadius: "0.75rem", background: c.bgMuted(theme), display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0 }}>📄</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ fontWeight: 600, color: c.text(theme), fontSize: "0.9rem" }}>{doc.label}</p>
+                  <p style={{ fontSize: "0.8rem", color: c.textMuted(theme), overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{doc.file}</p>
                 </div>
-                <span className="text-xs px-2.5 py-1 rounded-full font-medium flex-shrink-0"
-                  style={{ background: "#2ECC7115", color: "#2ECC71" }}>
-                  ✓ Verified
-                </span>
+                <span style={{ padding: "0.2rem 0.625rem", borderRadius: "999px", background: "#2ECC7115", color: "#2ECC71", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0 }}>✓ Verified</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Upload new document */}
-        <div className="mb-6">
-          <h2 className="font-semibold text-sm mb-4" style={{ color: "#1A1A2E" }}>Update Documents</h2>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {[
-              { label: "Replace ID Document", type: "id", hint: "Passport, driver's licence, national ID" },
-              { label: "Add Certification", type: "cert", hint: "New skill certificate or licence" },
-            ].map(doc => (
-              <button key={doc.type} onClick={() => simulateUpload(doc.type)}
-                className="p-4 rounded-2xl border-2 border-dashed text-left hover:border-teal-400 transition"
-                style={{ borderColor: "#E8E2D9" }}>
+        {/* Upload new */}
+        <div style={{ marginBottom: "2rem" }}>
+          <h2 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "1rem" }}>Update Documents</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            {[{ label: "Replace ID Document", type: "id", hint: "Passport, driver's licence, national ID" }, { label: "Add Certification", type: "cert", hint: "New skill certificate or licence" }].map(doc => (
+              <button key={doc.type} onClick={() => simulateUpload(doc.type)} style={{ padding: "1.5rem", borderRadius: "1rem", border: `2px dashed ${c.border(theme)}`, background: c.bgCard(theme), cursor: "pointer", textAlign: "left" }}>
                 {uploading === doc.type ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
-                      style={{ borderColor: "#0ABFBC" }} />
-                    <span className="text-sm" style={{ color: "#0ABFBC" }}>Uploading…</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
+                    <div style={{ width: "1.25rem", height: "1.25rem", borderRadius: "50%", border: "2px solid #0ABFBC", borderTopColor: "transparent", animation: "spin 0.8s linear infinite" }} />
+                    <span style={{ fontSize: "0.9rem", color: "#0ABFBC", fontWeight: 600 }}>Uploading…</span>
                   </div>
                 ) : (
                   <>
-                    <Upload size={20} style={{ color: "#8A8070" }} className="mb-2" />
-                    <p className="text-sm font-medium" style={{ color: "#1A1A2E" }}>{doc.label}</p>
-                    <p className="text-xs mt-0.5" style={{ color: "#8A8070" }}>{doc.hint}</p>
+                    <Upload size={20} style={{ color: c.textMuted(theme), marginBottom: "0.625rem" }} />
+                    <p style={{ fontWeight: 600, color: c.text(theme), fontSize: "0.9rem" }}>{doc.label}</p>
+                    <p style={{ fontSize: "0.8rem", color: c.textMuted(theme), marginTop: "0.2rem" }}>{doc.hint}</p>
                   </>
                 )}
               </button>
@@ -152,41 +107,34 @@ export default function VerificationPage() {
         </div>
 
         {/* Verification tiers */}
-        <div className="p-5 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-          <h2 className="font-semibold text-sm mb-4" style={{ color: "#1A1A2E" }}>Verification Tiers</h2>
-          <div className="space-y-3">
+        <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme) }}>
+          <h2 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "1.25rem" }}>Verification Tiers</h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             {[
               { tier: "Basic", icon: "🟢", desc: "ID verified · Visible to clients", current: true, phase: "MVP" },
               { tier: "Pro", icon: "🔵", desc: "Background check · Priority matching", current: false, phase: "Phase 2" },
               { tier: "Elite", icon: "🟡", desc: "Full audit · Featured placement · Micro-loan eligible", current: false, phase: "Phase 2" },
             ].map(t => (
-              <div key={t.tier} className="flex items-center gap-3 p-3 rounded-xl"
-                style={{ background: t.current ? "#2ECC7108" : "#F7F4EF" }}>
-                <span className="text-xl">{t.icon}</span>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium" style={{ color: "#1A1A2E" }}>{t.tier}</p>
-                    {t.current && (
-                      <span className="text-xs px-2 py-0.5 rounded-full"
-                        style={{ background: "#2ECC71", color: "#fff" }}>Current</span>
-                    )}
-                    <span className="text-xs px-2 py-0.5 rounded-full ml-auto"
-                      style={{ background: "#F7F4EF", color: "#8A8070" }}>{t.phase}</span>
+              <div key={t.tier} style={{ display: "flex", alignItems: "center", gap: "0.875rem", padding: "0.875rem", borderRadius: "0.875rem", background: t.current ? "#2ECC7108" : c.bgMuted(theme) }}>
+                <span style={{ fontSize: "1.3rem" }}>{t.icon}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <p style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.9rem" }}>{t.tier}</p>
+                    {t.current && <span style={{ padding: "0.1rem 0.5rem", borderRadius: "999px", background: "#2ECC71", color: "#fff", fontSize: "0.7rem", fontWeight: 700 }}>Current</span>}
+                    <span style={{ padding: "0.1rem 0.5rem", borderRadius: "999px", background: c.bgMuted(theme), color: c.textMuted(theme), fontSize: "0.7rem", marginLeft: "auto" }}>{t.phase}</span>
                   </div>
-                  <p className="text-xs mt-0.5" style={{ color: "#8A8070" }}>{t.desc}</p>
+                  <p style={{ fontSize: "0.8rem", color: c.textMuted(theme), marginTop: "0.2rem" }}>{t.desc}</p>
                 </div>
               </div>
             ))}
           </div>
-          <div className="mt-4 p-3 rounded-xl flex items-start gap-2"
-            style={{ background: "#0ABFBC10", border: "1px solid #0ABFBC20" }}>
-            <AlertCircle size={14} style={{ color: "#0ABFBC", flexShrink: 0, marginTop: 1 }} />
-            <p className="text-xs" style={{ color: "#1A1A2E" }}>
-              Pro and Elite tiers launch in Phase 2. You&apos;ll be notified when they&apos;re available.
-            </p>
+          <div style={{ marginTop: "1.25rem", padding: "0.875rem", borderRadius: "0.875rem", background: "#E6394610", border: "1px solid #E6394625", display: "flex", alignItems: "flex-start", gap: "0.625rem" }}>
+            <AlertCircle size={14} style={{ color: "#E63946", flexShrink: 0, marginTop: "0.1rem" }} />
+            <p style={{ fontSize: "0.85rem", color: c.text(theme) }}>Pro and Elite tiers launch in Phase 2. You&apos;ll be notified when they&apos;re available.</p>
           </div>
         </div>
       </div>
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
   );
 }

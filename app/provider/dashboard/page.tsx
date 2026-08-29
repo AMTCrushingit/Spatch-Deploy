@@ -3,116 +3,85 @@ import Link from "next/link";
 import Navbar from "@/components/shared/Navbar";
 import StatCard from "@/components/shared/StatCard";
 import Badge from "@/components/shared/Badge";
-import {
-  serviceRequests, quotes, serviceCategories,
-  getCategoryById, providers, users,
-} from "@/lib/data";
+import { serviceRequests, quotes, providers, users, getCategoryById } from "@/lib/data";
 import { formatDate, formatCurrency, ratingStars } from "@/lib/utils";
-import { ArrowRight, TrendingUp, Clock, Star, Zap } from "lucide-react";
+import { useTheme, colors } from "@/lib/theme";
+import { ArrowRight, TrendingUp, Zap } from "lucide-react";
 
 const currentProvider = providers.find(p => p.user_id === "u2")!;
 const currentUser = users.find(u => u.id === "u2")!;
 const myQuotes = quotes.filter(q => q.provider_id === currentProvider.id);
 const acceptedQuotes = myQuotes.filter(q => q.status === "accepted");
-
-// Available leads on my island + category
-const availableLeads = serviceRequests.filter(r =>
-  r.island === currentProvider.island &&
-  currentProvider.category_ids.some(c => c === r.category_id) &&
-  r.status === "open"
-);
+const availableLeads = serviceRequests.filter(r => r.island === currentProvider.island && currentProvider.category_ids.some(c => c === r.category_id) && r.status === "open");
 
 export default function ProviderDashboard() {
-  return (
-    <div style={{ background: "#FFFDF9", minHeight: "100vh" }}>
-      <Navbar role="provider" userName={currentUser.name} userAvatar={currentUser.avatar} />
+  const { theme } = useTheme();
+  const c = colors;
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome */}
-        <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
+  return (
+    <div style={{ minHeight: "100vh", background: c.bg(theme) }}>
+      <Navbar role="provider" userName={currentUser.name} userAvatar={currentUser.avatar} />
+      <div style={{ padding: "2.5rem" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2.5rem", flexWrap: "wrap", gap: "1rem" }}>
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <h1 className="text-2xl font-bold" style={{ color: "#1A1A2E" }}>
-                Welcome back, {currentUser.name.split(" ")[0]} 👋
-              </h1>
-              <span className="text-xs px-2 py-0.5 rounded-full font-medium"
-                style={{ background: "#2ECC7115", color: "#2ECC71" }}>✓ Verified</span>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.25rem" }}>
+              <h1 style={{ fontSize: "1.75rem", fontWeight: 900, color: c.text(theme) }}>Welcome back, {currentUser.name.split(" ")[0]} 👋</h1>
+              <span style={{ padding: "0.2rem 0.625rem", borderRadius: "999px", background: "#2ECC7118", color: "#2ECC71", fontSize: "0.8rem", fontWeight: 700 }}>✓ Verified</span>
             </div>
-            <p className="text-sm" style={{ color: "#8A8070" }}>
-              📍 {currentProvider.island} · ⚡ Electrical · Responds in ~{currentProvider.response_speed}h
-            </p>
+            <p style={{ color: c.textMuted(theme) }}>📍 {currentProvider.island} · ⚡ Electrical · Responds in ~{currentProvider.response_speed}h</p>
           </div>
-          <Link href="/provider/leads"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-medium hover:opacity-90 transition"
-            style={{ background: "#0ABFBC" }}>
+          <Link href="/provider/leads" style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.75rem 1.5rem", borderRadius: "0.875rem", background: "linear-gradient(135deg, #0ABFBC, #0ABFBC)", color: "#fff", fontWeight: 700, textDecoration: "none", fontSize: "0.95rem" }}>
             <Zap size={16} /> View Leads
           </Link>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1.25rem", marginBottom: "2.5rem" }} className="stats-grid">
           <StatCard label="Completed Jobs" value={currentProvider.completed_jobs} icon="✅" color="#2ECC71" trend="+12 this month" />
           <StatCard label="Rating" value={`${currentProvider.rating}★`} icon="⭐" color="#FFB347" />
           <StatCard label="Quotes Sent" value={myQuotes.length} icon="📬" color="#0ABFBC" />
           <StatCard label="Active Jobs" value={acceptedQuotes.length} icon="🔧" color="#FF6B4A" trend="In progress" />
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Available Leads */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-semibold text-base" style={{ color: "#1A1A2E" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "2rem" }} className="grid-2col">
+          <div>
+            {/* Available Leads */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
+              <h2 style={{ fontWeight: 700, fontSize: "1.1rem", color: c.text(theme) }}>
                 Available Leads
-                {availableLeads.length > 0 && (
-                  <span className="ml-2 text-xs px-2 py-0.5 rounded-full font-medium"
-                    style={{ background: "#FF6B4A15", color: "#FF6B4A" }}>
-                    {availableLeads.length} new
-                  </span>
-                )}
+                {availableLeads.length > 0 && <span style={{ marginLeft: "0.5rem", padding: "0.15rem 0.5rem", borderRadius: "999px", background: "#FF6B4A15", color: "#FF6B4A", fontSize: "0.8rem", fontWeight: 700 }}>{availableLeads.length} new</span>}
               </h2>
-              <Link href="/provider/leads" className="text-xs flex items-center gap-1 hover:opacity-70"
-                style={{ color: "#0ABFBC" }}>View all <ArrowRight size={12} /></Link>
+              <Link href="/provider/leads" style={{ fontSize: "0.9rem", color: "#0ABFBC", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.25rem" }}>View all <ArrowRight size={14} /></Link>
             </div>
-
             {availableLeads.length === 0 ? (
-              <div className="text-center py-12 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-                <div className="text-3xl mb-2">📭</div>
-                <p className="text-sm font-medium" style={{ color: "#1A1A2E" }}>No leads right now</p>
-                <p className="text-xs mt-1" style={{ color: "#8A8070" }}>New requests on {currentProvider.island} will appear here</p>
+              <div style={{ textAlign: "center", padding: "3rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme) }}>
+                <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>📭</div>
+                <p style={{ fontWeight: 600, color: c.text(theme) }}>No leads right now</p>
+                <p style={{ fontSize: "0.9rem", color: c.textMuted(theme), marginTop: "0.25rem" }}>New requests on {currentProvider.island} will appear here</p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem", marginBottom: "2rem" }}>
                 {availableLeads.map(req => {
                   const cat = getCategoryById(req.category_id);
                   const alreadyQuoted = myQuotes.some(q => q.request_id === req.id);
                   return (
-                    <div key={req.id} className="p-4 rounded-2xl border hover:shadow-sm transition"
-                      style={{ background: "#fff", borderColor: "#E8E2D9" }}>
-                      <div className="flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl flex items-center justify-center text-base flex-shrink-0"
-                          style={{ background: "#F7F4EF" }}>{cat?.icon}</div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-medium text-sm" style={{ color: "#1A1A2E" }}>{cat?.name}</span>
+                    <div key={req.id} style={{ padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
+                      <div style={{ display: "flex", alignItems: "flex-start", gap: "0.875rem" }}>
+                        <div style={{ width: "2.5rem", height: "2.5rem", borderRadius: "0.75rem", background: c.bgMuted(theme), display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0 }}>{cat?.icon}</div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                            <span style={{ fontWeight: 600, color: c.text(theme), fontSize: "0.95rem" }}>{cat?.name}</span>
                             <Badge status={req.status} />
-                            {alreadyQuoted && (
-                              <span className="text-xs px-2 py-0.5 rounded-full"
-                                style={{ background: "#0ABFBC15", color: "#0ABFBC" }}>Quoted</span>
-                            )}
+                            {alreadyQuoted && <span style={{ padding: "0.15rem 0.5rem", borderRadius: "999px", background: "#0ABFBC15", color: "#0ABFBC", fontSize: "0.75rem", fontWeight: 600 }}>Quoted</span>}
                           </div>
-                          <p className="text-xs mt-1 line-clamp-2" style={{ color: "#8A8070" }}>{req.description}</p>
-                          <div className="flex items-center gap-3 mt-2 flex-wrap">
-                            <span className="text-xs" style={{ color: "#8A8070" }}>📍 {req.island}</span>
-                            <span className="text-xs font-medium" style={{ color: "#FF6B4A" }}>{req.budget}</span>
-                            <span className="text-xs" style={{ color: "#8A8070" }}>{formatDate(req.created_at)}</span>
+                          <p style={{ fontSize: "0.85rem", color: c.textMuted(theme), marginTop: "0.25rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{req.description}</p>
+                          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: "0.5rem", flexWrap: "wrap" }}>
+                            <span style={{ fontSize: "0.8rem", color: c.textMuted(theme) }}>📍 {req.island}</span>
+                            <span style={{ fontSize: "0.8rem", fontWeight: 600, color: "#FF6B4A" }}>{req.budget}</span>
+                            <span style={{ fontSize: "0.8rem", color: c.textFaint(theme) }}>{formatDate(req.created_at)}</span>
                           </div>
                         </div>
                         {!alreadyQuoted && (
-                          <Link href="/provider/leads"
-                            className="text-xs px-3 py-1.5 rounded-lg font-medium text-white flex-shrink-0"
-                            style={{ background: "#0ABFBC" }}>
-                            Quote
-                          </Link>
+                          <Link href="/provider/leads" style={{ padding: "0.4rem 0.875rem", borderRadius: "0.625rem", background: "#0ABFBC", color: "#fff", textDecoration: "none", fontSize: "0.85rem", fontWeight: 700, flexShrink: 0 }}>Quote</Link>
                         )}
                       </div>
                     </div>
@@ -122,105 +91,77 @@ export default function ProviderDashboard() {
             )}
 
             {/* My Quotes */}
-            <div className="mt-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-semibold text-base" style={{ color: "#1A1A2E" }}>My Quotes</h2>
-                <Link href="/provider/quotes" className="text-xs flex items-center gap-1 hover:opacity-70"
-                  style={{ color: "#0ABFBC" }}>View all <ArrowRight size={12} /></Link>
-              </div>
-              <div className="space-y-3">
-                {myQuotes.map(q => {
-                  const req = serviceRequests.find(r => r.id === q.request_id);
-                  const cat = req ? getCategoryById(req.category_id) : null;
-                  return (
-                    <div key={q.id} className="p-4 rounded-2xl border flex items-center gap-3"
-                      style={{ borderColor: "#E8E2D9" }}>
-                      <span className="text-xl">{cat?.icon}</span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium" style={{ color: "#1A1A2E" }}>{cat?.name}</p>
-                        <p className="text-xs truncate" style={{ color: "#8A8070" }}>{q.message.slice(0, 50)}…</p>
-                      </div>
-                      <div className="text-right flex-shrink-0">
-                        <p className="text-sm font-bold" style={{ color: "#FF6B4A" }}>{formatCurrency(q.price)}</p>
-                        <Badge status={q.status} />
-                      </div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
+              <h2 style={{ fontWeight: 700, fontSize: "1.1rem", color: c.text(theme) }}>My Quotes</h2>
+              <Link href="/provider/quotes" style={{ fontSize: "0.9rem", color: "#0ABFBC", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.25rem" }}>View all <ArrowRight size={14} /></Link>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+              {myQuotes.map(q => {
+                const req = serviceRequests.find(r => r.id === q.request_id);
+                const cat = req ? getCategoryById(req.category_id) : null;
+                return (
+                  <div key={q.id} style={{ padding: "1rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), display: "flex", alignItems: "center", gap: "0.875rem" }}>
+                    <span style={{ fontSize: "1.3rem" }}>{cat?.icon}</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontWeight: 600, color: c.text(theme), fontSize: "0.95rem" }}>{cat?.name}</p>
+                      <p style={{ fontSize: "0.8rem", color: c.textMuted(theme), overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{q.message.slice(0, 50)}…</p>
                     </div>
-                  );
-                })}
-              </div>
+                    <div style={{ textAlign: "right", flexShrink: 0 }}>
+                      <p style={{ fontWeight: 800, color: "#FF6B4A", fontSize: "1rem" }}>{formatCurrency(q.price)}</p>
+                      <Badge status={q.status} />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-5">
-            {/* Profile summary */}
-            <div className="p-5 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold"
-                  style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>
-                  {currentUser.avatar}
-                </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "1.25rem" }}>
+                <div style={{ width: "3rem", height: "3rem", borderRadius: "50%", background: "linear-gradient(135deg, #FF6B4A, #E63946)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700 }}>{currentUser.avatar}</div>
                 <div>
-                  <p className="font-semibold text-sm" style={{ color: "#1A1A2E" }}>{currentUser.name}</p>
-                  <p className="text-xs" style={{ color: "#FFB347" }}>{ratingStars(currentProvider.rating)} {currentProvider.rating}</p>
+                  <p style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.95rem" }}>{currentUser.name}</p>
+                  <p style={{ fontSize: "0.85rem", color: "#FFB347" }}>{ratingStars(currentProvider.rating)} {currentProvider.rating}</p>
                 </div>
               </div>
-              <div className="space-y-2">
-                {[
-                  { label: "Subscription", value: "Pro · TT$100/mo", color: "#0ABFBC" },
-                  { label: "Response speed", value: `~${currentProvider.response_speed}h avg` },
-                  { label: "Member since", value: formatDate(currentProvider.created_at) },
-                ].map(item => (
-                  <div key={item.label} className="flex justify-between text-xs">
-                    <span style={{ color: "#8A8070" }}>{item.label}</span>
-                    <span className="font-medium" style={{ color: item.color ?? "#1A1A2E" }}>{item.value}</span>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
+                {[{ label: "Subscription", value: "Pro · TT$100/mo", color: "#0ABFBC" }, { label: "Response speed", value: `~${currentProvider.response_speed}h avg` }, { label: "Member since", value: formatDate(currentProvider.created_at) }].map(item => (
+                  <div key={item.label} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem" }}>
+                    <span style={{ color: c.textMuted(theme) }}>{item.label}</span>
+                    <span style={{ fontWeight: 600, color: (item as any).color ?? c.text(theme) }}>{item.value}</span>
                   </div>
                 ))}
               </div>
-              <Link href="/provider/profile"
-                className="mt-4 block text-center py-2 rounded-xl border text-xs font-medium hover:bg-gray-50 transition"
-                style={{ borderColor: "#E8E2D9", color: "#1A1A2E" }}>
-                View Full Profile
-              </Link>
+              <Link href="/provider/profile" style={{ display: "block", textAlign: "center", padding: "0.625rem", borderRadius: "0.75rem", border: `1px solid ${c.border(theme)}`, color: c.text(theme), textDecoration: "none", fontSize: "0.9rem", fontWeight: 600, marginTop: "1rem" }}>View Full Profile</Link>
             </div>
 
-            {/* Earnings preview */}
-            <div className="p-5 rounded-2xl" style={{ background: "linear-gradient(135deg, #1A1A2E, #2D2D4E)" }}>
-              <div className="flex items-center gap-2 mb-3">
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", background: "linear-gradient(135deg, #1A0A05, #2D1510)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
                 <TrendingUp size={16} style={{ color: "#FFB347" }} />
-                <p className="text-sm font-semibold text-white">Earnings (Phase 2)</p>
+                <p style={{ fontWeight: 700, color: "#fff", fontSize: "0.95rem" }}>Earnings (Phase 2)</p>
               </div>
-              <p className="text-2xl font-bold text-white">TT$0</p>
-              <p className="text-xs mt-1" style={{ color: "#8A8070" }}>Payments launch in Phase 2</p>
-              <div className="mt-3 pt-3 border-t" style={{ borderColor: "#ffffff15" }}>
-                <p className="text-xs" style={{ color: "#8A8070" }}>Projected monthly</p>
-                <p className="text-lg font-bold" style={{ color: "#2ECC71" }}>TT$8,400</p>
-                <p className="text-xs" style={{ color: "#8A8070" }}>Based on {currentProvider.completed_jobs} completed jobs</p>
+              <p style={{ fontSize: "1.75rem", fontWeight: 900, color: "#fff" }}>TT$0</p>
+              <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)", marginTop: "0.25rem" }}>Payments launch in Phase 2</p>
+              <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+                <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)" }}>Projected monthly</p>
+                <p style={{ fontSize: "1.4rem", fontWeight: 900, color: "#2ECC71" }}>TT$8,400</p>
               </div>
             </div>
 
-            {/* Quick links */}
-            <div className="p-5 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-              <h3 className="font-semibold text-sm mb-3" style={{ color: "#1A1A2E" }}>Quick Links</h3>
-              <div className="space-y-2">
-                {[
-                  { href: "/provider/leads", label: "Browse Leads", icon: "🔍" },
-                  { href: "/provider/quotes", label: "My Quotes", icon: "📬" },
-                  { href: "/provider/verification", label: "Verification Status", icon: "🛡️" },
-                  { href: "/provider/profile", label: "Edit Profile", icon: "✏️" },
-                ].map(l => (
-                  <Link key={l.href} href={l.href}
-                    className="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-50 transition text-sm"
-                    style={{ color: "#1A1A2E" }}>
-                    <span>{l.icon}</span> {l.label}
-                    <ArrowRight size={12} className="ml-auto" style={{ color: "#8A8070" }} />
-                  </Link>
-                ))}
-              </div>
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme) }}>
+              <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "0.875rem" }}>Quick Links</h3>
+              {[{ href: "/provider/leads", label: "Browse Leads", icon: "🔍" }, { href: "/provider/quotes", label: "My Quotes", icon: "📬" }, { href: "/provider/verification", label: "Verification Status", icon: "🛡️" }, { href: "/provider/profile", label: "Edit Profile", icon: "✏️" }].map(l => (
+                <Link key={l.href} href={l.href} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.625rem 0", fontSize: "0.9rem", color: c.text(theme), textDecoration: "none", borderBottom: `1px solid ${c.border(theme)}` }}>
+                  <span>{l.icon}</span> {l.label} <ArrowRight size={12} style={{ color: c.textFaint(theme), marginLeft: "auto" }} />
+                </Link>
+              ))}
             </div>
           </div>
         </div>
       </div>
+      <style>{`.stats-grid{grid-template-columns:repeat(4,1fr);} .grid-2col{grid-template-columns:2fr 1fr;} @media(max-width:1024px){.stats-grid{grid-template-columns:1fr 1fr!important;} .grid-2col{grid-template-columns:1fr!important;}}`}</style>
     </div>
   );
 }

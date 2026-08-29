@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import Navbar from "@/components/shared/Navbar";
-import { providers, users, reviews, serviceCategories, getReviewsByProviderId } from "@/lib/data";
+import { providers, users, serviceCategories, getReviewsByProviderId } from "@/lib/data";
 import { formatDate, ratingStars } from "@/lib/utils";
+import { useTheme, colors } from "@/lib/theme";
 import { Edit2, MapPin, Phone, Mail, Star, Briefcase, Clock, Shield } from "lucide-react";
 
 const currentProvider = providers.find(p => p.user_id === "u2")!;
@@ -10,167 +11,121 @@ const currentUser = users.find(u => u.id === "u2")!;
 const myReviews = getReviewsByProviderId(currentProvider.id);
 
 export default function ProviderProfilePage() {
+  const { theme } = useTheme();
+  const c = colors;
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({
-    bio: currentProvider.bio,
-    skills: currentProvider.skills.join(", "),
-  });
+  const [form, setForm] = useState({ bio: currentProvider.bio, skills: currentProvider.skills.join(", ") });
+
+  const inp = { width: "100%", padding: "0.875rem 1rem", borderRadius: "0.75rem", border: `1px solid ${c.border(theme)}`, background: c.inputBg(theme), color: c.text(theme), fontSize: "0.95rem", outline: "none", boxSizing: "border-box" as const };
 
   return (
-    <div style={{ background: "#FFFDF9", minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh", background: c.bg(theme) }}>
       <Navbar role="provider" userName={currentUser.name} userAvatar={currentUser.avatar} />
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-bold mb-6" style={{ color: "#1A1A2E" }}>My Profile</h1>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {/* Left column */}
-          <div className="space-y-5">
-            {/* Profile card */}
-            <div className="p-6 rounded-2xl border text-center" style={{ borderColor: "#E8E2D9" }}>
-              <div className="relative inline-block mb-4">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold"
-                  style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>
-                  {currentUser.avatar}
-                </div>
-                <div className="absolute bottom-0 right-0 w-6 h-6 rounded-full flex items-center justify-center"
-                  style={{ background: "#2ECC71", border: "2px solid #FFFDF9" }}>
-                  <Shield size={12} color="#fff" />
+      <div style={{ padding: "2.5rem" }}>
+        <h1 style={{ fontSize: "1.75rem", fontWeight: 900, color: c.text(theme), marginBottom: "2rem" }}>My Profile</h1>
+        <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: "2rem" }} className="grid-profile">
+          {/* Left */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), textAlign: "center", boxShadow: c.shadow(theme) }}>
+              <div style={{ position: "relative", display: "inline-block", marginBottom: "1rem" }}>
+                <div style={{ width: "5rem", height: "5rem", borderRadius: "50%", background: "linear-gradient(135deg, #FF6B4A, #E63946)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "1.5rem", fontWeight: 900, margin: "0 auto" }}>{currentUser.avatar}</div>
+                <div style={{ position: "absolute", bottom: 0, right: 0, width: "1.5rem", height: "1.5rem", borderRadius: "50%", background: "#2ECC71", border: `2px solid ${c.bgCard(theme)}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Shield size={10} color="#fff" />
                 </div>
               </div>
-              <h2 className="font-bold text-lg" style={{ color: "#1A1A2E" }}>{currentUser.name}</h2>
-              <p className="text-sm mt-0.5" style={{ color: "#0ABFBC" }}>⚡ Electrical</p>
-              <div className="flex items-center justify-center gap-1 mt-1">
+              <h2 style={{ fontWeight: 800, fontSize: "1.1rem", color: c.text(theme) }}>{currentUser.name}</h2>
+              <p style={{ fontSize: "0.9rem", color: "#0ABFBC", marginTop: "0.2rem" }}>⚡ Electrical</p>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", marginTop: "0.4rem" }}>
                 <span style={{ color: "#FFB347" }}>{ratingStars(currentProvider.rating)}</span>
-                <span className="text-sm font-medium" style={{ color: "#1A1A2E" }}>{currentProvider.rating}</span>
-                <span className="text-xs" style={{ color: "#8A8070" }}>({myReviews.length} reviews)</span>
+                <span style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.9rem" }}>{currentProvider.rating}</span>
+                <span style={{ fontSize: "0.8rem", color: c.textMuted(theme) }}>({myReviews.length} reviews)</span>
               </div>
-
-              <div className="mt-4 space-y-2 text-left">
-                {[
-                  { icon: <MapPin size={13} />, value: currentProvider.island },
-                  { icon: <Mail size={13} />, value: currentUser.email },
-                  { icon: <Phone size={13} />, value: currentUser.phone },
-                  { icon: <Briefcase size={13} />, value: `${currentProvider.completed_jobs} jobs completed` },
-                  { icon: <Clock size={13} />, value: `Responds in ~${currentProvider.response_speed}h` },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs" style={{ color: "#8A8070" }}>
-                    <span style={{ color: "#FF6B4A" }}>{item.icon}</span>
-                    {item.value}
+              <div style={{ marginTop: "1.25rem", display: "flex", flexDirection: "column", gap: "0.625rem", textAlign: "left" }}>
+                {[{ icon: <MapPin size={13} />, value: currentProvider.island }, { icon: <Mail size={13} />, value: currentUser.email }, { icon: <Phone size={13} />, value: currentUser.phone }, { icon: <Briefcase size={13} />, value: `${currentProvider.completed_jobs} jobs completed` }, { icon: <Clock size={13} />, value: `Responds in ~${currentProvider.response_speed}h` }].map((item, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.85rem", color: c.textMuted(theme) }}>
+                    <span style={{ color: "#FF6B4A" }}>{item.icon}</span> {item.value}
                   </div>
                 ))}
               </div>
-
-              <button onClick={() => setEditing(!editing)}
-                className="mt-5 w-full py-2 rounded-xl border text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-50 transition"
-                style={{ borderColor: "#E8E2D9", color: "#1A1A2E" }}>
+              <button onClick={() => setEditing(!editing)} style={{ marginTop: "1.25rem", width: "100%", padding: "0.625rem", borderRadius: "0.75rem", border: `1px solid ${c.border(theme)}`, background: c.bgMuted(theme), color: c.text(theme), fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", fontSize: "0.9rem" }}>
                 <Edit2 size={14} /> {editing ? "Cancel" : "Edit Profile"}
               </button>
             </div>
 
-            {/* Categories */}
-            <div className="p-5 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-              <h3 className="font-semibold text-sm mb-3" style={{ color: "#1A1A2E" }}>Service Categories</h3>
-              <div className="flex flex-wrap gap-2">
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme) }}>
+              <h3 style={{ fontWeight: 700, fontSize: "0.95rem", color: c.text(theme), marginBottom: "0.875rem" }}>Service Categories</h3>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
                 {currentProvider.category_ids.map(cid => {
-                  const cat = serviceCategories.find(c => c.id === cid);
-                  return cat ? (
-                    <span key={cid} className="text-xs px-3 py-1 rounded-full font-medium"
-                      style={{ background: "#0ABFBC15", color: "#0ABFBC" }}>
-                      {cat.icon} {cat.name}
-                    </span>
-                  ) : null;
+                  const cat = serviceCategories.find(cat => cat.id === cid);
+                  return cat ? <span key={cid} style={{ padding: "0.3rem 0.75rem", borderRadius: "999px", background: "#0ABFBC15", color: "#0ABFBC", fontSize: "0.85rem", fontWeight: 600 }}>{cat.icon} {cat.name}</span> : null;
                 })}
               </div>
             </div>
 
-            {/* Subscription */}
-            <div className="p-5 rounded-2xl" style={{ background: "linear-gradient(135deg, #1A1A2E, #2D2D4E)" }}>
-              <p className="text-xs font-medium mb-1" style={{ color: "#8A8070" }}>Current Plan</p>
-              <p className="text-lg font-bold text-white">Pro · TT$100/mo</p>
-              <p className="text-xs mt-1" style={{ color: "#8A8070" }}>Renews Aug 20, 2026</p>
-              <div className="mt-3 space-y-1">
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", background: "linear-gradient(135deg, #1A0A05, #2D1510)" }}>
+              <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "rgba(255,255,255,0.4)", marginBottom: "0.4rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>Current Plan</p>
+              <p style={{ fontSize: "1.3rem", fontWeight: 900, color: "#fff" }}>Pro · TT$100/mo</p>
+              <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)", marginTop: "0.2rem" }}>Renews Aug 20, 2026</p>
+              <div style={{ marginTop: "0.875rem", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                 {["Unlimited leads", "Priority matching", "Profile badge"].map(f => (
-                  <p key={f} className="text-xs text-white flex items-center gap-1">
-                    <span style={{ color: "#2ECC71" }}>✓</span> {f}
-                  </p>
+                  <p key={f} style={{ fontSize: "0.85rem", color: "#fff", display: "flex", alignItems: "center", gap: "0.4rem" }}><span style={{ color: "#2ECC71" }}>✓</span> {f}</p>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Right column */}
-          <div className="md:col-span-2 space-y-6">
-            {/* Edit form */}
+          {/* Right */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             {editing && (
-              <div className="p-5 rounded-2xl border" style={{ borderColor: "#FF6B4A40", background: "#FF6B4A05" }}>
-                <h3 className="font-semibold text-sm mb-4" style={{ color: "#1A1A2E" }}>Edit Profile</h3>
-                <div className="space-y-4">
+              <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `2px solid #FF6B4A40`, background: "#FF6B4A05" }}>
+                <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "1.25rem" }}>Edit Profile</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                   <div>
-                    <label className="text-xs font-medium block mb-1.5" style={{ color: "#1A1A2E" }}>Bio</label>
-                    <textarea value={form.bio} onChange={e => setForm(f => ({ ...f, bio: e.target.value }))}
-                      rows={4} className="w-full px-4 py-3 rounded-xl border text-sm outline-none resize-none"
-                      style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }} />
+                    <label style={{ fontSize: "0.9rem", fontWeight: 600, color: c.text(theme), display: "block", marginBottom: "0.5rem" }}>Bio</label>
+                    <textarea value={form.bio} onChange={e => setForm(f => ({ ...f, bio: e.target.value }))} rows={4} style={{ ...inp, resize: "none" }} />
                   </div>
                   <div>
-                    <label className="text-xs font-medium block mb-1.5" style={{ color: "#1A1A2E" }}>
-                      Skills <span style={{ color: "#8A8070" }}>(comma-separated)</span>
-                    </label>
-                    <input value={form.skills} onChange={e => setForm(f => ({ ...f, skills: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-xl border text-sm outline-none"
-                      style={{ borderColor: "#E8E2D9", background: "#fff", color: "#1A1A2E" }} />
+                    <label style={{ fontSize: "0.9rem", fontWeight: 600, color: c.text(theme), display: "block", marginBottom: "0.5rem" }}>Skills <span style={{ color: c.textMuted(theme), fontWeight: 400 }}>(comma-separated)</span></label>
+                    <input value={form.skills} onChange={e => setForm(f => ({ ...f, skills: e.target.value }))} style={inp} />
                   </div>
-                  <button onClick={() => setEditing(false)}
-                    className="w-full py-2.5 rounded-xl text-white text-sm font-medium hover:opacity-90 transition"
-                    style={{ background: "#FF6B4A" }}>
-                    Save Changes
-                  </button>
+                  <button onClick={() => setEditing(false)} style={{ padding: "0.875rem", borderRadius: "0.875rem", border: "none", background: "linear-gradient(135deg, #FF6B4A, #FF8C42)", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: "0.95rem" }}>Save Changes</button>
                 </div>
               </div>
             )}
 
-            {/* Bio */}
-            <div className="p-5 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-              <h3 className="font-semibold text-sm mb-3" style={{ color: "#1A1A2E" }}>About</h3>
-              <p className="text-sm" style={{ color: "#8A8070" }}>{currentProvider.bio}</p>
-              <div className="flex flex-wrap gap-2 mt-3">
-                {currentProvider.skills.map(skill => (
-                  <span key={skill} className="text-xs px-3 py-1 rounded-full"
-                    style={{ background: "#F7F4EF", color: "#1A1A2E" }}>{skill}</span>
-                ))}
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
+              <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "0.875rem" }}>About</h3>
+              <p style={{ fontSize: "0.95rem", color: c.textMuted(theme), lineHeight: 1.7 }}>{currentProvider.bio}</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "1rem" }}>
+                {currentProvider.skills.map(skill => <span key={skill} style={{ padding: "0.3rem 0.75rem", borderRadius: "999px", background: c.bgMuted(theme), color: c.text(theme), fontSize: "0.85rem" }}>{skill}</span>)}
               </div>
             </div>
 
-            {/* Reviews */}
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <h3 className="font-semibold text-sm" style={{ color: "#1A1A2E" }}>Client Reviews</h3>
-                <span className="text-xs px-2 py-0.5 rounded-full"
-                  style={{ background: "#FFB34715", color: "#FFB347" }}>
-                  {ratingStars(currentProvider.rating)} {currentProvider.rating}
-                </span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+                <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme) }}>Client Reviews</h3>
+                <span style={{ padding: "0.2rem 0.625rem", borderRadius: "999px", background: "#FFB34715", color: "#E6900A", fontSize: "0.8rem", fontWeight: 700 }}>{ratingStars(currentProvider.rating)} {currentProvider.rating}</span>
               </div>
               {myReviews.length === 0 ? (
-                <div className="text-center py-8 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-                  <Star size={24} className="mx-auto mb-2" style={{ color: "#E8E2D9" }} />
-                  <p className="text-sm" style={{ color: "#8A8070" }}>No reviews yet</p>
+                <div style={{ textAlign: "center", padding: "3rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme) }}>
+                  <Star size={24} style={{ color: c.border(theme), margin: "0 auto 0.75rem" }} />
+                  <p style={{ fontSize: "0.9rem", color: c.textMuted(theme) }}>No reviews yet</p>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
                   {myReviews.map(rev => (
-                    <div key={rev.id} className="p-4 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold"
-                            style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>C</div>
-                          <span className="text-xs font-medium" style={{ color: "#1A1A2E" }}>Verified Client</span>
+                    <div key={rev.id} style={{ padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
+                          <div style={{ width: "1.75rem", height: "1.75rem", borderRadius: "50%", background: "linear-gradient(135deg, #FF6B4A, #E63946)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "0.65rem", fontWeight: 700 }}>C</div>
+                          <span style={{ fontSize: "0.85rem", fontWeight: 600, color: c.text(theme) }}>Verified Client</span>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <span style={{ color: "#FFB347", fontSize: 12 }}>{ratingStars(rev.rating)}</span>
-                          <span className="text-xs" style={{ color: "#8A8070" }}>{formatDate(rev.created_at)}</span>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                          <span style={{ color: "#FFB347", fontSize: "0.85rem" }}>{ratingStars(rev.rating)}</span>
+                          <span style={{ fontSize: "0.8rem", color: c.textFaint(theme) }}>{formatDate(rev.created_at)}</span>
                         </div>
                       </div>
-                      <p className="text-sm" style={{ color: "#1A1A2E" }}>&ldquo;{rev.comment}&rdquo;</p>
+                      <p style={{ fontSize: "0.9rem", color: c.text(theme), lineHeight: 1.6 }}>&ldquo;{rev.comment}&rdquo;</p>
                     </div>
                   ))}
                 </div>
@@ -179,6 +134,7 @@ export default function ProviderProfilePage() {
           </div>
         </div>
       </div>
+      <style>{`.grid-profile{grid-template-columns:300px 1fr;} @media(max-width:1024px){.grid-profile{grid-template-columns:1fr!important;}}`}</style>
     </div>
   );
 }

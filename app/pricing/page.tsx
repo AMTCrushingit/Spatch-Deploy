@@ -2,534 +2,194 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/shared/Navbar";
-import { CheckCircle, XCircle, Zap, ArrowRight, Building2, Globe, Shield, TrendingUp, Star } from "lucide-react";
+import { useTheme, colors } from "@/lib/theme";
+import { CheckCircle, XCircle, Zap, ArrowRight, TrendingUp, Shield, Globe } from "lucide-react";
 
-const ANNUAL_DISCOUNT = 0.20; // 20% off annual
+const ANNUAL_DISCOUNT = 0.20;
 
 const providerTiers = [
-  {
-    id: "starter",
-    name: "Starter",
-    icon: "🌱",
-    monthlyPrice: 50,
-    color: "#0ABFBC",
-    colorLight: "#0ABFBC15",
-    description: "Perfect for new providers getting started on Rivva.",
-    badge: null,
-    cta: "Get Started",
-    features: [
-      { label: "Profile listing", included: true },
-      { label: "Up to 5 leads/month", included: true },
-      { label: "Basic verification badge", included: true },
-      { label: "Client messaging", included: true },
-      { label: "Review collection", included: true },
-      { label: "1 service category", included: true },
-      { label: "Priority matching", included: false },
-      { label: "Pro badge", included: false },
-      { label: "Response analytics", included: false },
-      { label: "Featured placement", included: false },
-      { label: "Multi-category listing", included: false },
-      { label: "Dedicated support", included: false },
-      { label: "Homepage feature", included: false },
-      { label: "Early island access", included: false },
-    ],
-  },
-  {
-    id: "pro",
-    name: "Pro",
-    icon: "⚡",
-    monthlyPrice: 100,
-    color: "#FF6B4A",
-    colorLight: "#FF6B4A15",
-    description: "For established providers ready to grow their client base.",
-    badge: "Most Popular",
-    cta: "Start Pro",
-    features: [
-      { label: "Profile listing", included: true },
-      { label: "Unlimited leads/month", included: true },
-      { label: "Verified Pro badge", included: true },
-      { label: "Client messaging", included: true },
-      { label: "Review collection", included: true },
-      { label: "Up to 3 service categories", included: true },
-      { label: "Priority matching", included: true },
-      { label: "Pro badge", included: true },
-      { label: "Response analytics", included: true },
-      { label: "Featured placement", included: false },
-      { label: "Multi-category listing", included: false },
-      { label: "Dedicated support", included: false },
-      { label: "Homepage feature", included: false },
-      { label: "Early island access", included: false },
-    ],
-  },
-  {
-    id: "elite",
-    name: "Elite",
-    icon: "👑",
-    monthlyPrice: 200,
-    color: "#FFB347",
-    colorLight: "#FFB34715",
-    description: "Maximum visibility for top-performing Caribbean professionals.",
-    badge: null,
-    cta: "Go Elite",
-    features: [
-      { label: "Profile listing", included: true },
-      { label: "Unlimited leads/month", included: true },
-      { label: "Elite verified badge", included: true },
-      { label: "Client messaging", included: true },
-      { label: "Review collection", included: true },
-      { label: "Unlimited service categories", included: true },
-      { label: "Priority matching", included: true },
-      { label: "Pro badge", included: true },
-      { label: "Response analytics", included: true },
-      { label: "Featured placement", included: true },
-      { label: "Multi-category listing", included: true },
-      { label: "Dedicated support", included: true },
-      { label: "Homepage feature", included: true },
-      { label: "Early island access", included: true },
-    ],
-  },
+  { id: "starter", name: "Starter", icon: "🌱", monthlyPrice: 50, color: "#0ABFBC", description: "Perfect for new providers getting started on Rivva.", badge: null, cta: "Get Started",
+    features: [{ label: "Profile listing", included: true }, { label: "Up to 5 leads/month", included: true }, { label: "Basic verification badge", included: true }, { label: "Client messaging", included: true }, { label: "Review collection", included: true }, { label: "1 service category", included: true }, { label: "Priority matching", included: false }, { label: "Pro badge", included: false }, { label: "Response analytics", included: false }, { label: "Featured placement", included: false }, { label: "Multi-category listing", included: false }, { label: "Dedicated support", included: false }] },
+  { id: "pro", name: "Pro", icon: "⚡", monthlyPrice: 100, color: "#FF6B4A", description: "For established providers ready to grow their client base.", badge: "Most Popular", cta: "Start Pro",
+    features: [{ label: "Profile listing", included: true }, { label: "Unlimited leads/month", included: true }, { label: "Verified Pro badge", included: true }, { label: "Client messaging", included: true }, { label: "Review collection", included: true }, { label: "Up to 3 service categories", included: true }, { label: "Priority matching", included: true }, { label: "Pro badge", included: true }, { label: "Response analytics", included: true }, { label: "Featured placement", included: false }, { label: "Multi-category listing", included: false }, { label: "Dedicated support", included: false }] },
+  { id: "elite", name: "Elite", icon: "👑", monthlyPrice: 200, color: "#FFB347", description: "Maximum visibility for top-performing Caribbean professionals.", badge: null, cta: "Go Elite",
+    features: [{ label: "Profile listing", included: true }, { label: "Unlimited leads/month", included: true }, { label: "Elite verified badge", included: true }, { label: "Client messaging", included: true }, { label: "Review collection", included: true }, { label: "Unlimited service categories", included: true }, { label: "Priority matching", included: true }, { label: "Pro badge", included: true }, { label: "Response analytics", included: true }, { label: "Featured placement", included: true }, { label: "Multi-category listing", included: true }, { label: "Dedicated support", included: true }] },
 ];
 
 const orgTiers = [
-  {
-    id: "corporate",
-    name: "Corporate",
-    icon: "🏢",
-    price: "TT$50k",
-    period: "/year",
-    color: "#0ABFBC",
-    description: "For businesses needing reliable, verified service providers at scale.",
-    features: [
-      "Dedicated provider pool",
-      "Bulk booking management",
-      "SLA guarantees",
-      "Priority support",
-      "Custom reporting",
-      "Up to 50 bookings/month",
-    ],
-    cta: "Contact Sales",
-  },
-  {
-    id: "government",
-    name: "Government & NGO",
-    icon: "🏛️",
-    price: "TT$150k",
-    period: "/contract",
-    color: "#FF6B4A",
-    description: "Workforce data, impact metrics, and grant reporting for development agencies.",
-    badge: "Credii Flagship",
-    features: [
-      "Full platform data access",
-      "Workforce impact reports",
-      "Provider verification pipeline",
-      "Grant reporting exports",
-      "Custom onboarding programs",
-      "Dedicated account manager",
-      "API access",
-      "Multi-island coverage",
-    ],
-    cta: "Talk to Credii",
-  },
-  {
-    id: "development",
-    name: "Development Bank",
-    icon: "🌍",
-    price: "Custom",
-    period: "",
-    color: "#FFB347",
-    description: "IDB, CDB, USAID — bespoke partnerships for regional economic development.",
-    features: [
-      "Everything in Government",
-      "Micro-loan eligibility data",
-      "Africa expansion access",
-      "Co-branded programs",
-      "Research data licensing",
-      "Board-level reporting",
-      "White-label options",
-      "Multi-region deployment",
-    ],
-    cta: "Partner with Us",
-  },
+  { id: "corporate", name: "Corporate", icon: "🏢", price: "TT$50k", period: "/year", color: "#0ABFBC", description: "For businesses needing reliable, verified service providers at scale.", badge: null, features: ["Dedicated provider pool", "Bulk booking management", "SLA guarantees", "Priority support", "Custom reporting", "Up to 50 bookings/month"], cta: "Contact Sales" },
+  { id: "government", name: "Government & NGO", icon: "🏛️", price: "TT$150k", period: "/contract", color: "#E63946", description: "Workforce data, impact metrics, and grant reporting for development agencies.", badge: "Credii Flagship", features: ["Full platform data access", "Workforce impact reports", "Provider verification pipeline", "Grant reporting exports", "Custom onboarding programs", "Dedicated account manager", "API access", "Multi-island coverage"], cta: "Talk to Credii" },
+  { id: "development", name: "Development Bank", icon: "🌍", price: "Custom", period: "", color: "#FFB347", description: "IDB, CDB, USAID — bespoke partnerships for regional economic development.", badge: null, features: ["Everything in Government", "Micro-loan eligibility data", "Africa expansion access", "Co-branded programs", "Research data licensing", "Board-level reporting", "White-label options", "Multi-region deployment"], cta: "Partner with Us" },
 ];
-
-const allFeatures = [
-  "Profile listing",
-  "Leads per month",
-  "Verification badge",
-  "Client messaging",
-  "Review collection",
-  "Service categories",
-  "Priority matching",
-  "Pro badge",
-  "Response analytics",
-  "Featured placement",
-  "Multi-category listing",
-  "Dedicated support",
-  "Homepage feature",
-  "Early island access",
-];
-
-const featureValues: Record<string, Record<string, string | boolean>> = {
-  "Profile listing":       { starter: true,  pro: true,        elite: true },
-  "Leads per month":       { starter: "5",   pro: "Unlimited", elite: "Unlimited" },
-  "Verification badge":    { starter: "Basic", pro: "Pro",     elite: "Elite" },
-  "Client messaging":      { starter: true,  pro: true,        elite: true },
-  "Review collection":     { starter: true,  pro: true,        elite: true },
-  "Service categories":    { starter: "1",   pro: "3",         elite: "Unlimited" },
-  "Priority matching":     { starter: false, pro: true,        elite: true },
-  "Pro badge":             { starter: false, pro: true,        elite: true },
-  "Response analytics":    { starter: false, pro: true,        elite: true },
-  "Featured placement":    { starter: false, pro: false,       elite: true },
-  "Multi-category listing":{ starter: false, pro: false,       elite: true },
-  "Dedicated support":     { starter: false, pro: false,       elite: true },
-  "Homepage feature":      { starter: false, pro: false,       elite: true },
-  "Early island access":   { starter: false, pro: false,       elite: true },
-};
-
-function FeatureCell({ value }: { value: string | boolean }) {
-  if (value === true) return <CheckCircle size={18} style={{ color: "#2ECC71" }} className="mx-auto" />;
-  if (value === false) return <XCircle size={16} style={{ color: "#E8E2D9" }} className="mx-auto" />;
-  return <span className="text-xs font-semibold" style={{ color: "#1A1A2E" }}>{value}</span>;
-}
 
 export default function PricingPage() {
+  const { theme } = useTheme();
+  const c = colors;
   const [annual, setAnnual] = useState(false);
   const [activeTab, setActiveTab] = useState<"providers" | "orgs">("providers");
 
-  function getPrice(monthly: number) {
-    if (annual) return Math.round(monthly * 12 * (1 - ANNUAL_DISCOUNT));
-    return monthly;
-  }
-
-  function getPriceLabel(monthly: number) {
-    if (annual) return `TT$${getPrice(monthly).toLocaleString()}/yr`;
-    return `TT$${monthly}/mo`;
-  }
-
   return (
-    <div style={{ background: "#FFFDF9", minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh", background: c.bg(theme) }}>
       <Navbar role="guest" />
 
       {/* Hero */}
-      <section className="py-16 text-center relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 60% 40%, #FF6B4A10 0%, transparent 60%), radial-gradient(ellipse at 30% 70%, #0ABFBC10 0%, transparent 50%)" }} />
-        <div className="max-w-3xl mx-auto px-4 relative">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium mb-4"
-            style={{ background: "#FF6B4A15", color: "#FF6B4A" }}>
-            🌴 Simple, transparent pricing
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold" style={{ color: "#1A1A2E" }}>
-            Grow your business<br />
-            <span style={{ color: "#FF6B4A" }}>across the Caribbean</span>
-          </h1>
-          <p className="text-lg mt-4" style={{ color: "#8A8070" }}>
-            Join 2,400+ verified providers earning more with Rivva. No hidden fees. Cancel anytime.
-          </p>
+      <section style={{ padding: "5rem 2.5rem 3rem", textAlign: "center" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 1rem", borderRadius: "999px", marginBottom: "1.5rem", background: "#FF6B4A15", color: "#FF6B4A", border: "1px solid #FF6B4A30", fontSize: "0.85rem", fontWeight: 700 }}>
+          🌴 Simple, transparent pricing
+        </div>
+        <h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900, color: c.text(theme), marginBottom: "1rem", lineHeight: 1.1 }}>
+          Grow your business<br /><span style={{ color: "#FF6B4A" }}>across the Caribbean</span>
+        </h1>
+        <p style={{ fontSize: "1.15rem", color: c.textMuted(theme), marginBottom: "2.5rem" }}>Join 2,400+ verified providers earning more with Rivva. No hidden fees. Cancel anytime.</p>
 
-          {/* Tab switcher */}
-          <div className="flex justify-center mt-8 mb-2">
-            <div className="flex rounded-2xl p-1 border" style={{ borderColor: "#E8E2D9", background: "#F7F4EF" }}>
-              <button onClick={() => setActiveTab("providers")}
-                className="px-6 py-2.5 rounded-xl text-sm font-medium transition"
-                style={{
-                  background: activeTab === "providers" ? "#FF6B4A" : "transparent",
-                  color: activeTab === "providers" ? "#fff" : "#8A8070",
-                }}>
-                For Providers
-              </button>
-              <button onClick={() => setActiveTab("orgs")}
-                className="px-6 py-2.5 rounded-xl text-sm font-medium transition"
-                style={{
-                  background: activeTab === "orgs" ? "#FF6B4A" : "transparent",
-                  color: activeTab === "orgs" ? "#fff" : "#8A8070",
-                }}>
-                For Organisations
-              </button>
-            </div>
-          </div>
+        {/* Tab switcher */}
+        <div style={{ display: "inline-flex", padding: "0.3rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgMuted(theme), marginBottom: "0.5rem" }}>
+          {(["providers", "orgs"] as const).map(tab => (
+            <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "0.625rem 1.5rem", borderRadius: "0.75rem", border: "none", background: activeTab === tab ? "#FF6B4A" : "transparent", color: activeTab === tab ? "#fff" : c.textMuted(theme), fontWeight: 700, fontSize: "0.95rem", cursor: "pointer" }}>
+              {tab === "providers" ? "For Providers" : "For Organisations"}
+            </button>
+          ))}
         </div>
       </section>
 
-      {/* ── PROVIDER PRICING ── */}
+      {/* Provider pricing */}
       {activeTab === "providers" && (
-        <>
+        <div style={{ padding: "0 2.5rem 5rem" }}>
           {/* Billing toggle */}
-          <div className="flex justify-center items-center gap-4 mb-10">
-            <span className="text-sm font-medium" style={{ color: annual ? "#8A8070" : "#1A1A2E" }}>Monthly</span>
-            <button onClick={() => setAnnual(!annual)}
-              className="relative w-12 h-6 rounded-full transition-colors"
-              style={{ background: annual ? "#FF6B4A" : "#E8E2D9" }}>
-              <div className="absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all"
-                style={{ left: annual ? "calc(100% - 20px)" : "4px" }} />
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "3rem" }}>
+            <span style={{ fontSize: "0.95rem", fontWeight: 600, color: annual ? c.textMuted(theme) : c.text(theme) }}>Monthly</span>
+            <button onClick={() => setAnnual(!annual)} style={{ position: "relative", width: "3rem", height: "1.5rem", borderRadius: "999px", border: "none", background: annual ? "#FF6B4A" : c.border(theme), cursor: "pointer" }}>
+              <div style={{ position: "absolute", top: "0.2rem", width: "1.1rem", height: "1.1rem", borderRadius: "50%", background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,0.2)", transition: "left 0.2s", left: annual ? "calc(100% - 1.3rem)" : "0.2rem" }} />
             </button>
-            <span className="text-sm font-medium" style={{ color: annual ? "#1A1A2E" : "#8A8070" }}>
-              Annual
-              <span className="ml-2 text-xs px-2 py-0.5 rounded-full font-semibold"
-                style={{ background: "#2ECC7120", color: "#2ECC71" }}>Save 20%</span>
+            <span style={{ fontSize: "0.95rem", fontWeight: 600, color: annual ? c.text(theme) : c.textMuted(theme) }}>
+              Annual <span style={{ padding: "0.15rem 0.5rem", borderRadius: "999px", background: "#2ECC7120", color: "#2ECC71", fontSize: "0.8rem", fontWeight: 700, marginLeft: "0.3rem" }}>Save 20%</span>
             </span>
           </div>
 
-          {/* Pricing cards */}
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-            <div className="grid md:grid-cols-3 gap-6">
-              {providerTiers.map(tier => (
-                <div key={tier.id}
-                  className="relative rounded-3xl border p-7 flex flex-col transition-shadow hover:shadow-xl"
-                  style={{
-                    borderColor: tier.badge ? tier.color : "#E8E2D9",
-                    background: tier.badge ? `linear-gradient(160deg, ${tier.colorLight}, #FFFDF9)` : "#fff",
-                    boxShadow: tier.badge ? `0 0 0 2px ${tier.color}` : undefined,
-                  }}>
-
-                  {/* Most Popular badge */}
-                  {tier.badge && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                      <span className="px-4 py-1 rounded-full text-xs font-bold text-white shadow-md"
-                        style={{ background: `linear-gradient(90deg, ${tier.color}, #FFB347)` }}>
-                        ⭐ {tier.badge}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Tier header */}
-                  <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-                        style={{ background: tier.colorLight }}>
-                        {tier.icon}
-                      </div>
-                      <h3 className="text-xl font-bold" style={{ color: "#1A1A2E" }}>{tier.name}</h3>
-                    </div>
-                    <p className="text-sm" style={{ color: "#8A8070" }}>{tier.description}</p>
-                  </div>
-
-                  {/* Price */}
-                  <div className="mb-6">
-                    <div className="flex items-end gap-1">
-                      <span className="text-4xl font-black" style={{ color: tier.color }}>
-                        TT${annual ? Math.round(tier.monthlyPrice * (1 - ANNUAL_DISCOUNT)) : tier.monthlyPrice}
-                      </span>
-                      <span className="text-sm mb-1.5" style={{ color: "#8A8070" }}>
-                        /mo{annual ? " · billed annually" : ""}
-                      </span>
-                    </div>
-                    {annual && (
-                      <p className="text-xs mt-1" style={{ color: "#2ECC71" }}>
-                        TT${Math.round(tier.monthlyPrice * 12 * (1 - ANNUAL_DISCOUNT)).toLocaleString()}/yr · Save TT${Math.round(tier.monthlyPrice * 12 * ANNUAL_DISCOUNT).toLocaleString()}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* CTA */}
-                  <Link href="/register?role=provider"
-                    className="w-full py-3 rounded-xl text-sm font-bold text-center mb-6 transition hover:opacity-90 flex items-center justify-center gap-2"
-                    style={{
-                      background: tier.badge ? tier.color : "transparent",
-                      color: tier.badge ? "#fff" : tier.color,
-                      border: tier.badge ? "none" : `2px solid ${tier.color}`,
-                    }}>
-                    {tier.cta} <ArrowRight size={15} />
-                  </Link>
-
-                  {/* Features */}
-                  <div className="space-y-2.5 flex-1">
-                    {tier.features.map(f => (
-                      <div key={f.label} className="flex items-center gap-2.5">
-                        {f.included
-                          ? <CheckCircle size={15} style={{ color: tier.color, flexShrink: 0 }} />
-                          : <XCircle size={15} style={{ color: "#E8E2D9", flexShrink: 0 }} />}
-                        <span className="text-sm" style={{ color: f.included ? "#1A1A2E" : "#C0B8B0" }}>
-                          {f.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+          {/* Tier cards */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.5rem", marginBottom: "3rem" }} className="grid-3col">
+            {providerTiers.map(tier => (
+              <div key={tier.id} style={{ position: "relative", padding: "2rem", borderRadius: "1.5rem", border: `2px solid ${tier.badge ? tier.color : c.border(theme)}`, background: tier.badge ? `${tier.color}08` : c.bgCard(theme), boxShadow: tier.badge ? `0 0 40px ${tier.color}20` : c.shadow(theme), display: "flex", flexDirection: "column" }}>
+                {tier.badge && (
+                  <div style={{ position: "absolute", top: "-1rem", left: "50%", transform: "translateX(-50%)", padding: "0.3rem 1rem", borderRadius: "999px", background: `linear-gradient(90deg, ${tier.color}, #FFB347)`, color: "#fff", fontSize: "0.8rem", fontWeight: 800, whiteSpace: "nowrap" }}>⭐ {tier.badge}</div>
+                )}
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+                  <div style={{ width: "2.75rem", height: "2.75rem", borderRadius: "0.875rem", background: `${tier.color}18`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem" }}>{tier.icon}</div>
+                  <h3 style={{ fontWeight: 800, fontSize: "1.2rem", color: c.text(theme) }}>{tier.name}</h3>
                 </div>
-              ))}
-            </div>
+                <p style={{ fontSize: "0.9rem", color: c.textMuted(theme), marginBottom: "1.5rem" }}>{tier.description}</p>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <div style={{ display: "flex", alignItems: "flex-end", gap: "0.3rem" }}>
+                    <span style={{ fontSize: "2.5rem", fontWeight: 900, color: tier.color, lineHeight: 1 }}>TT${annual ? Math.round(tier.monthlyPrice * (1 - ANNUAL_DISCOUNT)) : tier.monthlyPrice}</span>
+                    <span style={{ fontSize: "0.9rem", color: c.textMuted(theme), marginBottom: "0.3rem" }}>/mo{annual ? " · billed annually" : ""}</span>
+                  </div>
+                  {annual && <p style={{ fontSize: "0.8rem", color: "#2ECC71", marginTop: "0.3rem" }}>Save TT${Math.round(tier.monthlyPrice * 12 * ANNUAL_DISCOUNT).toLocaleString()}/yr</p>}
+                </div>
+                <Link href="/register?role=provider" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", padding: "0.875rem", borderRadius: "0.875rem", marginBottom: "1.5rem", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none", background: tier.badge ? tier.color : "transparent", color: tier.badge ? "#fff" : tier.color, border: tier.badge ? "none" : `2px solid ${tier.color}` }}>
+                  {tier.cta} <ArrowRight size={16} />
+                </Link>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", flex: 1 }}>
+                  {tier.features.map(f => (
+                    <div key={f.label} style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
+                      {f.included ? <CheckCircle size={15} style={{ color: tier.color, flexShrink: 0 }} /> : <XCircle size={15} style={{ color: c.border(theme), flexShrink: 0 }} />}
+                      <span style={{ fontSize: "0.9rem", color: f.included ? c.text(theme) : c.textFaint(theme) }}>{f.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Lead fee add-ons */}
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-            <div className="p-6 rounded-3xl border" style={{ borderColor: "#E8E2D9", background: "#F7F4EF" }}>
-              <div className="flex items-center gap-2 mb-5">
-                <Zap size={18} style={{ color: "#FFB347" }} />
-                <h3 className="font-bold text-base" style={{ color: "#1A1A2E" }}>Lead Fee Add-ons</h3>
-                <span className="text-xs px-2 py-0.5 rounded-full ml-1"
-                  style={{ background: "#FFB34720", color: "#FFB347" }}>Optional</span>
-              </div>
-              <div className="grid sm:grid-cols-3 gap-4">
-                {[
-                  { type: "Standard Lead", price: "TT$15", desc: "Client posted a matching request", icon: "📋", color: "#0ABFBC" },
-                  { type: "Verified Lead", price: "TT$25", desc: "Client has hired before (high intent)", icon: "✅", color: "#2ECC71" },
-                  { type: "Urgent Lead", price: "TT$35", desc: "Client needs same-day service", icon: "🔴", color: "#FF6B4A" },
-                ].map(l => (
-                  <div key={l.type} className="p-4 rounded-2xl border bg-white flex items-start gap-3"
-                    style={{ borderColor: "#E8E2D9" }}>
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
-                      style={{ background: `${l.color}15` }}>{l.icon}</div>
-                    <div>
-                      <p className="font-semibold text-sm" style={{ color: "#1A1A2E" }}>{l.type}</p>
-                      <p className="text-xs mt-0.5" style={{ color: "#8A8070" }}>{l.desc}</p>
-                      <p className="text-base font-black mt-1" style={{ color: l.color }}>{l.price}</p>
-                    </div>
+          <div style={{ padding: "2rem", borderRadius: "1.25rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), marginBottom: "2rem", boxShadow: c.shadow(theme) }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.5rem" }}>
+              <Zap size={18} style={{ color: "#FFB347" }} />
+              <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme) }}>Lead Fee Add-ons</h3>
+              <span style={{ padding: "0.15rem 0.625rem", borderRadius: "999px", background: "#FFB34720", color: "#E6900A", fontSize: "0.8rem", fontWeight: 700 }}>Optional</span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }} className="grid-3col">
+              {[{ type: "Standard Lead", price: "TT$15", desc: "Client posted a matching request", icon: "📋", color: "#0ABFBC" }, { type: "Verified Lead", price: "TT$25", desc: "Client has hired before (high intent)", icon: "✅", color: "#2ECC71" }, { type: "Urgent Lead", price: "TT$35", desc: "Client needs same-day service", icon: "🔴", color: "#FF6B4A" }].map(l => (
+                <div key={l.type} style={{ padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bg(theme), display: "flex", alignItems: "flex-start", gap: "0.875rem" }}>
+                  <div style={{ width: "2.5rem", height: "2.5rem", borderRadius: "0.75rem", background: `${l.color}15`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0 }}>{l.icon}</div>
+                  <div>
+                    <p style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.9rem" }}>{l.type}</p>
+                    <p style={{ fontSize: "0.8rem", color: c.textMuted(theme), marginTop: "0.2rem" }}>{l.desc}</p>
+                    <p style={{ fontSize: "1.2rem", fontWeight: 900, color: l.color, marginTop: "0.5rem" }}>{l.price}</p>
                   </div>
-                ))}
-              </div>
-              <p className="text-xs mt-4" style={{ color: "#8A8070" }}>
-                💡 Lead fees are optional. Starter plan includes 5 free leads/mo. Pro and Elite get unlimited leads included in subscription.
-              </p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Visibility boosts */}
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-            <div className="flex items-center gap-2 mb-5">
-              <Star size={18} style={{ color: "#FF6B4A" }} />
-              <h3 className="font-bold text-base" style={{ color: "#1A1A2E" }}>Visibility Boosts</h3>
-              <span className="text-xs px-2 py-0.5 rounded-full ml-1"
-                style={{ background: "#FF6B4A15", color: "#FF6B4A" }}>Available on all plans</span>
+          <div style={{ marginBottom: "3rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.25rem" }}>
+              <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme) }}>Visibility Boosts</h3>
+              <span style={{ padding: "0.15rem 0.625rem", borderRadius: "999px", background: "#FF6B4A15", color: "#FF6B4A", fontSize: "0.8rem", fontWeight: 700 }}>Available on all plans</span>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                { name: "Homepage Feature", price: "TT$300/mo", desc: "Your card on the Rivva homepage", icon: "🏠" },
-                { name: "Category Spotlight", price: "TT$150/mo", desc: "Top of results for one category", icon: "🔦" },
-                { name: "Island Boost", price: "TT$200/mo", desc: "Priority matching island-wide for 30 days", icon: "📍" },
-                { name: "Launch Boost", price: "TT$75 once", desc: "First 10 leads guaranteed for new providers", icon: "🚀" },
-              ].map(b => (
-                <div key={b.name} className="p-4 rounded-2xl border hover:shadow-md transition"
-                  style={{ borderColor: "#E8E2D9", background: "#fff" }}>
-                  <div className="text-2xl mb-2">{b.icon}</div>
-                  <p className="font-semibold text-sm" style={{ color: "#1A1A2E" }}>{b.name}</p>
-                  <p className="text-xs mt-0.5 mb-2" style={{ color: "#8A8070" }}>{b.desc}</p>
-                  <p className="font-black text-sm" style={{ color: "#FF6B4A" }}>{b.price}</p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1rem" }} className="grid-4col">
+              {[{ name: "Homepage Feature", price: "TT$300/mo", desc: "Your card on the Rivva homepage", icon: "🏠" }, { name: "Category Spotlight", price: "TT$150/mo", desc: "Top of results for one category", icon: "🔦" }, { name: "Island Boost", price: "TT$200/mo", desc: "Priority matching island-wide for 30 days", icon: "📍" }, { name: "Launch Boost", price: "TT$75 once", desc: "First 10 leads guaranteed for new providers", icon: "🚀" }].map(b => (
+                <div key={b.name} style={{ padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
+                  <div style={{ fontSize: "1.75rem", marginBottom: "0.75rem" }}>{b.icon}</div>
+                  <p style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.9rem" }}>{b.name}</p>
+                  <p style={{ fontSize: "0.8rem", color: c.textMuted(theme), marginTop: "0.2rem", marginBottom: "0.75rem" }}>{b.desc}</p>
+                  <p style={{ fontWeight: 900, color: "#FF6B4A", fontSize: "0.95rem" }}>{b.price}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Full comparison table */}
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-            <h2 className="text-2xl font-bold text-center mb-8" style={{ color: "#1A1A2E" }}>Full Feature Comparison</h2>
-            <div className="rounded-3xl border overflow-hidden" style={{ borderColor: "#E8E2D9" }}>
-              <table className="w-full">
-                <thead>
-                  <tr style={{ background: "#F7F4EF" }}>
-                    <th className="text-left px-6 py-4 text-sm font-semibold" style={{ color: "#8A8070", width: "40%" }}>Feature</th>
-                    {providerTiers.map(tier => (
-                      <th key={tier.id} className="px-4 py-4 text-center" style={{ width: "20%" }}>
-                        <div className="flex flex-col items-center gap-1">
-                          <span className="text-lg">{tier.icon}</span>
-                          <span className="text-sm font-bold" style={{ color: tier.color }}>{tier.name}</span>
-                          <span className="text-xs" style={{ color: "#8A8070" }}>
-                            TT${annual ? Math.round(tier.monthlyPrice * (1 - ANNUAL_DISCOUNT)) : tier.monthlyPrice}/mo
-                          </span>
-                        </div>
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {allFeatures.map((feature, i) => (
-                    <tr key={feature}
-                      style={{ background: i % 2 === 0 ? "#fff" : "#FAFAF8", borderTop: "1px solid #F0EDE8" }}>
-                      <td className="px-6 py-3.5 text-sm" style={{ color: "#1A1A2E" }}>{feature}</td>
-                      {(["starter", "pro", "elite"] as const).map(tier => (
-                        <td key={tier} className="px-4 py-3.5 text-center">
-                          <FeatureCell value={featureValues[feature][tier]} />
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-                <tfoot>
-                  <tr style={{ background: "#F7F4EF", borderTop: "1px solid #E8E2D9" }}>
-                    <td className="px-6 py-4" />
-                    {providerTiers.map(tier => (
-                      <td key={tier.id} className="px-4 py-4 text-center">
-                        <Link href="/register?role=provider"
-                          className="inline-flex items-center justify-center gap-1 px-4 py-2 rounded-xl text-xs font-bold transition hover:opacity-90"
-                          style={{
-                            background: tier.badge ? tier.color : "transparent",
-                            color: tier.badge ? "#fff" : tier.color,
-                            border: tier.badge ? "none" : `1.5px solid ${tier.color}`,
-                          }}>
-                          {tier.cta} <ArrowRight size={12} />
-                        </Link>
-                      </td>
-                    ))}
-                  </tr>
-                </tfoot>
-              </table>
+          {/* FAQ */}
+          <div style={{ padding: "2.5rem", borderRadius: "1.5rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
+            <h2 style={{ fontSize: "1.5rem", fontWeight: 900, color: c.text(theme), marginBottom: "2rem", textAlign: "center" }}>Frequently Asked Questions</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }} className="grid-2col">
+              {[
+                { q: "Is it free for clients?", a: "Yes. Clients always use Rivva for free. They post requests, receive quotes, and hire providers at no cost." },
+                { q: "Can I change my plan anytime?", a: "Yes. Upgrade or downgrade at any time. Changes take effect at the start of your next billing cycle." },
+                { q: "What payment methods are accepted?", a: "We accept all major credit/debit cards, Linx, and WiPay across the Caribbean." },
+                { q: "Do I need to be verified before subscribing?", a: "Yes. All providers must complete basic verification (ID + skill proof) before their profile goes live." },
+                { q: "What's the difference between a lead fee and a subscription?", a: "Your subscription gives you a monthly lead allowance. Lead fees are optional top-ups for more leads." },
+                { q: "How do institutional contracts work?", a: "Org partnerships are negotiated directly with the Credii team. Contact us to schedule a call." },
+              ].map(faq => (
+                <div key={faq.q} style={{ padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bg(theme) }}>
+                  <p style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.95rem", marginBottom: "0.5rem" }}>Q: {faq.q}</p>
+                  <p style={{ fontSize: "0.9rem", color: c.textMuted(theme), lineHeight: 1.6 }}>{faq.a}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </>
+        </div>
       )}
 
-      {/* ── ORG PRICING ── */}
+      {/* Org pricing */}
       {activeTab === "orgs" && (
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-          <div className="text-center mb-10">
-            <p className="text-base" style={{ color: "#8A8070" }}>
-              Institutional partnerships that generate TT$150k–600k per contract.<br />
-              This is Rivva&apos;s advantage over every US marketplace.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <div style={{ padding: "0 2.5rem 5rem" }}>
+          <p style={{ textAlign: "center", color: c.textMuted(theme), fontSize: "1.05rem", marginBottom: "3rem" }}>
+            Institutional partnerships that generate TT$150k–600k per contract.<br />This is Rivva&apos;s advantage over every US marketplace.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.5rem", marginBottom: "3rem" }} className="grid-3col">
             {orgTiers.map(tier => (
-              <div key={tier.id}
-                className="relative rounded-3xl border p-7 flex flex-col hover:shadow-xl transition-shadow"
-                style={{
-                  borderColor: tier.badge ? tier.color : "#E8E2D9",
-                  background: tier.badge ? `linear-gradient(160deg, ${tier.color}10, #FFFDF9)` : "#fff",
-                  boxShadow: tier.badge ? `0 0 0 2px ${tier.color}` : undefined,
-                }}>
-
-                {tier.badge && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <span className="px-4 py-1 rounded-full text-xs font-bold text-white shadow-md"
-                      style={{ background: `linear-gradient(90deg, ${tier.color}, #FFB347)` }}>
-                      🌍 {tier.badge}
-                    </span>
-                  </div>
-                )}
-
-                <div className="mb-5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-                      style={{ background: `${tier.color}15` }}>{tier.icon}</div>
-                    <h3 className="text-lg font-bold" style={{ color: "#1A1A2E" }}>{tier.name}</h3>
-                  </div>
-                  <p className="text-sm" style={{ color: "#8A8070" }}>{tier.description}</p>
+              <div key={tier.id} style={{ position: "relative", padding: "2rem", borderRadius: "1.5rem", border: `2px solid ${tier.badge ? tier.color : c.border(theme)}`, background: tier.badge ? `${tier.color}08` : c.bgCard(theme), boxShadow: tier.badge ? `0 0 40px ${tier.color}20` : c.shadow(theme), display: "flex", flexDirection: "column" }}>
+                {tier.badge && <div style={{ position: "absolute", top: "-1rem", left: "50%", transform: "translateX(-50%)", padding: "0.3rem 1rem", borderRadius: "999px", background: `linear-gradient(90deg, ${tier.color}, #FFB347)`, color: "#fff", fontSize: "0.8rem", fontWeight: 800, whiteSpace: "nowrap" }}>🌍 {tier.badge}</div>}
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+                  <div style={{ width: "2.75rem", height: "2.75rem", borderRadius: "0.875rem", background: `${tier.color}18`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem" }}>{tier.icon}</div>
+                  <h3 style={{ fontWeight: 800, fontSize: "1.1rem", color: c.text(theme) }}>{tier.name}</h3>
                 </div>
-
-                <div className="mb-5">
-                  <div className="flex items-end gap-1">
-                    <span className="text-3xl font-black" style={{ color: tier.color }}>{tier.price}</span>
-                    {tier.period && <span className="text-sm mb-1" style={{ color: "#8A8070" }}>{tier.period}</span>}
+                <p style={{ fontSize: "0.9rem", color: c.textMuted(theme), marginBottom: "1.25rem" }}>{tier.description}</p>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <div style={{ display: "flex", alignItems: "flex-end", gap: "0.3rem" }}>
+                    <span style={{ fontSize: "2rem", fontWeight: 900, color: tier.color, lineHeight: 1 }}>{tier.price}</span>
+                    {tier.period && <span style={{ fontSize: "0.9rem", color: c.textMuted(theme), marginBottom: "0.2rem" }}>{tier.period}</span>}
                   </div>
-                  {tier.id === "development" && (
-                    <p className="text-xs mt-1" style={{ color: "#8A8070" }}>Negotiated directly with Credii</p>
-                  )}
                 </div>
-
-                <Link href="/register"
-                  className="w-full py-3 rounded-xl text-sm font-bold text-center mb-6 transition hover:opacity-90 flex items-center justify-center gap-2"
-                  style={{
-                    background: tier.badge ? tier.color : "transparent",
-                    color: tier.badge ? "#fff" : tier.color,
-                    border: tier.badge ? "none" : `2px solid ${tier.color}`,
-                  }}>
-                  {tier.cta} <ArrowRight size={15} />
+                <Link href="/register" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", padding: "0.875rem", borderRadius: "0.875rem", marginBottom: "1.5rem", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none", background: tier.badge ? tier.color : "transparent", color: tier.badge ? "#fff" : tier.color, border: tier.badge ? "none" : `2px solid ${tier.color}` }}>
+                  {tier.cta} <ArrowRight size={16} />
                 </Link>
-
-                <div className="space-y-2.5 flex-1">
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", flex: 1 }}>
                   {tier.features.map(f => (
-                    <div key={f} className="flex items-center gap-2.5">
+                    <div key={f} style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
                       <CheckCircle size={15} style={{ color: tier.color, flexShrink: 0 }} />
-                      <span className="text-sm" style={{ color: "#1A1A2E" }}>{f}</span>
+                      <span style={{ fontSize: "0.9rem", color: c.text(theme) }}>{f}</span>
                     </div>
                   ))}
                 </div>
@@ -537,104 +197,56 @@ export default function PricingPage() {
             ))}
           </div>
 
-          {/* Org value props */}
-          <div className="grid md:grid-cols-3 gap-5 mb-12">
-            {[
-              { icon: <TrendingUp size={22} />, color: "#FF6B4A", title: "Grant-Ready Data", desc: "Every request, provider, and job completion is tracked and exportable for development agency reporting and grant applications." },
-              { icon: <Shield size={22} />, color: "#0ABFBC", title: "Verified Workforce", desc: "All providers are ID-verified and skill-checked by Credii. Organisations get a trusted, auditable pool of Caribbean professionals." },
-              { icon: <Globe size={22} />, color: "#FFB347", title: "Africa Expansion", desc: "Development bank partners get early access to Rivva's Africa rollout — the same model, applied to 54 countries." },
-            ].map(v => (
-              <div key={v.title} className="p-5 rounded-2xl border" style={{ borderColor: "#E8E2D9" }}>
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-3"
-                  style={{ background: `${v.color}15`, color: v.color }}>{v.icon}</div>
-                <h4 className="font-bold text-sm mb-1" style={{ color: "#1A1A2E" }}>{v.title}</h4>
-                <p className="text-xs" style={{ color: "#8A8070" }}>{v.desc}</p>
+          {/* Value props */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.25rem", marginBottom: "2.5rem" }} className="grid-3col">
+            {[{ icon: <TrendingUp size={22} />, color: "#FF6B4A", title: "Grant-Ready Data", desc: "Every request, provider, and job completion is tracked and exportable for development agency reporting." }, { icon: <Shield size={22} />, color: "#E63946", title: "Credii Verified Workforce", desc: "All providers are ID-verified and skill-checked by Credii. Organisations get a trusted, auditable pool." }, { icon: <Globe size={22} />, color: "#FFB347", title: "Africa Expansion", desc: "Development bank partners get early access to Rivva's Africa rollout — the same model, 54 countries." }].map(v => (
+              <div key={v.title} style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
+                <div style={{ width: "3rem", height: "3rem", borderRadius: "0.875rem", background: `${v.color}18`, color: v.color, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>{v.icon}</div>
+                <h4 style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.95rem", marginBottom: "0.5rem" }}>{v.title}</h4>
+                <p style={{ fontSize: "0.85rem", color: c.textMuted(theme), lineHeight: 1.6 }}>{v.desc}</p>
               </div>
             ))}
           </div>
 
-          {/* Partner logos placeholder */}
-          <div className="p-6 rounded-3xl border text-center" style={{ borderColor: "#E8E2D9", background: "#F7F4EF" }}>
-            <p className="text-xs font-semibold mb-4" style={{ color: "#8A8070" }}>TRUSTED BY REGIONAL INSTITUTIONS</p>
-            <div className="flex flex-wrap justify-center gap-6 items-center">
+          {/* Partner logos */}
+          <div style={{ padding: "2rem", borderRadius: "1.25rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), textAlign: "center" }}>
+            <p style={{ fontSize: "0.75rem", fontWeight: 700, color: c.textFaint(theme), letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.25rem" }}>TRUSTED BY REGIONAL INSTITUTIONS</p>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.875rem" }}>
               {["IDB", "CDB", "USAID", "UN Women", "CARICOM", "Min. of Labour TT"].map(org => (
-                <div key={org} className="px-4 py-2 rounded-xl border text-sm font-semibold"
-                  style={{ borderColor: "#E8E2D9", color: "#8A8070", background: "#fff" }}>
-                  {org}
-                </div>
+                <div key={org} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.75rem", border: `1px solid ${c.border(theme)}`, color: c.textMuted(theme), fontSize: "0.9rem", fontWeight: 600, background: c.bg(theme) }}>{org}</div>
               ))}
             </div>
-            <p className="text-xs mt-4" style={{ color: "#8A8070" }}>
-              * Partnership logos shown upon contract execution
-            </p>
           </div>
         </div>
       )}
 
-      {/* FAQ */}
-      <section className="py-16" style={{ background: "#F7F4EF" }}>
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8" style={{ color: "#1A1A2E" }}>Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {[
-              { q: "Is it free for clients?", a: "Yes. Clients always use Rivva for free. They post requests, receive quotes, and hire providers at no cost. Providers pay to access leads." },
-              { q: "Can I change my plan anytime?", a: "Yes. Upgrade or downgrade at any time. Changes take effect at the start of your next billing cycle. No cancellation fees." },
-              { q: "What payment methods are accepted?", a: "We accept all major credit/debit cards, Linx, and WiPay across the Caribbean. Bank transfer available for annual plans." },
-              { q: "Do I need to be verified before I can subscribe?", a: "Yes. All providers must complete basic verification (ID + skill proof) before their profile goes live, regardless of plan." },
-              { q: "What's the difference between a lead fee and a subscription?", a: "Your subscription gives you a monthly lead allowance. Lead fees are optional top-ups if you want more leads than your plan includes. Pro and Elite plans include unlimited leads." },
-              { q: "How do institutional contracts work?", a: "Org partnerships are negotiated directly with the Credii team. Contact us and we'll schedule a call to discuss your specific needs, data requirements, and contract terms." },
-            ].map(faq => (
-              <div key={faq.q} className="p-5 rounded-2xl border" style={{ borderColor: "#E8E2D9", background: "#fff" }}>
-                <p className="font-semibold text-sm mb-2" style={{ color: "#1A1A2E" }}>Q: {faq.q}</p>
-                <p className="text-sm" style={{ color: "#8A8070" }}>{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Bottom CTA */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <div className="rounded-3xl p-10"
-            style={{ background: "linear-gradient(135deg, #1A1A2E 0%, #2D2D4E 100%)" }}>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              Ready to grow across the Caribbean?
-            </h2>
-            <p className="text-sm mb-6" style={{ color: "#8A8070" }}>
-              Join 2,400+ verified providers. Start free, upgrade when you&apos;re ready.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link href="/register?role=provider"
-                className="px-8 py-3.5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition"
-                style={{ background: "#FF6B4A" }}>
-                Start as a Provider <ArrowRight size={16} />
-              </Link>
-              <Link href="/register"
-                className="px-8 py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition border"
-                style={{ borderColor: "#ffffff30", color: "#fff" }}>
-                Post a Request Free
-              </Link>
-            </div>
-            <p className="text-xs mt-4" style={{ color: "#8A8070" }}>
-              No credit card required for clients · Providers start from TT$50/mo
-            </p>
-          </div>
+      <section style={{ padding: "5rem 2.5rem", textAlign: "center", background: c.bgCard(theme), borderTop: `1px solid ${c.border(theme)}` }}>
+        <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: c.text(theme), marginBottom: "1rem" }}>Ready to grow across the Caribbean?</h2>
+        <p style={{ color: c.textMuted(theme), fontSize: "1.1rem", marginBottom: "2.5rem" }}>Join 2,400+ verified providers. Start free, upgrade when you&apos;re ready.</p>
+        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+          <Link href="/register?role=provider" style={{ padding: "1rem 2.5rem", borderRadius: "0.875rem", background: "linear-gradient(135deg, #FF6B4A, #FF8C42)", color: "#fff", fontWeight: 700, fontSize: "1rem", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            Start as a Provider <ArrowRight size={18} />
+          </Link>
+          <Link href="/register" style={{ padding: "1rem 2.5rem", borderRadius: "0.875rem", border: `2px solid ${c.border(theme)}`, color: c.text(theme), fontWeight: 700, fontSize: "1rem", textDecoration: "none" }}>
+            Post a Request Free
+          </Link>
         </div>
+        <p style={{ fontSize: "0.9rem", color: c.textFaint(theme), marginTop: "1.5rem" }}>No credit card required for clients · Providers start from TT$50/mo</p>
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-8" style={{ borderColor: "#E8E2D9" }}>
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold text-xs"
-              style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)" }}>S</div>
-            <span className="font-bold" style={{ color: "#1A1A2E" }}>Rivva</span>
-            <span className="text-xs ml-2" style={{ color: "#8A8070" }}>Powered by Credii</span>
+      <footer style={{ borderTop: `1px solid ${c.border(theme)}`, padding: "2rem 2.5rem" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <div style={{ width: "2rem", height: "2rem", borderRadius: "0.5rem", background: "linear-gradient(135deg, #FF6B4A, #E63946)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900 }}>R</div>
+            <span style={{ fontWeight: 800, color: c.text(theme) }}>Rivva</span>
+            <span style={{ color: "#E63946", fontSize: "0.85rem", fontWeight: 600 }}>Powered by Credii</span>
           </div>
-          <p className="text-xs" style={{ color: "#8A8070" }}>© 2026 Rivva / Credii. All rights reserved.</p>
+          <p style={{ fontSize: "0.85rem", color: c.textFaint(theme) }}>© 2026 Rivva / Credii. All rights reserved.</p>
         </div>
       </footer>
+      <style>{`.grid-3col{grid-template-columns:repeat(3,1fr);} .grid-4col{grid-template-columns:repeat(4,1fr);} .grid-2col{grid-template-columns:1fr 1fr;} @media(max-width:1024px){.grid-3col{grid-template-columns:1fr 1fr!important;} .grid-4col{grid-template-columns:1fr 1fr!important;}} @media(max-width:640px){.grid-3col{grid-template-columns:1fr!important;} .grid-4col{grid-template-columns:1fr!important;} .grid-2col{grid-template-columns:1fr!important;}}`}</style>
     </div>
   );
 }
