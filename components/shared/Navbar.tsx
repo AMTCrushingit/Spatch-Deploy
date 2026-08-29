@@ -48,21 +48,8 @@ export default function Navbar({ role = "guest", userName = "", userAvatar = "" 
       <div style={{ width: "100%", padding: "0 2.5rem" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "4rem" }}>
 
-          {/* Logo */}
-          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.6rem", textDecoration: "none" }}>
-            <div style={{
-              width: "2.2rem", height: "2.2rem", borderRadius: "0.6rem",
-              background: "linear-gradient(135deg, #FF6B4A, #E63946)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fff", fontWeight: 900, fontSize: "1rem",
-            }}>R</div>
-            <span style={{ fontWeight: 800, fontSize: "1.3rem", color: c.text(theme) }}>Rivva</span>
-            {role === "admin" && (
-              <span style={{ fontSize: "0.7rem", padding: "0.2rem 0.6rem", borderRadius: "999px", background: "#E6394615", color: "#E63946", fontWeight: 700, marginLeft: "0.3rem" }}>
-                Credii Admin
-              </span>
-            )}
-          </Link>
+          
+            
 
           {/* Desktop Nav */}
           <div style={{ display: "flex", alignItems: "center", gap: "2rem" }} className="hidden md:flex">

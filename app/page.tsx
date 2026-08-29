@@ -205,8 +205,8 @@ export default function HomePage() {
               <div style={{ borderRadius: "1.5rem", padding: "2rem", border: `1px solid ${border}`, background: isDark ? "rgba(10,191,188,0.05)" : "rgba(255,255,255,0.88)", backdropFilter: "blur(24px)", boxShadow: shadow }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                    <div style={{ width: "2.5rem", height: "2.5rem", borderRadius: "0.75rem", background: `linear-gradient(135deg, ${P.teal}, ${P.blue})`, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900, fontSize: "1.1rem" }}>R</div>
-                    <span style={{ fontWeight: 700, fontSize: "1.1rem", color: text }}>Rivva Live</span>
+                    <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2.2rem", height: "2.2rem" }} />
+                    <span style={{ fontWeight: 700, fontSize: "1.1rem", color: text }}>RIVVA Live</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: P.green, fontSize: "0.9rem", fontWeight: 600 }}>
                     <div style={{ width: "0.5rem", height: "0.5rem", borderRadius: "50%", background: P.green }} />
@@ -684,8 +684,8 @@ export default function HomePage() {
       <footer style={{ borderTop: `1px solid ${border}`, padding: "2.5rem 2.5rem", background: bgAlt }}>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <div style={{ width: "2.2rem", height: "2.2rem", borderRadius: "0.6rem", background: `linear-gradient(135deg, ${P.teal}, ${P.blue})`, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900, fontSize: "1rem" }}>R</div>
-            <span style={{ fontWeight: 800, fontSize: "1.2rem", color: text }}>Rivva</span>
+            <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2.2rem", height: "2.2rem" }} />
+            <span style={{ fontWeight: 900, fontSize: "1.2rem", color: text, letterSpacing: "-0.02em" }}>RIVVA</span>
             <span style={{ color: P.credii, fontSize: "0.9rem", fontWeight: 600 }}>Powered by Credii</span>
           </div>
           <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>

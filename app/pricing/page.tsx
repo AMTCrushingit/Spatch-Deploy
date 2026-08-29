@@ -239,8 +239,8 @@ export default function PricingPage() {
       <footer style={{ borderTop: `1px solid ${c.border(theme)}`, padding: "2rem 2.5rem" }}>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <div style={{ width: "2rem", height: "2rem", borderRadius: "0.5rem", background: "linear-gradient(135deg, #FF6B4A, #E63946)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900 }}>R</div>
-            <span style={{ fontWeight: 800, color: c.text(theme) }}>Rivva</span>
+            <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2rem", height: "2rem" }} />
+            <span style={{ fontWeight: 900, color: c.text(theme), letterSpacing: "-0.02em" }}>RIVVA</span>
             <span style={{ color: "#E63946", fontSize: "0.85rem", fontWeight: 600 }}>Powered by Credii</span>
           </div>
           <p style={{ fontSize: "0.85rem", color: c.textFaint(theme) }}>© 2026 Rivva / Credii. All rights reserved.</p>

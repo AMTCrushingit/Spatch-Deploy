@@ -29,8 +29,8 @@ export default function RegisterPage() {
       <div style={{ width: "100%", maxWidth: "520px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem" }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.6rem", textDecoration: "none" }}>
-            <div style={{ width: "2rem", height: "2rem", borderRadius: "0.5rem", background: "linear-gradient(135deg, #FF6B4A, #E63946)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900 }}>R</div>
-            <span style={{ fontWeight: 800, fontSize: "1.2rem", color: c.text(theme) }}>Rivva</span>
+            <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2rem", height: "2rem" }} />
+            <span style={{ fontWeight: 900, fontSize: "1.2rem", color: c.text(theme), letterSpacing: "-0.02em" }}>RIVVA</span>
           </Link>
           <span style={{ fontSize: "0.9rem", color: c.textMuted(theme) }}>Step {step} of {totalSteps}</span>
         </div>

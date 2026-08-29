@@ -77,8 +77,8 @@ export default function LoginPage() {
         <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", padding: "2.5rem" }}>
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.625rem", textDecoration: "none" }}>
-            <div style={{ width: "2.4rem", height: "2.4rem", borderRadius: "0.7rem", background: `linear-gradient(135deg, ${C.teal}, ${C.blue})`, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900, fontSize: "1.1rem" }}>R</div>
-            <span style={{ fontWeight: 800, fontSize: "1.4rem", color: "#fff" }}>Rivva</span>
+            <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2.2rem", height: "2.2rem" }} />
+            <span style={{ fontWeight: 900, fontSize: "1.4rem", color: "#fff", letterSpacing: "-0.02em" }}>RIVVA</span>
           </Link>
 
           {/* Hero text */}
@@ -145,8 +145,8 @@ export default function LoginPage() {
         <div style={{ width: "100%", maxWidth: "420px", position: "relative" }}>
           {/* Mobile logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.6rem", textDecoration: "none", marginBottom: "2.5rem" }} className="lg:hidden">
-            <div style={{ width: "2rem", height: "2rem", borderRadius: "0.5rem", background: `linear-gradient(135deg, ${C.teal}, ${C.blue})`, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900 }}>R</div>
-            <span style={{ fontWeight: 800, fontSize: "1.2rem", color: c.text(theme) }}>Rivva</span>
+            <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2rem", height: "2rem" }} />
+            <span style={{ fontWeight: 900, fontSize: "1.2rem", color: c.text(theme), letterSpacing: "-0.02em" }}>RIVVA</span>
           </Link>
 
           {/* Greeting */}
