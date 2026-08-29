@@ -101,7 +101,7 @@ export default function HomePage() {
           <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] rounded-full blur-3xl" style={{ background: "rgba(10,191,188,0.10)" }} />
         </div>
 
-        <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-12" style={{ paddingTop: "6rem", paddingBottom: "6rem" }}>
+        <div className="relative w-full w-full px-10 xl:px-20" style={{ paddingTop: "6rem", paddingBottom: "6rem" }}>
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* LEFT */}
@@ -133,7 +133,7 @@ export default function HomePage() {
               </p>
 
               {/* Search bar */}
-              <div className="flex flex-col sm:flex-row gap-3 mb-10 max-w-2xl">
+              <div className="flex flex-col sm:flex-row gap-3 mb-10 max-w-3xl">
                 <div className="flex-1 flex items-center gap-3 px-5 py-4 rounded-2xl border"
                   style={{ background: "rgba(255,255,255,0.07)", borderColor: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)" }}>
                   <span className="text-xl">🔍</span>
@@ -151,7 +151,7 @@ export default function HomePage() {
               {/* Trust badges */}
               <div className="flex flex-wrap gap-3">
                 {[
-                  { icon: "🛡️", label: "Credii Verified", color: "#0ABFBC" },
+                  { icon: "🛡️", label: "Credii Verified", color: "#E63946" },
                   { icon: "⚡", label: "Instant Matching", color: "#FFD700" },
                   { icon: "🌴", label: "6 Islands", color: "#2ECC71" },
                   { icon: "💰", label: "Free for Clients", color: "#FF6B4A" },
@@ -236,7 +236,7 @@ export default function HomePage() {
 
       {/* ── STATS ─────────────────────────────────────────────────────────── */}
       <section className="border-y" style={{ background: "#0D0D1A", borderColor: "rgba(255,255,255,0.06)", padding: "5rem 0" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="w-full px-10 xl:px-20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
             {[
               { value: 2438, suffix: "+", label: "Verified Providers", color: "#FF6B4A" },
@@ -258,24 +258,24 @@ export default function HomePage() {
       {/* ── CREDII TRUST SCORE ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ padding: "8rem 0" }}>
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 25% 50%, rgba(10,191,188,0.07) 0%, transparent 60%)" }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          style={{ background: "radial-gradient(ellipse at 25% 50%, rgba(230,57,70,0.07) 0%, transparent 60%)" }} />
+        <div className="w-full px-10 xl:px-20">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border"
-                style={{ background: "rgba(10,191,188,0.12)", color: "#0ABFBC", borderColor: "rgba(10,191,188,0.3)", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.05em" }}>
+                style={{ background: "rgba(230,57,70,0.12)", color: "#E63946", borderColor: "rgba(230,57,70,0.3)", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.05em" }}>
                 🛡️ CREDII TRUST INFRASTRUCTURE
               </div>
               <h2 className="font-black mb-8 leading-tight" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}>
                 <span className="text-white">Not just verified.</span><br />
-                <span style={{ color: "#0ABFBC" }}>Trust-scored.</span>
+                <span style={{ color: "#E63946" }}>Trust-scored.</span>
               </h2>
               <p className="mb-10" style={{ fontSize: "clamp(1rem, 1.8vw, 1.25rem)", color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
-                Every Rivva provider gets a <strong style={{ color: "#0ABFBC" }}>Credii Trust Score</strong> — built from identity verification, skill proof, response speed, completion rate, and client reviews. Not just a background check. A real measure of professional reliability.
+                Every Rivva provider gets a <strong style={{ color: "#E63946" }}>Credii Trust Score</strong> — built from identity verification, skill proof, response speed, completion rate, and client reviews. Not just a background check. A real measure of professional reliability.
               </p>
               <div className="space-y-5 mb-10">
                 {[
-                  { label: "Identity Verified", desc: "Government ID + biometric check", color: "#0ABFBC" },
+                  { label: "Identity Verified", desc: "Government ID + biometric check", color: "#E63946" },
                   { label: "Skill Certified", desc: "Licence or portfolio reviewed by Credii", color: "#FFD700" },
                   { label: "Performance Tracked", desc: "Response time, completion rate, reviews", color: "#2ECC71" },
                   { label: "Continuously Monitored", desc: "Annual re-verification, real-time flags", color: "#FF6B4A" },
@@ -297,7 +297,7 @@ export default function HomePage() {
                 <span style={{ color: "rgba(255,255,255,0.4)" }}>Thumbtack shows:</span>
                 <span className="font-semibold text-white">✓ Verified</span>
                 <span style={{ color: "rgba(255,255,255,0.4)" }}>· Rivva shows:</span>
-                <span className="font-black" style={{ color: "#0ABFBC" }}>Credii Score: 94</span>
+                <span className="font-black" style={{ color: "#E63946" }}>Credii Score: 94</span>
               </div>
             </div>
 
@@ -321,7 +321,7 @@ export default function HomePage() {
                   </div>
                   <p className="mb-3" style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.85rem" }}>{p.island}</p>
                   <div className="flex items-center justify-between mb-2">
-                    <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.85rem" }}>Credii Score</span>
+                    <span style={{ color: "#E63946", fontSize: "0.85rem", fontWeight: 700 }}>Credii Score</span>
                     <span className="font-black" style={{ color: p.color, fontSize: "1.1rem" }}>{p.score}</span>
                   </div>
                   <div className="w-full h-2 rounded-full mb-4" style={{ background: "rgba(255,255,255,0.08)" }}>
@@ -340,7 +340,7 @@ export default function HomePage() {
 
       {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
       <section style={{ background: "#0D0D1A", padding: "8rem 0" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="w-full px-10 xl:px-20">
           <div className="text-center mb-16">
             <h2 className="font-black text-white mb-5" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}>How Rivva works</h2>
             <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "1.2rem" }}>Three steps. Zero hassle. Caribbean-fast.</p>
@@ -370,7 +370,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden" style={{ padding: "8rem 0" }}>
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse at 70% 50%, rgba(255,107,74,0.06) 0%, transparent 60%)" }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="w-full px-10 xl:px-20">
           <div className="flex items-end justify-between mb-12">
             <h2 className="font-black text-white" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", lineHeight: 1.1 }}>
               Every service.<br />Every island.
@@ -400,7 +400,7 @@ export default function HomePage() {
 
       {/* ── ISLAND MAP ────────────────────────────────────────────────────── */}
       <section style={{ background: "#0D0D1A", padding: "8rem 0" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="w-full px-10 xl:px-20">
           <div className="text-center mb-14">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 border"
               style={{ background: "rgba(255,215,0,0.12)", color: "#FFD700", borderColor: "rgba(255,215,0,0.3)", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.05em" }}>
@@ -446,7 +446,7 @@ export default function HomePage() {
 
       {/* ── PHOTOS + TESTIMONIALS ─────────────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ padding: "8rem 0" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="w-full px-10 xl:px-20">
           <div className="text-center mb-14">
             <h2 className="font-black text-white" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}>
               Real people.<br />Real results.
@@ -487,7 +487,7 @@ export default function HomePage() {
           </div>
 
           {/* Testimonial */}
-          <div className="max-w-4xl mx-auto">
+          <div className="w-full">
             {testimonials.map((t, i) => (
               <div key={t.name} style={{ display: activeTestimonial === i ? "block" : "none" }}>
                 <div className="p-12 rounded-3xl border text-center"
@@ -529,7 +529,7 @@ export default function HomePage() {
 
       {/* ── FOR PROVIDERS ─────────────────────────────────────────────────── */}
       <section style={{ background: "#0D0D1A", padding: "8rem 0" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="w-full px-10 xl:px-20">
           <div className="rounded-3xl overflow-hidden relative" style={{ minHeight: "500px" }}>
             <img src="https://images.pexels.com/photos/31010712/pexels-photo-31010712/free-photo-of-aerial-view-of-coastal-town-and-blue-ocean.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               alt="Caribbean coast" className="absolute inset-0 w-full h-full object-cover"
@@ -592,9 +592,9 @@ export default function HomePage() {
       <section className="relative overflow-hidden" style={{ padding: "10rem 0" }}>
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-3xl" style={{ background: "rgba(255,107,74,0.1)" }} />
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full blur-3xl" style={{ background: "rgba(10,191,188,0.08)" }} />
+          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full blur-3xl" style={{ background: "rgba(230,57,70,0.06)" }} />
         </div>
-        <div className="max-w-5xl mx-auto px-6 text-center relative">
+        <div className="w-full px-10 xl:px-20 text-center relative">
           <h2 className="font-black text-white mb-8" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.03em" }}>
             Ready to join the<br />
             <span style={{
@@ -627,13 +627,13 @@ export default function HomePage() {
 
       {/* ── FOOTER ────────────────────────────────────────────────────────── */}
       <footer className="border-t" style={{ borderColor: "rgba(255,255,255,0.06)", padding: "3rem 0" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="w-full px-10 xl:px-20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold"
                 style={{ background: "linear-gradient(135deg, #FF6B4A, #0ABFBC)", fontSize: "1rem" }}>R</div>
               <span className="font-bold text-white" style={{ fontSize: "1.2rem" }}>Rivva</span>
-              <span className="ml-2" style={{ color: "rgba(255,255,255,0.25)", fontSize: "0.9rem" }}>Powered by Credii</span>
+              <span className="ml-2" style={{ color: "#E63946", fontSize: "0.9rem", fontWeight: 600 }}>Powered by Credii</span>
             </div>
             <div className="flex gap-8">
               {[["About", "#"], ["Pricing", "/pricing"], ["For Providers", "/register?role=provider"], ["Privacy", "#"], ["Terms", "#"], ["Contact", "#"]].map(([l, h]) => (
