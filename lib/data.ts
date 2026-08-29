@@ -28,7 +28,9 @@ export interface Provider {
   completed_jobs: number;
   island: Island;
   category_ids: string[];
-  response_speed: number; // hours avg
+  response_speed: number;
+  service_areas: string[];
+  multi_island: boolean;
   created_at: string;
 }
 
@@ -115,11 +117,11 @@ export const serviceCategories: ServiceCategory[] = [
 ];
 
 export const providers: Provider[] = [
-  { id: "p1", user_id: "u2", bio: "Licensed electrician with 8 years experience across Jamaica and Barbados.", skills: ["Wiring", "Solar Installation", "Fault Finding"], verification_status: "approved", rating: 4.8, completed_jobs: 127, island: "Jamaica", category_ids: ["c2"], response_speed: 2, created_at: "2026-01-20" },
-  { id: "p2", user_id: "u3", bio: "Professional photographer specialising in weddings, events and corporate shoots.", skills: ["Wedding Photography", "Event Coverage", "Drone Shots"], verification_status: "approved", rating: 4.9, completed_jobs: 89, island: "Trinidad", category_ids: ["c4"], response_speed: 1, created_at: "2026-02-01" },
-  { id: "p3", user_id: "u4", bio: "Master plumber, fully certified. Fast response across Barbados.", skills: ["Pipe Repair", "Bathroom Fit-out", "Leak Detection"], verification_status: "approved", rating: 4.6, completed_jobs: 203, island: "Barbados", category_ids: ["c1"], response_speed: 3, created_at: "2026-02-10" },
-  { id: "p4", user_id: "u7", bio: "Catering specialist for weddings, corporate events and private dining.", skills: ["Caribbean Cuisine", "Event Catering", "Pastry"], verification_status: "pending", rating: 0, completed_jobs: 0, island: "Grenada", category_ids: ["c5"], response_speed: 4, created_at: "2026-03-01" },
-  { id: "p5", user_id: "u8", bio: "Full-stack developer and IT consultant. Websites, apps, and tech support.", skills: ["React", "Node.js", "WordPress", "IT Support"], verification_status: "approved", rating: 4.7, completed_jobs: 54, island: "Trinidad", category_ids: ["c11"], response_speed: 1, created_at: "2026-03-05" },
+  { id: "p1", user_id: "u2", bio: "Licensed electrician with 8 years experience across Jamaica and Barbados.", skills: ["Wiring", "Solar Installation", "Fault Finding"], verification_status: "approved", rating: 4.8, completed_jobs: 127, island: "Jamaica", category_ids: ["c2"], response_speed: 2, service_areas: ["Kingston", "Portmore", "Spanish Town", "Montego Bay"], multi_island: true, created_at: "2026-01-20" },
+  { id: "p2", user_id: "u3", bio: "Professional photographer specialising in weddings, events and corporate shoots.", skills: ["Wedding Photography", "Event Coverage", "Drone Shots"], verification_status: "approved", rating: 4.9, completed_jobs: 89, island: "Trinidad", category_ids: ["c4"], response_speed: 1, service_areas: ["Port of Spain", "San Fernando", "Westmoorings", "Chaguanas", "Maraval"], multi_island: true, created_at: "2026-02-01" },
+  { id: "p3", user_id: "u4", bio: "Master plumber, fully certified. Fast response across Barbados.", skills: ["Pipe Repair", "Bathroom Fit-out", "Leak Detection"], verification_status: "approved", rating: 4.6, completed_jobs: 203, island: "Barbados", category_ids: ["c1"], response_speed: 3, service_areas: ["Bridgetown", "Speightstown", "Oistins", "Holetown"], multi_island: false, created_at: "2026-02-10" },
+  { id: "p4", user_id: "u7", bio: "Catering specialist for weddings, corporate events and private dining.", skills: ["Caribbean Cuisine", "Event Catering", "Pastry"], verification_status: "pending", rating: 0, completed_jobs: 0, island: "Grenada", category_ids: ["c5"], response_speed: 4, service_areas: ["St. George's", "Grand Anse", "Grenville"], multi_island: false, created_at: "2026-03-01" },
+  { id: "p5", user_id: "u8", bio: "Full-stack developer and IT consultant. Websites, apps, and tech support.", skills: ["React", "Node.js", "WordPress", "IT Support"], verification_status: "approved", rating: 4.7, completed_jobs: 54, island: "Trinidad", category_ids: ["c11"], response_speed: 1, service_areas: ["Port of Spain", "San Fernando", "Remote — All Islands"], multi_island: true, created_at: "2026-03-05" },
 ];
 
 export const clients: Client[] = [

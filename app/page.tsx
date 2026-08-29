@@ -8,19 +8,21 @@ import { ArrowRight, CheckCircle, Star, TrendingUp, Users, Briefcase, Shield } f
 
 // ── Palette — River / Caribbean ──────────────────────────────────────────────
 const P = {
-  teal:    "#0ABFBC",
-  tealDk:  "#089A97",
-  blue:    "#1A7FBF",
-  blueLt:  "#4FB3E8",
-  green:   "#1DB87A",
-  greenLt: "#4DD9A0",
-  turq:    "#00C9C8",
-  credii:  "#E63946",
-  gold:    "#F4A623",
-  white:   "#FFFFFF",
+  teal:     "#0ABFBC",
+  tealDk:   "#089A97",
+  blue:     "#1A7FBF",
+  blueLt:   "#4FB3E8",
+  green:    "#1DB87A",
+  greenLt:  "#4DD9A0",
+  turq:     "#00C9C8",
+  credii:   "#E63946",
+  gold:     "#F4A623",
+  white:    "#FFFFFF",
+  lime:     "#AAFF00",
+  elecBlue: "#00BFFF",
+  neonGrn:  "#39FF14",
 };
 
-// ── Live activity feed ────────────────────────────────────────────────────────
 const FEED = [
   { icon: "⚡", text: "Electrician verified in Jamaica", time: "2m ago", color: P.blue },
   { icon: "📸", text: "Photographer booked in Trinidad", time: "5m ago", color: P.teal },
@@ -146,9 +148,9 @@ export default function HomePage() {
         <div style={{ position: "relative", width: "100%", padding: "7rem 2.5rem 5rem" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }} className="hero-grid">
             <div>
-              {/* Live pill */}
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", padding: "0.6rem 1.25rem", borderRadius: "999px", marginBottom: "2rem", border: `1px solid ${P.teal}40`, background: isDark ? `${P.teal}12` : `${P.teal}15`, backdropFilter: "blur(12px)" }}>
-                <div style={{ width: "0.6rem", height: "0.6rem", borderRadius: "50%", background: P.green, animation: "pulse 2s infinite" }} />
+              {/* Live pill — electric lime accent */}
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.75rem", padding: "0.6rem 1.25rem", borderRadius: "999px", marginBottom: "2rem", border: `1px solid ${P.lime}50`, background: isDark ? `${P.lime}08` : `${P.lime}10`, backdropFilter: "blur(12px)" }}>
+                <div style={{ width: "0.6rem", height: "0.6rem", borderRadius: "50%", background: P.lime, animation: "pulse 2s infinite", boxShadow: `0 0 8px ${P.lime}` }} />
                 <span style={{ fontSize: "1rem", color: activity.color }}>{activity.icon}</span>
                 <span style={{ fontSize: "1rem", color: text, fontWeight: 500 }}>{activity.text}</span>
                 <span style={{ fontSize: "0.85rem", color: textMut }}>{activity.time}</span>
@@ -165,11 +167,11 @@ export default function HomePage() {
                 Like a river connecting the islands — Rivva links verified Caribbean professionals with clients who need them. Powered by <strong style={{ color: P.credii }}>Credii</strong>.
               </p>
 
-              {/* Founding Provider CTA — revenue from day 1 */}
-              <div style={{ padding: "1.5rem", borderRadius: "1.25rem", border: `2px solid ${P.gold}50`, background: isDark ? `${P.gold}10` : `${P.gold}12`, marginBottom: "1.75rem", backdropFilter: "blur(10px)" }}>
+              {/* Founding Provider CTA */}
+              <div style={{ padding: "1.5rem", borderRadius: "1.25rem", border: `2px solid ${P.lime}60`, background: isDark ? `${P.lime}06` : `${P.lime}08`, marginBottom: "1.75rem", backdropFilter: "blur(10px)", boxShadow: isDark ? `0 0 30px ${P.lime}15` : `0 0 20px ${P.lime}20` }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
                   <span style={{ fontSize: "1.2rem" }}>🌟</span>
-                  <span style={{ fontWeight: 800, color: P.gold, fontSize: "1rem" }}>Become a Founding Provider</span>
+                  <span style={{ fontWeight: 800, color: isDark ? P.lime : "#4A7A00", fontSize: "1rem" }}>Become a Founding Provider</span>
                   <span style={{ padding: "0.15rem 0.5rem", borderRadius: "999px", background: P.credii, color: "#fff", fontSize: "0.7rem", fontWeight: 800 }}>LIMITED</span>
                 </div>
                 <p style={{ fontSize: "0.9rem", color: textMut, marginBottom: "1rem" }}>Early access · Lifetime founding badge · Priority placement · Credii verification</p>
@@ -249,7 +251,7 @@ export default function HomePage() {
                 </div>
 
                 <Link href="/register?role=provider&founding=true" style={{ display: "block", width: "100%", padding: "1rem", borderRadius: "0.875rem", textAlign: "center", fontWeight: 800, fontSize: "0.95rem", background: `linear-gradient(135deg, ${P.teal}, ${P.blue})`, color: "#fff", textDecoration: "none" }}>
-                  🌟 Become a Founding Provider
+                  {"🌟 Become a Founding Provider"}
                 </Link>
               </div>
             </div>
@@ -281,10 +283,7 @@ export default function HomePage() {
       <section style={{ ...sec }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }} className="grid-2col">
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.4rem 1rem", borderRadius: "999px", marginBottom: "1.5rem", background: `${P.green}15`, color: P.green, border: `1px solid ${P.green}30`, fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.05em" }}>
-              <div style={{ width: "0.5rem", height: "0.5rem", borderRadius: "50%", background: P.green, animation: "pulse 2s infinite" }} />
-              LIVE · UPDATED EVERY FEW MINUTES
-            </div>
+            
             <h2 style={{ fontWeight: 900, color: text, marginBottom: "1rem", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
               Jobs posted in the<br /><span style={{ color: P.teal }}>last 24 hours</span>
             </h2>

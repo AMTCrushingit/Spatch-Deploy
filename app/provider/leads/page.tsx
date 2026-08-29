@@ -88,11 +88,6 @@ export default function LeadsPage() {
                       <p style={{ fontSize: "0.9rem", color: c.textMuted(theme), marginTop: "0.25rem" }}>{req.description}</p>
                     </div>
                   </div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.625rem", marginBottom: "1.25rem" }}>
-                    {[{ icon: <MapPin size={12} />, text: req.island, color: c.textMuted(theme), bg: c.bgMuted(theme) }, { icon: <DollarSign size={12} />, text: req.budget, color: "#FF6B4A", bg: "#FF6B4A10" }, { icon: <Clock size={12} />, text: formatDate(req.created_at), color: c.textMuted(theme), bg: c.bgMuted(theme) }].map((tag, i) => (
-                      <span key={i} style={{ display: "flex", alignItems: "center", gap: "0.3rem", padding: "0.3rem 0.75rem", borderRadius: "999px", background: tag.bg, color: tag.color, fontSize: "0.8rem", fontWeight: 600 }}>{tag.icon} {tag.text}</span>
-                    ))}
-                  </div>
                   {isSubmitted ? (
                     <div style={{ padding: "0.75rem", borderRadius: "0.75rem", background: "#0ABFBC15", color: "#0ABFBC", fontSize: "0.9rem", fontWeight: 600, textAlign: "center" }}>✓ Quote submitted — awaiting client response</div>
                   ) : (

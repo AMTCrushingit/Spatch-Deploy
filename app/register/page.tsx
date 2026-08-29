@@ -14,7 +14,7 @@ export default function RegisterPage() {
   const c = colors;
   const [step, setStep] = useState(1);
   const [role, setRole] = useState<"client" | "provider">("client");
-  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", island: "", bio: "", categories: [] as string[] });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", island: "", bio: "", categories: [] as string[], serviceAreas: [] as string[], multiIsland: false });
 
   function update(k: string, v: string) { setForm(f => ({ ...f, [k]: v })); }
   function toggleCat(id: string) { setForm(f => ({ ...f, categories: f.categories.includes(id) ? f.categories.filter(c => c !== id) : [...f.categories, id] })); }
@@ -89,6 +89,51 @@ export default function RegisterPage() {
                 </button>
               ))}
             </div>
+            {/* Service areas */}
+            <div style={{ marginBottom: "1.5rem" }}>
+              <label style={{ fontSize: "0.9rem", fontWeight: 600, color: c.text(theme), display: "block", marginBottom: "0.25rem" }}>Areas Served</label>
+              <p style={{ fontSize: "0.8rem", color: c.textMuted(theme), marginBottom: "0.75rem" }}>Which specific areas, districts or communities do you serve? Clients search by area.</p>
+              <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                <input
+                  id="area-input"
+                  placeholder="e.g. Port of Spain, Westmoorings, Chaguanas…"
+                  style={{ ...inp, flex: 1 }}
+                  onKeyDown={e => {
+                    if (e.key === "Enter" || e.key === ",") {
+                      e.preventDefault();
+                      const val = (e.target as HTMLInputElement).value.trim().replace(/,$/, "");
+                      if (val && !form.serviceAreas.includes(val)) {
+                        setForm(f => ({ ...f, serviceAreas: [...f.serviceAreas, val] }));
+                        (e.target as HTMLInputElement).value = "";
+                      }
+                    }
+                  }}
+                />
+                <button type="button" onClick={() => {
+                  const inp2 = document.getElementById("area-input") as HTMLInputElement;
+                  const val = inp2?.value.trim();
+                  if (val && !form.serviceAreas.includes(val)) {
+                    setForm(f => ({ ...f, serviceAreas: [...f.serviceAreas, val] }));
+                    inp2.value = "";
+                  }
+                }} style={{ padding: "0 1rem", borderRadius: "0.75rem", border: "none", background: "#0ABFBC", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: "0.9rem", flexShrink: 0 }}>Add</button>
+              </div>
+              {form.serviceAreas.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                  {form.serviceAreas.map(area => (
+                    <span key={area} style={{ display: "flex", alignItems: "center", gap: "0.3rem", padding: "0.3rem 0.75rem", borderRadius: "999px", background: "#0ABFBC18", color: "#0ABFBC", fontSize: "0.85rem", fontWeight: 600, border: "1px solid #0ABFBC40" }}>
+                      📍 {area}
+                      <button onClick={() => setForm(f => ({ ...f, serviceAreas: f.serviceAreas.filter(a => a !== area) }))} style={{ background: "none", border: "none", cursor: "pointer", color: "#0ABFBC", fontSize: "0.9rem", lineHeight: 1, padding: 0 }}>×</button>
+                    </span>
+                  ))}
+                </div>
+              )}
+              <label style={{ display: "flex", alignItems: "center", gap: "0.625rem", cursor: "pointer" }}>
+                <input type="checkbox" checked={form.multiIsland} onChange={e => setForm(f => ({ ...f, multiIsland: e.target.checked }))} style={{ width: "1.1rem", height: "1.1rem", accentColor: "#0ABFBC" }} />
+                <span style={{ fontSize: "0.9rem", color: c.text(theme), fontWeight: 500 }}>I serve clients across multiple islands</span>
+              </label>
+            </div>
+
             <div style={{ marginBottom: "1.5rem" }}>
               <label style={{ fontSize: "0.9rem", fontWeight: 600, color: c.text(theme), display: "block", marginBottom: "0.5rem" }}>Bio / About you</label>
               <textarea value={form.bio} onChange={e => update("bio", e.target.value)} rows={3} placeholder="Describe your experience..." style={{ ...inp, resize: "none" }} />

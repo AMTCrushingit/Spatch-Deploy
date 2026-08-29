@@ -55,11 +55,31 @@ export default function ProviderProfilePage() {
             <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme) }}>
               <h3 style={{ fontWeight: 700, fontSize: "0.95rem", color: c.text(theme), marginBottom: "0.875rem" }}>Service Categories</h3>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                {currentProvider.category_ids.map(cid => {
+                {currentProvider.category_ids.map((cid: string) => {
                   const cat = serviceCategories.find(cat => cat.id === cid);
                   return cat ? <span key={cid} style={{ padding: "0.3rem 0.75rem", borderRadius: "999px", background: "#0ABFBC15", color: "#0ABFBC", fontSize: "0.85rem", fontWeight: 600 }}>{cat.icon} {cat.name}</span> : null;
                 })}
               </div>
+            </div>
+
+            {/* Service Areas */}
+            <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme) }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.875rem" }}>
+                <h3 style={{ fontWeight: 700, fontSize: "0.95rem", color: c.text(theme) }}>Areas Served</h3>
+                {currentProvider.multi_island && (
+                  <span style={{ padding: "0.2rem 0.625rem", borderRadius: "999px", background: "#1DB87A18", color: "#1DB87A", fontSize: "0.75rem", fontWeight: 700 }}>🌴 Multi-island</span>
+                )}
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                {currentProvider.service_areas.map((area: string) => (
+                  <span key={area} style={{ display: "flex", alignItems: "center", gap: "0.3rem", padding: "0.3rem 0.75rem", borderRadius: "999px", background: "#1A7FBF15", color: "#1A7FBF", fontSize: "0.85rem", fontWeight: 600, border: "1px solid #1A7FBF30" }}>
+                    📍 {area}
+                  </span>
+                ))}
+              </div>
+              <p style={{ fontSize: "0.8rem", color: c.textMuted(theme), marginTop: "0.875rem" }}>
+                Clients searching in these areas will see your profile first.
+              </p>
             </div>
 
             <div style={{ padding: "1.5rem", borderRadius: "1rem", background: "linear-gradient(135deg, #1A0A05, #2D1510)" }}>
@@ -97,7 +117,7 @@ export default function ProviderProfilePage() {
               <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme), marginBottom: "0.875rem" }}>About</h3>
               <p style={{ fontSize: "0.95rem", color: c.textMuted(theme), lineHeight: 1.7 }}>{currentProvider.bio}</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "1rem" }}>
-                {currentProvider.skills.map(skill => <span key={skill} style={{ padding: "0.3rem 0.75rem", borderRadius: "999px", background: c.bgMuted(theme), color: c.text(theme), fontSize: "0.85rem" }}>{skill}</span>)}
+                {currentProvider.skills.map((skill: string) => <span key={skill} style={{ padding: "0.3rem 0.75rem", borderRadius: "999px", background: c.bgMuted(theme), color: c.text(theme), fontSize: "0.85rem" }}>{skill}</span>)}
               </div>
             </div>
 

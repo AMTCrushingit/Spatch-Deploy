@@ -12,7 +12,7 @@ const currentProvider = providers.find(p => p.user_id === "u2")!;
 const currentUser = users.find(u => u.id === "u2")!;
 const myQuotes = quotes.filter(q => q.provider_id === currentProvider.id);
 const acceptedQuotes = myQuotes.filter(q => q.status === "accepted");
-const availableLeads = serviceRequests.filter(r => r.island === currentProvider.island && currentProvider.category_ids.some(c => c === r.category_id) && r.status === "open");
+const availableLeads = serviceRequests.filter(r => r.island === currentProvider.island && currentProvider.category_ids.some((c: string) => c === r.category_id) && r.status === "open");
 
 export default function ProviderDashboard() {
   const { theme } = useTheme();

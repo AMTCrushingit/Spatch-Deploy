@@ -100,7 +100,7 @@ export default function QuotesPage() {
                                 </div>
                               </div>
                               <p style={{ fontSize: "0.95rem", padding: "0.875rem", borderRadius: "0.75rem", background: c.bgMuted(theme), color: c.text(theme), marginTop: "1rem" }}>&ldquo;{q.message}&rdquo;</p>
-                              {provider && <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "0.875rem" }}>{provider.skills.map(s => <span key={s} style={{ fontSize: "0.8rem", padding: "0.2rem 0.625rem", borderRadius: "999px", background: c.bgMuted(theme), color: c.textMuted(theme) }}>{s}</span>)}</div>}
+                              
                               {!isAccepted && (
                                 <div style={{ display: "flex", gap: "0.625rem", marginTop: "1rem" }}>
                                   <button onClick={() => setAcceptedQuote(q.id)} style={{ display: "flex", alignItems: "center", gap: "0.4rem", padding: "0.625rem 1.25rem", borderRadius: "0.75rem", border: "none", background: "#2ECC71", color: "#fff", fontSize: "0.9rem", fontWeight: 700, cursor: "pointer" }}><CheckCircle size={14} /> Accept</button>
