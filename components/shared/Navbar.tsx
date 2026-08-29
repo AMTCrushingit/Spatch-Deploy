@@ -62,36 +62,18 @@ export default function Navbar({ role = "guest", userName = "", userAvatar = "" 
             ))}
           </div>
 
-          {/* Right */}
+          {/* Right — desktop only */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }} className="hidden md:flex">
-            {/* Theme toggle */}
-            <button onClick={toggle} style={{
-              width: "2.4rem", height: "2.4rem", borderRadius: "0.6rem",
-              border: `1px solid ${c.border(theme)}`,
-              background: c.bgMuted(theme),
-              display: "flex", alignItems: "center", justifyContent: "center",
-              cursor: "pointer", color: c.textMuted(theme),
-            }}>
-              {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
-            </button>
-
             {role === "guest" ? (
               <>
-                <Link href="/login" style={{
-                  fontSize: "0.9rem", fontWeight: 600, padding: "0.5rem 1.2rem",
-                  borderRadius: "0.6rem", color: c.textMuted(theme), textDecoration: "none",
-                  border: `1px solid ${c.border(theme)}`,
-                }}>Log in</Link>
-                <Link href="/register" style={{
-                  fontSize: "0.9rem", fontWeight: 700, padding: "0.5rem 1.4rem",
-                  borderRadius: "0.6rem", color: "#fff", textDecoration: "none",
-                  background: "linear-gradient(135deg, #FF6B4A, #FF8C42)",
-                }}>Get Started</Link>
+                <button onClick={toggle} style={{ width: "2.2rem", height: "2.2rem", borderRadius: "0.6rem", border: `1px solid ${c.border(theme)}`, background: c.bgMuted(theme), display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: c.textMuted(theme) }}>
+                  {theme === "light" ? <Moon size={15} /> : <Sun size={15} />}
+                </button>
+                <Link href="/login" style={{ fontSize: "0.9rem", fontWeight: 600, padding: "0.5rem 1.2rem", borderRadius: "0.6rem", color: c.textMuted(theme), textDecoration: "none", border: `1px solid ${c.border(theme)}` }}>Log in</Link>
+                <Link href="/register" style={{ fontSize: "0.9rem", fontWeight: 700, padding: "0.5rem 1.4rem", borderRadius: "0.6rem", color: "#fff", textDecoration: "none", background: "linear-gradient(135deg, #0ABFBC, #1A7FBF)" }}>Get Started</Link>
               </>
             ) : (
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <button style={{ position: "relative", padding: "0.5rem", borderRadius: "0.6rem", border: "none", background: "transparent", cursor: "pointer", color: c.textMuted(theme) }}>
-                  <Bell size={18} />
+              
                   <span style={{ position: "absolute", top: "0.3rem", right: "0.3rem", width: "0.5rem", height: "0.5rem", borderRadius: "50%", background: "#FF6B4A" }} />
                 </button>
                 <div style={{ position: "relative" }}>
