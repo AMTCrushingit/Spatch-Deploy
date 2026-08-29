@@ -164,7 +164,7 @@ export default function HomePage() {
               </h1>
 
               <p style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", color: textMut, lineHeight: 1.7, marginBottom: "2rem", maxWidth: "36rem" }}>
-                Like a river connecting the islands — Rivva links verified Caribbean professionals with clients who need them. Powered by <strong style={{ color: P.credii }}>Credii</strong>.
+                <strong>Trusted talent. Real opportunity.</strong><br /><br />Like a river connecting the islands — Rivva links verified Caribbean professionals with clients who need them. Powered by <strong style={{ color: P.credii }}>Credii</strong>.
               </p>
 
               {/* Founding Provider CTA */}

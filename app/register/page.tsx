@@ -44,7 +44,7 @@ export default function RegisterPage() {
         {step === 1 && (
           <div>
             <h1 style={{ fontSize: "2rem", fontWeight: 900, color: c.text(theme), marginBottom: "0.5rem" }}>Create your account</h1>
-            <p style={{ color: c.textMuted(theme), fontSize: "1rem", marginBottom: "2rem" }}>Join the Caribbean&apos;s service marketplace</p>
+            <p style={{ color: c.textMuted(theme), fontSize: "1rem", marginBottom: "2rem" }}>Trusted talent. Real opportunity.</p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2rem" }}>
               {(["client", "provider"] as const).map(r => (
                 <button key={r} onClick={() => setRole(r)} style={{ padding: "1.25rem", borderRadius: "1rem", border: `2px solid ${role === r ? "#FF6B4A" : c.border(theme)}`, background: role === r ? "#FF6B4A08" : c.bgCard(theme), cursor: "pointer", textAlign: "left" }}>

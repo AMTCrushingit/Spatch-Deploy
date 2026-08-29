@@ -96,8 +96,7 @@ export default function LoginPage() {
             </h2>
 
             <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1rem", lineHeight: 1.7, marginBottom: "2rem" }}>
-              Connecting clients and providers across 6 islands.<br />
-              Powered by <strong style={{ color: C.credii }}>Credii</strong> — the region&apos;s trust infrastructure.
+              Trusted talent. Real opportunity.
             </p>
 
             {/* Island flags */}
