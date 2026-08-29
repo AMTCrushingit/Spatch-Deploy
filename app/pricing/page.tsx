@@ -8,18 +8,69 @@ import { CheckCircle, XCircle, Zap, ArrowRight, TrendingUp, Shield, Globe } from
 const ANNUAL_DISCOUNT = 0.20;
 
 const providerTiers = [
-  { id: "starter", name: "Starter", icon: "🌱", monthlyPrice: 50, color: "#0ABFBC", description: "Perfect for new providers getting started on Rivva.", badge: null, cta: "Get Started",
-    features: [{ label: "Profile listing", included: true }, { label: "Up to 5 leads/month", included: true }, { label: "Basic verification badge", included: true }, { label: "Client messaging", included: true }, { label: "Review collection", included: true }, { label: "1 service category", included: true }, { label: "Priority matching", included: false }, { label: "Pro badge", included: false }, { label: "Response analytics", included: false }, { label: "Featured placement", included: false }, { label: "Multi-category listing", included: false }, { label: "Dedicated support", included: false }] },
-  { id: "pro", name: "Pro", icon: "⚡", monthlyPrice: 100, color: "#FF6B4A", description: "For established providers ready to grow their client base.", badge: "Most Popular", cta: "Start Pro",
-    features: [{ label: "Profile listing", included: true }, { label: "Unlimited leads/month", included: true }, { label: "Verified Pro badge", included: true }, { label: "Client messaging", included: true }, { label: "Review collection", included: true }, { label: "Up to 3 service categories", included: true }, { label: "Priority matching", included: true }, { label: "Pro badge", included: true }, { label: "Response analytics", included: true }, { label: "Featured placement", included: false }, { label: "Multi-category listing", included: false }, { label: "Dedicated support", included: false }] },
-  { id: "elite", name: "Elite", icon: "👑", monthlyPrice: 200, color: "#FFB347", description: "Maximum visibility for top-performing Caribbean professionals.", badge: null, cta: "Go Elite",
-    features: [{ label: "Profile listing", included: true }, { label: "Unlimited leads/month", included: true }, { label: "Elite verified badge", included: true }, { label: "Client messaging", included: true }, { label: "Review collection", included: true }, { label: "Unlimited service categories", included: true }, { label: "Priority matching", included: true }, { label: "Pro badge", included: true }, { label: "Response analytics", included: true }, { label: "Featured placement", included: true }, { label: "Multi-category listing", included: true }, { label: "Dedicated support", included: true }] },
+  { id: "starter", name: "Starter", icon: "🌱", monthlyPrice: 50, color: "#0ABFBC",
+    description: "Perfect for new providers getting started on RIVVA.", badge: null, cta: "Get Started",
+    features: [
+      { label: "Profile listing", included: true },
+      { label: "Up to 5 leads/month", included: true },
+      { label: "Basic verification badge", included: true },
+      { label: "Client messaging", included: true },
+      { label: "Review collection", included: true },
+      { label: "1 service category", included: true },
+      { label: "Priority matching", included: false },
+      { label: "Pro badge", included: false },
+      { label: "Response analytics", included: false },
+      { label: "Featured placement", included: false },
+      { label: "Multi-category listing", included: false },
+      { label: "Dedicated support", included: false },
+    ]},
+  { id: "pro", name: "Pro", icon: "⚡", monthlyPrice: 100, color: "#1A7FBF",
+    description: "For established providers ready to grow their client base.", badge: "Most Popular", cta: "Start Pro",
+    features: [
+      { label: "Profile listing", included: true },
+      { label: "Unlimited leads/month", included: true },
+      { label: "Verified Pro badge", included: true },
+      { label: "Client messaging", included: true },
+      { label: "Review collection", included: true },
+      { label: "Up to 3 service categories", included: true },
+      { label: "Priority matching", included: true },
+      { label: "Pro badge", included: true },
+      { label: "Response analytics", included: true },
+      { label: "Featured placement", included: false },
+      { label: "Multi-category listing", included: false },
+      { label: "Dedicated support", included: false },
+    ]},
+  { id: "elite", name: "Elite", icon: "👑", monthlyPrice: 200, color: "#1DB87A",
+    description: "Maximum visibility for top-performing Caribbean professionals.", badge: null, cta: "Go Elite",
+    features: [
+      { label: "Profile listing", included: true },
+      { label: "Unlimited leads/month", included: true },
+      { label: "Elite verified badge", included: true },
+      { label: "Client messaging", included: true },
+      { label: "Review collection", included: true },
+      { label: "Unlimited service categories", included: true },
+      { label: "Priority matching", included: true },
+      { label: "Pro badge", included: true },
+      { label: "Response analytics", included: true },
+      { label: "Featured placement", included: true },
+      { label: "Multi-category listing", included: true },
+      { label: "Dedicated support", included: true },
+    ]},
 ];
 
 const orgTiers = [
-  { id: "corporate", name: "Corporate", icon: "🏢", price: "TT$50k", period: "/year", color: "#0ABFBC", description: "For businesses needing reliable, verified service providers at scale.", badge: null, features: ["Dedicated provider pool", "Bulk booking management", "SLA guarantees", "Priority support", "Custom reporting", "Up to 50 bookings/month"], cta: "Contact Sales" },
-  { id: "government", name: "Government & NGO", icon: "🏛️", price: "TT$150k", period: "/contract", color: "#E63946", description: "Workforce data, impact metrics, and grant reporting for development agencies.", badge: "Credii Flagship", features: ["Full platform data access", "Workforce impact reports", "Provider verification pipeline", "Grant reporting exports", "Custom onboarding programs", "Dedicated account manager", "API access", "Multi-island coverage"], cta: "Talk to Credii" },
-  { id: "development", name: "Development Bank", icon: "🌍", price: "Custom", period: "", color: "#FFB347", description: "IDB, CDB, USAID — bespoke partnerships for regional economic development.", badge: null, features: ["Everything in Government", "Micro-loan eligibility data", "Africa expansion access", "Co-branded programs", "Research data licensing", "Board-level reporting", "White-label options", "Multi-region deployment"], cta: "Partner with Us" },
+  { id: "corporate", name: "Corporate", icon: "🏢", price: "TT$50k", period: "/year", color: "#0ABFBC",
+    description: "For businesses needing reliable, verified service providers at scale.", badge: null,
+    features: ["Dedicated provider pool", "Bulk booking management", "SLA guarantees", "Priority support", "Custom reporting", "Up to 50 bookings/month"],
+    cta: "Contact Sales" },
+  { id: "government", name: "Government & NGO", icon: "🏛️", price: "TT$150k", period: "/contract", color: "#E63946",
+    description: "Workforce data, impact metrics, and reporting for development agencies.", badge: "Credii Flagship",
+    features: ["Full platform data access", "Workforce impact reports", "Provider verification pipeline", "Grant reporting exports", "Custom onboarding programs", "Dedicated account manager", "API access", "Multi-island coverage"],
+    cta: "Talk to Credii" },
+  { id: "development", name: "Development Partners", icon: "🌍", price: "Custom", period: "", color: "#F4A623",
+    description: "Bespoke partnerships for regional economic development agencies and institutions.", badge: null,
+    features: ["Everything in Government", "Micro-loan eligibility data", "Co-branded programs", "Research data licensing", "Board-level reporting", "White-label options", "Multi-region deployment"],
+    cta: "Partner with Us" },
 ];
 
 export default function PricingPage() {
@@ -34,18 +85,18 @@ export default function PricingPage() {
 
       {/* Hero */}
       <section style={{ padding: "5rem 2.5rem 3rem", textAlign: "center" }}>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 1rem", borderRadius: "999px", marginBottom: "1.5rem", background: "#FF6B4A15", color: "#FF6B4A", border: "1px solid #FF6B4A30", fontSize: "0.85rem", fontWeight: 700 }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 1rem", borderRadius: "999px", marginBottom: "1.5rem", background: "#0ABFBC15", color: "#0ABFBC", border: "1px solid #0ABFBC30", fontSize: "0.85rem", fontWeight: 700 }}>
           🌴 Simple, transparent pricing
         </div>
         <h1 style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", fontWeight: 900, color: c.text(theme), marginBottom: "1rem", lineHeight: 1.1 }}>
-          Grow your business<br /><span style={{ color: "#FF6B4A" }}>across the Caribbean</span>
+          Grow your business<br /><span style={{ color: "#0ABFBC" }}>across the Caribbean</span>
         </h1>
-        <p style={{ fontSize: "1.15rem", color: c.textMuted(theme), marginBottom: "2.5rem" }}>Join 2,400+ verified providers earning more with Rivva. No hidden fees. Cancel anytime.</p>
-
-        {/* Tab switcher */}
-        <div style={{ display: "inline-flex", padding: "0.3rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgMuted(theme), marginBottom: "0.5rem" }}>
+        <p style={{ fontSize: "1.15rem", color: c.textMuted(theme), marginBottom: "2.5rem" }}>
+          Join 2,400+ verified providers. No hidden fees. Cancel anytime.
+        </p>
+        <div style={{ display: "inline-flex", padding: "0.3rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgMuted(theme) }}>
           {(["providers", "orgs"] as const).map(tab => (
-            <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "0.625rem 1.5rem", borderRadius: "0.75rem", border: "none", background: activeTab === tab ? "#FF6B4A" : "transparent", color: activeTab === tab ? "#fff" : c.textMuted(theme), fontWeight: 700, fontSize: "0.95rem", cursor: "pointer" }}>
+            <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "0.625rem 1.5rem", borderRadius: "0.75rem", border: "none", background: activeTab === tab ? "#0ABFBC" : "transparent", color: activeTab === tab ? "#fff" : c.textMuted(theme), fontWeight: 700, fontSize: "0.95rem", cursor: "pointer" }}>
               {tab === "providers" ? "For Providers" : "For Organisations"}
             </button>
           ))}
@@ -58,11 +109,11 @@ export default function PricingPage() {
           {/* Billing toggle */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "3rem" }}>
             <span style={{ fontSize: "0.95rem", fontWeight: 600, color: annual ? c.textMuted(theme) : c.text(theme) }}>Monthly</span>
-            <button onClick={() => setAnnual(!annual)} style={{ position: "relative", width: "3rem", height: "1.5rem", borderRadius: "999px", border: "none", background: annual ? "#FF6B4A" : c.border(theme), cursor: "pointer" }}>
+            <button onClick={() => setAnnual(!annual)} style={{ position: "relative", width: "3rem", height: "1.5rem", borderRadius: "999px", border: "none", background: annual ? "#0ABFBC" : c.border(theme), cursor: "pointer" }}>
               <div style={{ position: "absolute", top: "0.2rem", width: "1.1rem", height: "1.1rem", borderRadius: "50%", background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,0.2)", transition: "left 0.2s", left: annual ? "calc(100% - 1.3rem)" : "0.2rem" }} />
             </button>
             <span style={{ fontSize: "0.95rem", fontWeight: 600, color: annual ? c.text(theme) : c.textMuted(theme) }}>
-              Annual <span style={{ padding: "0.15rem 0.5rem", borderRadius: "999px", background: "#2ECC7120", color: "#2ECC71", fontSize: "0.8rem", fontWeight: 700, marginLeft: "0.3rem" }}>Save 20%</span>
+              Annual <span style={{ padding: "0.15rem 0.5rem", borderRadius: "999px", background: "#1DB87A20", color: "#1DB87A", fontSize: "0.8rem", fontWeight: 700, marginLeft: "0.3rem" }}>Save 20%</span>
             </span>
           </div>
 
@@ -71,7 +122,7 @@ export default function PricingPage() {
             {providerTiers.map(tier => (
               <div key={tier.id} style={{ position: "relative", padding: "2rem", borderRadius: "1.5rem", border: `2px solid ${tier.badge ? tier.color : c.border(theme)}`, background: tier.badge ? `${tier.color}08` : c.bgCard(theme), boxShadow: tier.badge ? `0 0 40px ${tier.color}20` : c.shadow(theme), display: "flex", flexDirection: "column" }}>
                 {tier.badge && (
-                  <div style={{ position: "absolute", top: "-1rem", left: "50%", transform: "translateX(-50%)", padding: "0.3rem 1rem", borderRadius: "999px", background: `linear-gradient(90deg, ${tier.color}, #FFB347)`, color: "#fff", fontSize: "0.8rem", fontWeight: 800, whiteSpace: "nowrap" }}>⭐ {tier.badge}</div>
+                  <div style={{ position: "absolute", top: "-1rem", left: "50%", transform: "translateX(-50%)", padding: "0.3rem 1rem", borderRadius: "999px", background: `linear-gradient(90deg, ${tier.color}, #1DB87A)`, color: "#fff", fontSize: "0.8rem", fontWeight: 800, whiteSpace: "nowrap" }}>⭐ {tier.badge}</div>
                 )}
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
                   <div style={{ width: "2.75rem", height: "2.75rem", borderRadius: "0.875rem", background: `${tier.color}18`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem" }}>{tier.icon}</div>
@@ -83,7 +134,7 @@ export default function PricingPage() {
                     <span style={{ fontSize: "2.5rem", fontWeight: 900, color: tier.color, lineHeight: 1 }}>TT${annual ? Math.round(tier.monthlyPrice * (1 - ANNUAL_DISCOUNT)) : tier.monthlyPrice}</span>
                     <span style={{ fontSize: "0.9rem", color: c.textMuted(theme), marginBottom: "0.3rem" }}>/mo{annual ? " · billed annually" : ""}</span>
                   </div>
-                  {annual && <p style={{ fontSize: "0.8rem", color: "#2ECC71", marginTop: "0.3rem" }}>Save TT${Math.round(tier.monthlyPrice * 12 * ANNUAL_DISCOUNT).toLocaleString()}/yr</p>}
+                  {annual && <p style={{ fontSize: "0.8rem", color: "#1DB87A", marginTop: "0.3rem" }}>Save TT${Math.round(tier.monthlyPrice * 12 * ANNUAL_DISCOUNT).toLocaleString()}/yr</p>}
                 </div>
                 <Link href="/register?role=provider" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", padding: "0.875rem", borderRadius: "0.875rem", marginBottom: "1.5rem", fontWeight: 700, fontSize: "0.95rem", textDecoration: "none", background: tier.badge ? tier.color : "transparent", color: tier.badge ? "#fff" : tier.color, border: tier.badge ? "none" : `2px solid ${tier.color}` }}>
                   {tier.cta} <ArrowRight size={16} />
@@ -103,12 +154,16 @@ export default function PricingPage() {
           {/* Lead fee add-ons */}
           <div style={{ padding: "2rem", borderRadius: "1.25rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), marginBottom: "2rem", boxShadow: c.shadow(theme) }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.5rem" }}>
-              <Zap size={18} style={{ color: "#FFB347" }} />
+              <Zap size={18} style={{ color: "#F4A623" }} />
               <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme) }}>Lead Fee Add-ons</h3>
-              <span style={{ padding: "0.15rem 0.625rem", borderRadius: "999px", background: "#FFB34720", color: "#E6900A", fontSize: "0.8rem", fontWeight: 700 }}>Optional</span>
+              <span style={{ padding: "0.15rem 0.625rem", borderRadius: "999px", background: "#F4A62320", color: "#E6900A", fontSize: "0.8rem", fontWeight: 700 }}>Optional</span>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" }} className="grid-3col">
-              {[{ type: "Standard Lead", price: "TT$15", desc: "Client posted a matching request", icon: "📋", color: "#0ABFBC" }, { type: "Verified Lead", price: "TT$25", desc: "Client has hired before (high intent)", icon: "✅", color: "#2ECC71" }, { type: "Urgent Lead", price: "TT$35", desc: "Client needs same-day service", icon: "🔴", color: "#FF6B4A" }].map(l => (
+              {[
+                { type: "Standard Lead", price: "TT$15", desc: "Client posted a matching request", icon: "📋", color: "#0ABFBC" },
+                { type: "Verified Lead", price: "TT$25", desc: "Client has hired before (high intent)", icon: "✅", color: "#1DB87A" },
+                { type: "Urgent Lead", price: "TT$35", desc: "Client needs same-day service", icon: "🔴", color: "#E63946" },
+              ].map(l => (
                 <div key={l.type} style={{ padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bg(theme), display: "flex", alignItems: "flex-start", gap: "0.875rem" }}>
                   <div style={{ width: "2.5rem", height: "2.5rem", borderRadius: "0.75rem", background: `${l.color}15`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0 }}>{l.icon}</div>
                   <div>
@@ -125,16 +180,34 @@ export default function PricingPage() {
           <div style={{ marginBottom: "3rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.25rem" }}>
               <h3 style={{ fontWeight: 700, fontSize: "1rem", color: c.text(theme) }}>Visibility Boosts</h3>
-              <span style={{ padding: "0.15rem 0.625rem", borderRadius: "999px", background: "#FF6B4A15", color: "#FF6B4A", fontSize: "0.8rem", fontWeight: 700 }}>Available on all plans</span>
+              <span style={{ padding: "0.15rem 0.625rem", borderRadius: "999px", background: "#0ABFBC15", color: "#0ABFBC", fontSize: "0.8rem", fontWeight: 700 }}>Available on all plans</span>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1rem" }} className="grid-4col">
-              {[{ name: "Homepage Feature", price: "TT$300/mo", desc: "Your card on the Rivva homepage", icon: "🏠" }, { name: "Category Spotlight", price: "TT$150/mo", desc: "Top of results for one category", icon: "🔦" }, { name: "Island Boost", price: "TT$200/mo", desc: "Priority matching island-wide for 30 days", icon: "📍" }, { name: "Launch Boost", price: "TT$75 once", desc: "First 10 leads guaranteed for new providers", icon: "🚀" }].map(b => (
+              {[
+                { name: "Homepage Feature", price: "TT$300/mo", desc: "Your card on the RIVVA homepage", icon: "🏠" },
+                { name: "Category Spotlight", price: "TT$150/mo", desc: "Top of results for one category", icon: "🔦" },
+                { name: "Island Boost", price: "TT$200/mo", desc: "Priority matching island-wide for 30 days", icon: "📍" },
+                { name: "Launch Boost", price: "TT$75 once", desc: "First 10 leads guaranteed for new providers", icon: "🚀" },
+              ].map(b => (
                 <div key={b.name} style={{ padding: "1.25rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
                   <div style={{ fontSize: "1.75rem", marginBottom: "0.75rem" }}>{b.icon}</div>
                   <p style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.9rem" }}>{b.name}</p>
                   <p style={{ fontSize: "0.8rem", color: c.textMuted(theme), marginTop: "0.2rem", marginBottom: "0.75rem" }}>{b.desc}</p>
-                  <p style={{ fontWeight: 900, color: "#FF6B4A", fontSize: "0.95rem" }}>{b.price}</p>
+                  <p style={{ fontWeight: 900, color: "#0ABFBC", fontSize: "0.95rem" }}>{b.price}</p>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Payment methods */}
+          <div style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), marginBottom: "3rem", display: "flex", alignItems: "center", gap: "1.5rem", flexWrap: "wrap" }}>
+            <div>
+              <p style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.95rem", marginBottom: "0.25rem" }}>Accepted payment methods</p>
+              <p style={{ fontSize: "0.85rem", color: c.textMuted(theme) }}>Secure payments processed via Stripe and PayPal</p>
+            </div>
+            <div style={{ display: "flex", gap: "0.75rem", marginLeft: "auto" }}>
+              {["💳 Stripe", "🅿️ PayPal"].map(p => (
+                <span key={p} style={{ padding: "0.5rem 1rem", borderRadius: "0.75rem", border: `1px solid ${c.border(theme)}`, color: c.text(theme), fontSize: "0.9rem", fontWeight: 600, background: c.bg(theme) }}>{p}</span>
               ))}
             </div>
           </div>
@@ -144,9 +217,9 @@ export default function PricingPage() {
             <h2 style={{ fontSize: "1.5rem", fontWeight: 900, color: c.text(theme), marginBottom: "2rem", textAlign: "center" }}>Frequently Asked Questions</h2>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }} className="grid-2col">
               {[
-                { q: "Is it free for clients?", a: "Yes. Clients always use Rivva for free. They post requests, receive quotes, and hire providers at no cost." },
+                { q: "Is it free for clients?", a: "Yes. Clients always use RIVVA for free. They post requests, receive quotes, and hire providers at no cost." },
                 { q: "Can I change my plan anytime?", a: "Yes. Upgrade or downgrade at any time. Changes take effect at the start of your next billing cycle." },
-                { q: "What payment methods are accepted?", a: "We accept all major credit/debit cards, Linx, and WiPay across the Caribbean." },
+                { q: "What payment methods are accepted?", a: "We accept Stripe and PayPal. All transactions are secure and encrypted." },
                 { q: "Do I need to be verified before subscribing?", a: "Yes. All providers must complete basic verification (ID + skill proof) before their profile goes live." },
                 { q: "What's the difference between a lead fee and a subscription?", a: "Your subscription gives you a monthly lead allowance. Lead fees are optional top-ups for more leads." },
                 { q: "How do institutional contracts work?", a: "Org partnerships are negotiated directly with the Credii team. Contact us to schedule a call." },
@@ -165,12 +238,12 @@ export default function PricingPage() {
       {activeTab === "orgs" && (
         <div style={{ padding: "0 2.5rem 5rem" }}>
           <p style={{ textAlign: "center", color: c.textMuted(theme), fontSize: "1.05rem", marginBottom: "3rem" }}>
-            Institutional partnerships that generate TT$150k–600k per contract.<br />This is Rivva&apos;s advantage over every US marketplace.
+            Institutional partnerships that generate TT$150k–600k per contract.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.5rem", marginBottom: "3rem" }} className="grid-3col">
             {orgTiers.map(tier => (
               <div key={tier.id} style={{ position: "relative", padding: "2rem", borderRadius: "1.5rem", border: `2px solid ${tier.badge ? tier.color : c.border(theme)}`, background: tier.badge ? `${tier.color}08` : c.bgCard(theme), boxShadow: tier.badge ? `0 0 40px ${tier.color}20` : c.shadow(theme), display: "flex", flexDirection: "column" }}>
-                {tier.badge && <div style={{ position: "absolute", top: "-1rem", left: "50%", transform: "translateX(-50%)", padding: "0.3rem 1rem", borderRadius: "999px", background: `linear-gradient(90deg, ${tier.color}, #FFB347)`, color: "#fff", fontSize: "0.8rem", fontWeight: 800, whiteSpace: "nowrap" }}>🌍 {tier.badge}</div>}
+                {tier.badge && <div style={{ position: "absolute", top: "-1rem", left: "50%", transform: "translateX(-50%)", padding: "0.3rem 1rem", borderRadius: "999px", background: `linear-gradient(90deg, ${tier.color}, #F4A623)`, color: "#fff", fontSize: "0.8rem", fontWeight: 800, whiteSpace: "nowrap" }}>🌍 {tier.badge}</div>}
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
                   <div style={{ width: "2.75rem", height: "2.75rem", borderRadius: "0.875rem", background: `${tier.color}18`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem" }}>{tier.icon}</div>
                   <h3 style={{ fontWeight: 800, fontSize: "1.1rem", color: c.text(theme) }}>{tier.name}</h3>
@@ -198,24 +271,18 @@ export default function PricingPage() {
           </div>
 
           {/* Value props */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.25rem", marginBottom: "2.5rem" }} className="grid-3col">
-            {[{ icon: <TrendingUp size={22} />, color: "#FF6B4A", title: "Grant-Ready Data", desc: "Every request, provider, and job completion is tracked and exportable for development agency reporting." }, { icon: <Shield size={22} />, color: "#E63946", title: "Credii Verified Workforce", desc: "All providers are ID-verified and skill-checked by Credii. Organisations get a trusted, auditable pool." }, { icon: <Globe size={22} />, color: "#FFB347", title: "Africa Expansion", desc: "Development bank partners get early access to Rivva's Africa rollout — the same model, 54 countries." }].map(v => (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.25rem" }} className="grid-3col">
+            {[
+              { icon: <TrendingUp size={22} />, color: "#0ABFBC", title: "Grant-Ready Data", desc: "Every request, provider, and job completion is tracked and exportable for development agency reporting." },
+              { icon: <Shield size={22} />, color: "#E63946", title: "Credii Verified Workforce", desc: "All providers are ID-verified and skill-checked by Credii. Organisations get a trusted, auditable pool." },
+              { icon: <Globe size={22} />, color: "#F4A623", title: "Multi-Island Coverage", desc: "RIVVA operates across 6 Caribbean islands with a single platform, single dashboard, and unified reporting." },
+            ].map(v => (
               <div key={v.title} style={{ padding: "1.5rem", borderRadius: "1rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), boxShadow: c.shadow(theme) }}>
                 <div style={{ width: "3rem", height: "3rem", borderRadius: "0.875rem", background: `${v.color}18`, color: v.color, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>{v.icon}</div>
                 <h4 style={{ fontWeight: 700, color: c.text(theme), fontSize: "0.95rem", marginBottom: "0.5rem" }}>{v.title}</h4>
                 <p style={{ fontSize: "0.85rem", color: c.textMuted(theme), lineHeight: 1.6 }}>{v.desc}</p>
               </div>
             ))}
-          </div>
-
-          {/* Partner logos */}
-          <div style={{ padding: "2rem", borderRadius: "1.25rem", border: `1px solid ${c.border(theme)}`, background: c.bgCard(theme), textAlign: "center" }}>
-            <p style={{ fontSize: "0.75rem", fontWeight: 700, color: c.textFaint(theme), letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "1.25rem" }}>TRUSTED BY REGIONAL INSTITUTIONS</p>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.875rem" }}>
-              {["IDB", "CDB", "USAID", "UN Women", "CARICOM", "Min. of Labour TT"].map(org => (
-                <div key={org} style={{ padding: "0.5rem 1.25rem", borderRadius: "0.75rem", border: `1px solid ${c.border(theme)}`, color: c.textMuted(theme), fontSize: "0.9rem", fontWeight: 600, background: c.bg(theme) }}>{org}</div>
-              ))}
-            </div>
           </div>
         </div>
       )}
@@ -225,7 +292,7 @@ export default function PricingPage() {
         <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: c.text(theme), marginBottom: "1rem" }}>Ready to grow across the Caribbean?</h2>
         <p style={{ color: c.textMuted(theme), fontSize: "1.1rem", marginBottom: "2.5rem" }}>Join 2,400+ verified providers. Start free, upgrade when you&apos;re ready.</p>
         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/register?role=provider" style={{ padding: "1rem 2.5rem", borderRadius: "0.875rem", background: "linear-gradient(135deg, #FF6B4A, #FF8C42)", color: "#fff", fontWeight: 700, fontSize: "1rem", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <Link href="/register?role=provider" style={{ padding: "1rem 2.5rem", borderRadius: "0.875rem", background: "linear-gradient(135deg, #0ABFBC, #1A7FBF)", color: "#fff", fontWeight: 700, fontSize: "1rem", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}>
             Start as a Provider <ArrowRight size={18} />
           </Link>
           <Link href="/register" style={{ padding: "1rem 2.5rem", borderRadius: "0.875rem", border: `2px solid ${c.border(theme)}`, color: c.text(theme), fontWeight: 700, fontSize: "1rem", textDecoration: "none" }}>
@@ -239,8 +306,7 @@ export default function PricingPage() {
       <footer style={{ borderTop: `1px solid ${c.border(theme)}`, padding: "2rem 2.5rem" }}>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2rem", height: "2rem" }} />
-            <span style={{ fontWeight: 900, color: c.text(theme), letterSpacing: "-0.02em" }}>RIVVA</span>
+            <span style={{ fontWeight: 900, color: c.text(theme), letterSpacing: "-0.02em", fontSize: "1.1rem" }}>RIVVA</span>
             <span style={{ color: "#E63946", fontSize: "0.85rem", fontWeight: 600 }}>Powered by Credii</span>
           </div>
           <p style={{ fontSize: "0.85rem", color: c.textFaint(theme) }}>© 2026 Rivva / Credii. All rights reserved.</p>

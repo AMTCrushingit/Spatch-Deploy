@@ -125,7 +125,7 @@ export default function ClientDashboard() {
                   <span key={i} style={{ fontSize: "0.8rem", padding: "0.25rem 0.625rem", borderRadius: "999px", background: "rgba(255,255,255,0.1)", color: "#fff" }}>{i}</span>
                 ))}
               </div>
-              <p style={{ fontSize: "0.85rem", color: "#FF6B4A", marginTop: "0.875rem", fontWeight: 600 }}>Expanding to Africa 2027 🌍</p>
+              <p style={{ fontSize: "0.85rem", color: "#FF6B4A", marginTop: "0.875rem", fontWeight: 600 }}> 🌍</p>
             </div>
           </div>
         </div>

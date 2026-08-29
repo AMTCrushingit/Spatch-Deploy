@@ -205,7 +205,6 @@ export default function HomePage() {
               <div style={{ borderRadius: "1.5rem", padding: "2rem", border: `1px solid ${border}`, background: isDark ? "rgba(10,191,188,0.05)" : "rgba(255,255,255,0.88)", backdropFilter: "blur(24px)", boxShadow: shadow }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                    <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2.2rem", height: "2.2rem" }} />
                     <span style={{ fontWeight: 700, fontSize: "1.1rem", color: text }}>RIVVA Live</span>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: P.green, fontSize: "0.9rem", fontWeight: 600 }}>
@@ -330,7 +329,7 @@ export default function HomePage() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }} className="grid-2col">
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.4rem 1rem", borderRadius: "999px", marginBottom: "1.5rem", background: `${P.credii}12`, color: P.credii, border: `1px solid ${P.credii}30`, fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.05em" }}>
-              🛡️ CREDII TRUST INFRASTRUCTURE
+              🛡️ CREDII VERIFICATION
             </div>
             <h2 style={{ fontWeight: 900, color: text, marginBottom: "1rem", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.1 }}>
               Not just verified.<br /><span style={{ color: P.credii }}>Trust-scored.</span>
@@ -440,18 +439,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Africa teaser */}
-        <div style={{ marginTop: "1.5rem", padding: "1.5rem 2rem", borderRadius: "1.25rem", border: `2px dashed ${border}`, background: bgCard, textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem", flexWrap: "wrap" }}>
-          <span style={{ fontSize: "2rem" }}>🌍</span>
-          <div>
-            <p style={{ fontWeight: 700, color: text, fontSize: "1.1rem" }}>Africa Expansion — 2027</p>
-            <p style={{ color: textMut, fontSize: "0.9rem" }}>The same Credii trust infrastructure. 54 countries. Nigeria, Ghana, Kenya first.</p>
-          </div>
-          <Link href="/register?role=provider" style={{ padding: "0.625rem 1.5rem", borderRadius: "0.875rem", background: `linear-gradient(135deg, ${P.teal}, ${P.blue})`, color: "#fff", fontWeight: 700, fontSize: "0.9rem", textDecoration: "none" }}>
-            Get Early Access
-          </Link>
         </div>
       </section>
 
@@ -586,7 +573,7 @@ export default function HomePage() {
                 At the same time, clients waste hours searching for reliable help, with no way to verify who they&apos;re hiring. The result? Billions in economic potential, untapped.
               </p>
               <p style={{ color: text, fontSize: "1.05rem", lineHeight: 1.8, fontWeight: 600 }}>
-                Rivva — named for the rivers that connect the Caribbean landscape — was built to change this. Powered by <strong style={{ color: P.credii }}>Credii&apos;s</strong> trust infrastructure, we verify professionals, match them to opportunities, and build the economic network the Caribbean deserves.
+                Rivva — named for the rivers that connect the Caribbean landscape — was built to change this. Powered by <strong style={{ color: P.credii }}>Credii</strong>, we verify professionals, match them to opportunities, and build the economic network the Caribbean deserves.
               </p>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "2rem" }}>
@@ -661,7 +648,7 @@ export default function HomePage() {
         <div style={{ position: "relative" }}>
           <h2 style={{ fontWeight: 900, color: text, marginBottom: "1.5rem", fontSize: "clamp(2.5rem, 6vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.03em" }}>
             Ready to join the<br />
-            <span style={{ background: `linear-gradient(90deg, ${P.teal} 0%, ${P.blue} 50%, ${P.green} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Caribbean&apos;s trust network?</span>
+            <span style={{ background: `linear-gradient(90deg, ${P.teal} 0%, ${P.blue} 50%, ${P.green} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Caribbean service network?</span>
           </h2>
           <p style={{ color: textMut, fontSize: "1.25rem", marginBottom: "3rem" }}>
             Clients post free. Providers start from TT$50/mo. No hidden fees.
@@ -675,7 +662,7 @@ export default function HomePage() {
             </Link>
           </div>
           <p style={{ color: textFnt, fontSize: "0.95rem", marginTop: "2rem" }}>
-            Powered by <strong style={{ color: P.credii }}>Credii</strong> · Caribbean&apos;s Trust Infrastructure · Expanding to Africa 2027
+            Powered by <strong style={{ color: P.credii }}>Credii</strong> · Caribbean Service Network · 
           </p>
         </div>
       </section>
@@ -684,7 +671,6 @@ export default function HomePage() {
       <footer style={{ borderTop: `1px solid ${border}`, padding: "2.5rem 2.5rem", background: bgAlt }}>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2.2rem", height: "2.2rem" }} />
             <span style={{ fontWeight: 900, fontSize: "1.2rem", color: text, letterSpacing: "-0.02em" }}>RIVVA</span>
             <span style={{ color: P.credii, fontSize: "0.9rem", fontWeight: 600 }}>Powered by Credii</span>
           </div>

@@ -77,7 +77,6 @@ export default function LoginPage() {
         <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", padding: "2.5rem" }}>
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.625rem", textDecoration: "none" }}>
-            <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2.2rem", height: "2.2rem" }} />
             <span style={{ fontWeight: 900, fontSize: "1.4rem", color: "#fff", letterSpacing: "-0.02em" }}>RIVVA</span>
           </Link>
 
@@ -125,7 +124,7 @@ export default function LoginPage() {
           </div>
 
           {/* Footer */}
-          <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.25)" }}>© 2026 Rivva / Credii · Caribbean&apos;s Trust Network</p>
+          <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.25)" }}>© 2026 Rivva / Credii</p>
         </div>
       </div>
 
@@ -145,7 +144,6 @@ export default function LoginPage() {
         <div style={{ width: "100%", maxWidth: "420px", position: "relative" }}>
           {/* Mobile logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.6rem", textDecoration: "none", marginBottom: "2.5rem" }} className="lg:hidden">
-            <img src="/rivva-logo.svg" alt="Rivva" style={{ width: "2rem", height: "2rem" }} />
             <span style={{ fontWeight: 900, fontSize: "1.2rem", color: c.text(theme), letterSpacing: "-0.02em" }}>RIVVA</span>
           </Link>
 

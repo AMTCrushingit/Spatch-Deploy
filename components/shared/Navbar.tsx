@@ -63,8 +63,7 @@ export default function Navbar({ role = "guest", userName = "", userAvatar = "" 
 
           {/* Logo */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
-            <img src="/rivva-logo.svg" alt="RIVVA" style={{ width: "2.4rem", height: "2.4rem" }} />
-            <span style={{ fontWeight: 900, fontSize: "1.3rem", color: c.text(theme), letterSpacing: "-0.02em" }}>RIVVA</span>
+            <span style={{ fontWeight: 900, fontSize: "1.5rem", color: c.text(theme), letterSpacing: "-0.03em" }}>RIVVA</span>
             {role === "admin" && (
               <span style={{ fontSize: "0.7rem", padding: "0.2rem 0.6rem", borderRadius: "999px", background: "#E6394615", color: "#E63946", fontWeight: 700, marginLeft: "0.3rem" }}>
                 Credii Admin
